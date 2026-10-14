@@ -24,10 +24,17 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.MachineListActivity"
+            android:exported="false"
+            android:label="Machines"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/Theme.LaundryTracker"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".activities.AddEditActivity"
             android:exported="false"
             android:label="Add Machine"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".activities.MachineListActivity"
             android:theme="@style/Theme.LaundryTracker"
             android:windowSoftInputMode="adjustResize" />
     </application>
