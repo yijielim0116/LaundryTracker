@@ -72,7 +72,7 @@ class AddEditActivity : AppCompatActivity() {
         val cancelButton =
             findViewById<Button>(R.id.cancelButton)
 
-        // MainActivity sends the id when Edit is pressed, -1 means no id was sent
+        // the machine list sends the id when Edit is pressed, -1 means no id was sent
         editingId =
             intent.getLongExtra("id", -1L)
                 .takeIf { it != -1L }

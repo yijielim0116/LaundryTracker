@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Laundry Tracker</string>
 
-    <!-- options for the status drop-down on the main screen, the order matters (see MainActivity) -->
+    <!-- options for the status drop-down on the machine list, the order matters (see MachineListActivity) -->
     <string-array name="status_filter_options">
         <item>All</item>
         <item>Available</item>

@@ -42,7 +42,7 @@
             android:layout_marginTop="8dp"
             android:entries="@array/status_filter_options" />
 
-        <!-- the machine list goes in listLayout (added in MainActivity),
+        <!-- the machine list goes in listLayout (added in MachineListActivity),
              put it in a ScrollView so it can scroll when there's a lot of machines -->
         <ScrollView
             android:layout_width="match_parent"
