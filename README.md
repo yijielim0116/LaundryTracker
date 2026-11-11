@@ -4,6 +4,7 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 
 ## Features
 
+- **Splash screen** with the app logo and name for 2 seconds when the app opens
 - **Home screen** with a View Machines button
 - **Add, list, edit and delete machines** (name, location, washer/dryer, status)
 - **Search** machines by name or location, and **filter** by status with a drop-down
@@ -18,6 +19,7 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 
 | Screen | Class | Layout |
 |---|---|---|
+| Splash | `SplashActivity` | `activity_splash.xml` |
 | Home | `MainActivity` | `activity_main.xml` |
 | Machines list | `MachineListActivity` + `MachineAdapter` | `activity_machine_list.xml`, `item_machine.xml` |
 | Add / Edit machine | `AddEditActivity` | `activity_add_edit.xml` |
@@ -28,7 +30,7 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 
 ([SVG version](docs/laundrytracker-uml.svg))
 
-- The three screens extend `AppCompatActivity`. Home opens the list, and the list opens the form (sending the machine's id when editing).
+- The four screens extend `AppCompatActivity`. `SplashActivity` is the launcher screen and opens Home after 2 seconds, then finishes so Back doesn't return to it. Home opens the list, and the list opens the form (sending the machine's id when editing).
 - The machines list uses a `RecyclerView` with `MachineAdapter`, which turns each `MachineModel` into a row from `item_machine.xml`.
 - Every screen uses the same store through `AppData.machines`, typed as the `MachineStore` interface.
 - `MainApp` (an `Application` class) runs once when the app starts and sets `AppData.machines` to a `MachineJSONStore`.
@@ -38,7 +40,7 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 
 ```
 app/src/main/java/org/setu/laundrytracker/
-├── activities/   MainActivity, MachineListActivity, AddEditActivity
+├── activities/   SplashActivity, MainActivity, MachineListActivity, AddEditActivity
 ├── adapters/     MachineAdapter
 ├── main/         MainApp, AppData
 └── models/       MachineModel (+ MachineType, MachineStatus), MachineStore,

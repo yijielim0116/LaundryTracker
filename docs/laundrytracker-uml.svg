@@ -72,6 +72,16 @@
   <text x="890" y="570" font-size="12">- selectedType(): MachineType</text>
   <text x="890" y="587" font-size="12">- selectedStatus(): MachineStatus</text>
   <text x="890" y="604" font-size="12">- saveMachine()</text>
+  <rect x="30" y="397" width="250" height="164" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="427" x2="280" y2="427" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="494" x2="280" y2="494" stroke="#333" stroke-width="1.5"/>
+  <text x="155.0" y="417" font-size="15" font-weight="bold" text-anchor="middle">SplashActivity</text>
+  <text x="40" y="447" font-size="12">- handler: Handler</text>
+  <text x="40" y="464" font-size="12">- goToHome: Runnable</text>
+  <text x="40" y="481" font-size="12">- SPLASH_TIME_MS: Long = 2000</text>
+  <text x="40" y="514" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
+  <text x="40" y="531" font-size="12">+ onDestroy()</text>
+  <text x="40" y="548" font-size="11" fill="#555">« launcher, first screen »</text>
   <rect x="1300" y="215" width="250" height="92" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
   <line x1="1300" y1="245" x2="1550" y2="245" stroke="#333" stroke-width="1.5"/>
   <line x1="1300" y1="257" x2="1550" y2="257" stroke="#333" stroke-width="1.5"/>
@@ -167,7 +177,8 @@
   <path d="M 155.0 215 L 155.0 194" fill="none" stroke="#333" stroke-width="1.2"/>
   <path d="M 575.0 215 L 575.0 194" fill="none" stroke="#333" stroke-width="1.2"/>
   <path d="M 1065.0 215 L 1065.0 194" fill="none" stroke="#333" stroke-width="1.2"/>
-  <path d="M 155.0 194 L 1065.0 194" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 14 194 L 1065.0 194" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 14 194 L 14 419 L 30 419" fill="none" stroke="#333" stroke-width="1.2"/>
   <path d="M 640.0 194 L 640.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
   <text x="862" y="186" font-size="11" fill="#555" text-anchor="start">« extends »</text>
   <path d="M 1425.0 215 L 1425.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
@@ -176,6 +187,8 @@
   <text x="315.0" y="268" font-size="11" fill="#555" text-anchor="middle">« opens »</text>
   <path d="M 800 275 L 880 275" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
   <text x="840.0" y="268" font-size="11" fill="#555" text-anchor="middle">« opens (id) »</text>
+  <path d="M 155.0 397 L 155.0 307" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="163.0" y="356.0" font-size="11" fill="#555" text-anchor="start">« opens after 2s »</text>
   <polygon points="555.0,566 562.0,577 555.0,588 548.0,577" fill="#333" stroke="#333" stroke-width="1.2"/>
   <path d="M 555.0 588 L 555.0 727" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
   <text x="565.0" y="719" font-size="11" fill="#555" text-anchor="start">1</text>
