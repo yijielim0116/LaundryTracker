@@ -6,9 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -18,17 +16,21 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.adapters.MachineAdapter
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
-import org.setu.laundrytracker.models.MachineType
 
 // Machine list screen - shows all the machines with search, the status filter and the menu
 class MachineListActivity : AppCompatActivity() {
 
-    // empty layout from activity_machine_list.xml, I add the machines into this in code
-    private lateinit var listLayout: LinearLayout
+    // the RecyclerView shows the machines, the adapter turns each machine into a row
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: MachineAdapter
+    private lateinit var emptyText: TextView
     private lateinit var searchInput: EditText
     private lateinit var statusFilter: Spinner
 
@@ -52,8 +54,31 @@ class MachineListActivity : AppCompatActivity() {
         // up arrow to go back to the home screen
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        listLayout =
-            findViewById(R.id.listLayout)
+        emptyText =
+            findViewById(R.id.emptyText)
+
+        recyclerView =
+            findViewById(R.id.machinesRecyclerView)
+
+        // start with an empty list, displayMachines() gives it the real machines
+        // the adapter calls back here when Edit or Delete is pressed on a row
+        adapter = MachineAdapter(
+            machines = emptyList(),
+
+            onEdit = { machine ->
+                editMachine(machine)
+            },
+
+            onDelete = { machine ->
+                deleteMachine(machine)
+            }
+        )
+
+        // LinearLayoutManager = rows go one under the other
+        recyclerView.layoutManager =
+            LinearLayoutManager(this)
+
+        recyclerView.adapter = adapter
 
         searchInput =
             findViewById(R.id.searchInput)
@@ -140,16 +165,13 @@ class MachineListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (::listLayout.isInitialized) {
+        if (::adapter.isInitialized) {
             displayMachines()
         }
     }
 
-    // builds the list from the store, each machine gets its own little block
+    // filters the machines and gives them to the adapter, the RecyclerView redraws the rows
     private fun displayMachines() {
-
-        // clear it first or the machines show up twice
-        listLayout.removeAllViews()
 
         val allMachines = AppData.machines.findAll()
 
@@ -172,85 +194,35 @@ class MachineListActivity : AppCompatActivity() {
             matchesSearch && matchesStatus
         }
 
+        adapter.updateMachines(machines)
+
         // nothing to show, the message depends on if there's no machines at all or just no matches
         if (machines.isEmpty()) {
-
-            val emptyText = TextView(this).apply {
-                text = if (allMachines.isEmpty()) "No machines yet." else "No machines match your search or filter."
-                textSize = 18f
-                setPadding(0, 40, 0, 40)
-            }
-
-            listLayout.addView(emptyText)
-
-            return
-        }
-
-        for (machine in machines) {
-
-            // one block for each machine (name, location, status, edit and delete buttons)
-            val machineLayout = LinearLayout(this).apply {
-                orientation = LinearLayout.VERTICAL
-                setPadding(0, 20, 0, 20)
-            }
-
-            // shows like "1: Washer 1"
-            val machineTitle = TextView(this).apply {
-                text = "${machine.id}: ${machine.name}"
-                textSize = 20f
-            }
-
-            val machineLocation = TextView(this).apply {
-                text = machine.location
-                textSize = 16f
-            }
-
-            // shows like "Washer · Available", and "Washer · In use · 60 min" when it's running
-            val machineStatus = TextView(this).apply {
-                text = statusLine(machine)
-                textSize = 14f
-            }
-
-            // edit button, opens the form and sends the machine's id so it knows which one to edit
-            val editButton = Button(this).apply {
-                text = "Edit"
-
-                setOnClickListener {
-                    val intent = Intent(this@MachineListActivity, AddEditActivity::class.java)
-                    intent.putExtra("id", machine.id)
-                    startActivity(intent)
-                }
-            }
-
-            // delete button, removes it from the store then redraws the list
-            val deleteButton = Button(this).apply {
-                text = "Delete"
-
-                setOnClickListener {
-                    AppData.machines.delete(machine.id)
-                    displayMachines()
-                }
-            }
-
-            machineLayout.addView(machineTitle)
-            machineLayout.addView(machineLocation)
-            machineLayout.addView(machineStatus)
-            machineLayout.addView(editButton)
-            machineLayout.addView(deleteButton)
-
-            listLayout.addView(machineLayout)
+            emptyText.text =
+                if (allMachines.isEmpty()) "No machines yet." else "No machines match your search or filter."
+            emptyText.visibility = View.VISIBLE
+        } else {
+            emptyText.visibility = View.GONE
         }
     }
 
-    // only add the cycle length for machines that are in use, it doesn't mean anything otherwise
-    private fun statusLine(machine: MachineModel): String {
-        val line = "${typeLabel(machine.type)} · ${statusLabel(machine.status)}"
+    // Edit pressed on a row: open the form and send the machine's id so it knows which one to edit
+    private fun editMachine(machine: MachineModel) {
 
-        return if (machine.status == MachineStatus.IN_USE) {
-            "$line · ${machine.cycleMinutes} min"
-        } else {
-            line
-        }
+        val intent =
+            Intent(this, AddEditActivity::class.java)
+
+        intent.putExtra("id", machine.id)
+
+        startActivity(intent)
+    }
+
+    // Delete pressed on a row: remove it from the store then redraw the list
+    private fun deleteMachine(machine: MachineModel) {
+
+        AppData.machines.delete(machine.id)
+
+        displayMachines()
     }
 
     // turns the drop-down position into a status, same order as status_filter_options in strings.xml
@@ -260,23 +232,6 @@ class MachineListActivity : AppCompatActivity() {
             2 -> MachineStatus.IN_USE
             3 -> MachineStatus.OUT_OF_ORDER
             else -> null
-        }
-    }
-
-    // the enum names (WASHER, DRYER) look ugly on screen so I change them to normal words
-    private fun typeLabel(type: MachineType): String {
-        return when (type) {
-            MachineType.WASHER -> "Washer"
-            MachineType.DRYER -> "Dryer"
-        }
-    }
-
-    // same thing for the status
-    private fun statusLabel(status: MachineStatus): String {
-        return when (status) {
-            MachineStatus.AVAILABLE -> "Available"
-            MachineStatus.IN_USE -> "In use"
-            MachineStatus.OUT_OF_ORDER -> "Out of order"
         }
     }
 }

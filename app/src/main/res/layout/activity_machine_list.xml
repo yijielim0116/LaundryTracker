@@ -42,19 +42,23 @@
             android:layout_marginTop="8dp"
             android:entries="@array/status_filter_options" />
 
-        <!-- the machine list goes in listLayout (added in MachineListActivity),
-             put it in a ScrollView so it can scroll when there's a lot of machines -->
-        <ScrollView
+        <!-- shows when there's nothing in the list (no machines, or nothing matches) -->
+        <TextView
+            android:id="@+id/emptyText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <!-- the machine list, MachineAdapter makes a row (item_machine.xml) for each machine
+             RecyclerView scrolls by itself so it doesn't need a ScrollView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/machinesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:id="@+id/listLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
