@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Android 12+ always shows its own splash first, so I make it teal too to match mine -->
+    <style name="Theme.LaundryTracker.Splash" parent="Theme.LaundryTracker">
+        <item name="android:windowBackground">@color/teal_700</item>
+        <item name="android:windowSplashScreenBackground">@color/teal_700</item>
+    </style>
+</resources>
