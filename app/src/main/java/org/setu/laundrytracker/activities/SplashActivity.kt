@@ -6,8 +6,9 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.main.Session
 
-// Splash screen - shows my logo for a bit, then goes to the home screen
+// Splash screen - shows my logo for a bit, then goes to login (or home if already logged in)
 class SplashActivity : AppCompatActivity() {
 
     // I keep the handler so I can cancel it if the user leaves early
@@ -15,7 +16,13 @@ class SplashActivity : AppCompatActivity() {
 
     // what to do when the time is up
     private val goToHome = Runnable {
-        startActivity(Intent(this, MainActivity::class.java))
+        // logged in already -> home screen, otherwise they have to log in first
+        val next = if (Session.currentEmail(this) != null) {
+            MainActivity::class.java
+        } else {
+            LoginActivity::class.java
+        }
+        startActivity(Intent(this, next))
         // finish so pressing back on the home screen doesn't bring the splash back
         finish()
     }

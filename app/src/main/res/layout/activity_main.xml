@@ -27,4 +27,20 @@
         android:layout_marginTop="24dp"
         android:text="View Machines" />
 
+    <!-- who is logged in, filled in by the code -->
+    <TextView
+        android:id="@+id/loggedInText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        tools:text="Logged in as test@example.com" />
+
+    <!-- logs out and goes back to the login screen -->
+    <Button
+        android:id="@+id/logoutButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log out" />
+
 </LinearLayout>
