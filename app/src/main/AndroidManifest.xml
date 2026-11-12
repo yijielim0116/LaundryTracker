@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- the camera is nice to have, the app still works on phones without one (Select Image) -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <!-- MainApp sets up the JSON store when the app starts -->
     <application
         android:name=".main.MainApp"
@@ -54,6 +59,17 @@
             android:parentActivityName=".activities.MachineListActivity"
             android:theme="@style/Theme.LaundryTracker"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- lets the camera app save a photo into my app's private images folder -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

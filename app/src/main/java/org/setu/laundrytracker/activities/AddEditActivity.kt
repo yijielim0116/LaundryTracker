@@ -14,11 +14,13 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.FileProvider
 import org.setu.laundrytracker.R
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
 import org.setu.laundrytracker.models.MachineType
+import java.io.File
 
 class AddEditActivity : AppCompatActivity() {
 
@@ -52,6 +54,24 @@ class AddEditActivity : AppCompatActivity() {
 
                 selectedImageUri = uri
                 machineImage.setImageURI(uri)
+            }
+        }
+
+    // where the camera saves the photo it's taking right now
+    private var cameraFile: File? = null
+    private var cameraUri: Uri? = null
+
+    // opens the camera app, it saves the photo straight into cameraUri and tells me if it worked
+    private val takePhoto =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { saved: Boolean ->
+            if (saved) {
+                selectedImageUri = cameraUri
+                // clear it first, otherwise setImageURI sometimes skips redrawing
+                machineImage.setImageDrawable(null)
+                machineImage.setImageURI(cameraUri)
+            } else {
+                // cancelled, so get rid of the empty file the camera never wrote to
+                cameraFile?.delete()
             }
         }
 
@@ -94,6 +114,10 @@ class AddEditActivity : AppCompatActivity() {
             imagePicker.launch(arrayOf("image/*"))
         }
 
+        findViewById<Button>(R.id.takePhotoButton).setOnClickListener {
+            openCamera()
+        }
+
         setUpCyclePicker()
 
         // show or hide the cycle picker whenever a different status is ticked
@@ -117,6 +141,12 @@ class AddEditActivity : AppCompatActivity() {
             supportActionBar?.title = "Edit Machine"
 
             loadExistingMachine(editingId!!)
+        }
+
+        // Android can close this screen while the camera is open (e.g. low memory),
+        // so put back the photo + camera file I saved in onSaveInstanceState
+        if (savedInstanceState != null) {
+            restorePhotoState(savedInstanceState)
         }
 
         saveButton.setOnClickListener {
@@ -179,6 +209,36 @@ class AddEditActivity : AppCompatActivity() {
         // show the photo this machine already has (the gallery icon is already there if it has none)
         selectedImageUri = machine.imageUri?.let { Uri.parse(it) }
         selectedImageUri?.let { machineImage.setImageURI(it) }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_IMAGE_URI, selectedImageUri?.toString())
+        outState.putString(KEY_CAMERA_PATH, cameraFile?.absolutePath)
+    }
+
+    private fun restorePhotoState(state: Bundle) {
+        state.getString(KEY_CAMERA_PATH)?.let { path ->
+            cameraFile = File(path)
+            cameraUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", File(path))
+        }
+
+        selectedImageUri = state.getString(KEY_IMAGE_URI)?.let { Uri.parse(it) }
+        selectedImageUri?.let { machineImage.setImageURI(it) }
+    }
+
+    // makes an empty file in filesDir/images and gives the camera a content:// uri for it
+    // (FileProvider turns my private file into a uri the camera app is allowed to write to)
+    private fun openCamera() {
+        val imagesDir = File(filesDir, "images")
+        imagesDir.mkdirs()
+
+        val file = File(imagesDir, "machine_${System.currentTimeMillis()}.jpg")
+        val uri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
+
+        cameraFile = file
+        cameraUri = uri
+        takePhoto.launch(uri)
     }
 
     // the cycle length only matters when someone is using the machine,
@@ -292,5 +352,9 @@ class AddEditActivity : AppCompatActivity() {
         private const val MIN_MINUTES = 10
         private const val MAX_MINUTES = 120
         private const val STEP_MINUTES = 5
+
+        // keys for saving the photo when the screen gets recreated
+        private const val KEY_IMAGE_URI = "imageUri"
+        private const val KEY_CAMERA_PATH = "cameraPath"
     }
 }
