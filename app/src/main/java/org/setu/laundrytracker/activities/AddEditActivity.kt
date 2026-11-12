@@ -1,13 +1,17 @@
 package org.setu.laundrytracker.activities
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import org.setu.laundrytracker.R
@@ -24,9 +28,32 @@ class AddEditActivity : AppCompatActivity() {
     private lateinit var statusGroup: RadioGroup
     private lateinit var cyclePicker: NumberPicker
     private lateinit var cycleSection: LinearLayout
+    private lateinit var machineImage: ImageView
+
+    // the photo I picked, null until I pick one (same as selectedImageUri in my PlacedMark lab)
+    private var selectedImageUri: Uri? = null
 
     // null = adding a new machine, otherwise it's the id of the machine I'm editing
     private var editingId: Long? = null
+
+    // opens the phone's file picker, uri comes back null if I cancel
+    private val imagePicker =
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+            if (uri != null) {
+                // ask to keep access to the photo so it still loads after the app restarts
+                try {
+                    contentResolver.takePersistableUriPermission(
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
+                } catch (_: SecurityException) {
+                    // some pickers don't allow it, the photo still shows for now
+                }
+
+                selectedImageUri = uri
+                machineImage.setImageURI(uri)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +85,14 @@ class AddEditActivity : AppCompatActivity() {
 
         cycleSection =
             findViewById(R.id.cycleSection)
+
+        machineImage =
+            findViewById(R.id.machineImage)
+
+        // only images show up in the picker
+        findViewById<Button>(R.id.selectImageButton).setOnClickListener {
+            imagePicker.launch(arrayOf("image/*"))
+        }
 
         setUpCyclePicker()
 
@@ -140,6 +175,10 @@ class AddEditActivity : AppCompatActivity() {
         cyclePicker.value = minutesToIndex(machine.cycleMinutes)
 
         updateCycleSection()
+
+        // show the photo this machine already has (the gallery icon is already there if it has none)
+        selectedImageUri = machine.imageUri?.let { Uri.parse(it) }
+        selectedImageUri?.let { machineImage.setImageURI(it) }
     }
 
     // the cycle length only matters when someone is using the machine,
@@ -211,7 +250,8 @@ class AddEditActivity : AppCompatActivity() {
                 location = location,
                 type = selectedType(),
                 status = selectedStatus(),
-                cycleMinutes = selectedCycleMinutes()
+                cycleMinutes = selectedCycleMinutes(),
+                imageUri = selectedImageUri?.toString()
             )
 
             AppData.machines.create(machine)
@@ -231,7 +271,8 @@ class AddEditActivity : AppCompatActivity() {
                 location = location,
                 type = selectedType(),
                 status = selectedStatus(),
-                cycleMinutes = selectedCycleMinutes()
+                cycleMinutes = selectedCycleMinutes(),
+                imageUri = selectedImageUri?.toString()
             )
 
             AppData.machines.update(machine)

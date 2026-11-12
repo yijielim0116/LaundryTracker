@@ -127,6 +127,31 @@
                     android:layout_gravity="center_horizontal" />
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Photo"
+                android:textStyle="bold" />
+
+            <!-- shows the machine's photo, or the gallery icon if it doesn't have one yet -->
+            <ImageView
+                android:id="@+id/machineImage"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="8dp"
+                android:background="#EEEEEE"
+                android:contentDescription="Machine photo"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_gallery" />
+
+            <!-- opens the phone's file picker to choose a photo -->
+            <Button
+                android:id="@+id/selectImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Image" />
+
             <Button
                 android:id="@+id/saveButton"
                 android:layout_width="match_parent"
