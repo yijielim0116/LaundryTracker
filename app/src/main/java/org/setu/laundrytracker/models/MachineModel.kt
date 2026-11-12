@@ -28,5 +28,8 @@ data class MachineModel(
     val type: MachineType = MachineType.WASHER,
     val status: MachineStatus = MachineStatus.AVAILABLE,
     // how long one wash/dry cycle takes in minutes, 60 if I don't pick one
-    val cycleMinutes: Int = 60
+    val cycleMinutes: Int = 60,
+    // the machine's photo as a uri string, null if it doesn't have one
+    // nullable so the machines saved before photos existed still load from machines.json
+    val imageUri: String? = null
 )
