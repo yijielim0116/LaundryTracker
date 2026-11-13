@@ -1,6 +1,6 @@
 # Laundry Tracker
 
-Laundry Tracker is a Kotlin Android app for keeping track of the laundry machines in a building, so you can check which washers and dryers are free before heading down. It was built for **Mobile Application Development (Assignment 1)** at SETU.
+Laundry Tracker is a Kotlin Android app for keeping track of the laundry machines in a building, so you can check which washers and dryers are free before heading down. It was built for **Mobile Application Development (Assignment 2)** at SETU.
 
 ## Features
 
