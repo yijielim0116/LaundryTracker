@@ -1,9 +1,11 @@
 package org.setu.laundrytracker.adapters
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.setu.laundrytracker.R
@@ -23,6 +25,9 @@ class MachineAdapter(
     // holds the views of one row so I only have to findViewById once per row
     class MachineViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
+
+        val machineImage: ImageView =
+            itemView.findViewById(R.id.machineImage)
 
         val nameText: TextView =
             itemView.findViewById(R.id.nameText)
@@ -72,6 +77,16 @@ class MachineAdapter(
 
         holder.statusText.text =
             statusLine(machine)
+
+        // the machine's photo, or the gallery icon if it doesn't have one
+        // (rows get reused, so I always have to set something or an old photo would stay)
+        val imageUri = machine.imageUri
+
+        if (imageUri != null) {
+            holder.machineImage.setImageURI(Uri.parse(imageUri))
+        } else {
+            holder.machineImage.setImageResource(android.R.drawable.ic_menu_gallery)
+        }
 
         holder.editButton.setOnClickListener {
             onEdit(machine)

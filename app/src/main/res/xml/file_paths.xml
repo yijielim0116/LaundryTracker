@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- the folders FileProvider is allowed to share, the camera saves photos into filesDir/images -->
+<paths>
+    <files-path
+        name="machine_images"
+        path="images/" />
+</paths>

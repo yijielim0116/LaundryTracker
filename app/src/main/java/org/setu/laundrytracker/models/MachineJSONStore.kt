@@ -44,7 +44,8 @@ class MachineJSONStore(private val file: File) : MachineStore {
                 location = machine.location,
                 type = machine.type,
                 status = machine.status,
-                cycleMinutes = machine.cycleMinutes
+                cycleMinutes = machine.cycleMinutes,
+                imageUri = machine.imageUri
             )
             save()
             true

@@ -94,4 +94,31 @@ class MachineJSONStoreTest {
         file.writeText("this is not json")
         assertEquals(0, reopen().findAll().size)
     }
+
+    @Test
+    fun photoIsKeptAfterReopening() {
+        val store = reopen()
+        store.create(MachineModel(name = "Washer 1", imageUri = "content://test/photo1.jpg"))
+
+        assertEquals("content://test/photo1.jpg", reopen().findOne(1L)?.imageUri)
+    }
+
+    @Test
+    fun updateChangesThePhoto() {
+        val store = reopen()
+        store.create(MachineModel(name = "Washer 1", imageUri = "content://test/old.jpg"))
+        store.update(MachineModel(id = 1L, name = "Washer 1", imageUri = "content://test/new.jpg"))
+
+        assertEquals("content://test/new.jpg", reopen().findOne(1L)?.imageUri)
+    }
+
+    @Test
+    fun machinesSavedBeforePhotosExistedStillLoad() {
+        // what machines.json looked like before I added imageUri
+        file.writeText("""[{"id":1,"name":"Washer 1","location":"Block A","type":"WASHER","status":"AVAILABLE","cycleMinutes":60}]""")
+
+        val machine = reopen().findOne(1L)
+        assertEquals("Washer 1", machine?.name)
+        assertNull(machine?.imageUri)
+    }
 }
