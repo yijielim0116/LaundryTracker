@@ -1,6 +1,6 @@
 package org.setu.laundrytracker.models
 
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -13,7 +13,10 @@ import java.util.concurrent.atomic.AtomicLong
 // the difference is every change gets written to the file
 class MachineJSONStore(private val file: File) : MachineStore {
 
-    private val gson = Gson()
+    // pretty printing so the json file is easy to read if I open it (same as my PlacedMark lab)
+    private val gson = GsonBuilder()
+        .setPrettyPrinting()
+        .create()
 
     // tells Gson the JSON is a list of MachineModel (not just one machine)
     private val listType = object : TypeToken<ArrayList<MachineModel>>() {}.type
@@ -71,6 +74,8 @@ class MachineJSONStore(private val file: File) : MachineStore {
 
     // turns the whole list into JSON text and writes it over the file
     private fun save() {
+        // make sure the folder exists first, like the lab does
+        file.parentFile?.mkdirs()
         file.writeText(gson.toJson(machines, listType))
     }
 

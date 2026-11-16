@@ -1,6 +1,6 @@
 package org.setu.laundrytracker.models
 
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -11,7 +11,10 @@ import java.util.concurrent.atomic.AtomicLong
  */
 class UserJSONStore(private val file: File) : UserStore {
 
-    private val gson = Gson()
+    // pretty printing so the json file is easy to read if I open it (same as my PlacedMark lab)
+    private val gson = GsonBuilder()
+        .setPrettyPrinting()
+        .create()
 
     // tells Gson the JSON is a list of UserModel
     private val listType = object : TypeToken<ArrayList<UserModel>>() {}.type
@@ -39,6 +42,8 @@ class UserJSONStore(private val file: File) : UserStore {
     }
 
     private fun save() {
+        // make sure the folder exists first, like the lab does
+        file.parentFile?.mkdirs()
         file.writeText(gson.toJson(users, listType))
     }
 
