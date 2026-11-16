@@ -121,4 +121,21 @@ class MachineJSONStoreTest {
         assertEquals("Washer 1", machine?.name)
         assertNull(machine?.imageUri)
     }
+
+    @Test
+    fun jsonFileIsPrettyPrinted() {
+        reopen().create(MachineModel(name = "Washer 1"))
+
+        // pretty printing puts each field on its own indented line
+        assertTrue(file.readText().contains("\n  "))
+    }
+
+    @Test
+    fun savesIntoAFolderThatDoesNotExistYet() {
+        val nested = File(tempFolder.root, "data/laundry/machines.json")
+        MachineJSONStore(nested).create(MachineModel(name = "Washer 1"))
+
+        assertTrue(nested.exists())
+        assertEquals("Washer 1", MachineJSONStore(nested).findOne(1L)?.name)
+    }
 }

@@ -1,9 +1,7 @@
 package org.setu.laundrytracker.main
 
 import android.app.Application
-import org.setu.laundrytracker.models.MachineJSONStore
-import org.setu.laundrytracker.models.UserJSONStore
-import java.io.File
+import timber.log.Timber
 
 // runs once when the app starts, before any screen opens (registered in the manifest)
 class MainApp : Application() {
@@ -11,11 +9,17 @@ class MainApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // filesDir is the app's own private folder on the phone,
-        // so machines.json lives there and nothing else can mess with it
-        AppData.machines = MachineJSONStore(File(filesDir, "machines.json"))
+        // plant Timber once for the whole app so every Timber.d() shows up in Logcat
+        // (the lab does this in MainActivity, MainApp runs before every screen so it's here)
+        // the check stops a second tree being added, which would double every log
+        if (Timber.treeCount == 0) {
+            Timber.plant(Timber.DebugTree())
+        }
+        Timber.d("MainApp created")
 
-        // the accounts get their own file
-        AppData.users = UserJSONStore(File(filesDir, "users.json"))
+        // the lab calls this in MainActivity, but my app opens Splash and Login before Home
+        // (and Login already needs AppData.users), so I load the stores here instead.
+        // MainApp always runs first, even when Android reopens the app straight on another screen
+        AppData.initialize(this)
     }
 }

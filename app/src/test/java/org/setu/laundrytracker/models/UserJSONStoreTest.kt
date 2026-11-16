@@ -96,4 +96,13 @@ class UserJSONStoreTest {
 
         assertEquals(0, reopen().findAll().size)
     }
+
+    @Test
+    fun savesIntoAFolderThatDoesNotExistYet() {
+        val nested = File(tempFolder.root, "data/users.json")
+        UserJSONStore(nested).create(newUser("amy@example.com", "secret1"))
+
+        assertTrue(nested.exists())
+        assertNotNull(UserJSONStore(nested).findByEmail("amy@example.com"))
+    }
 }

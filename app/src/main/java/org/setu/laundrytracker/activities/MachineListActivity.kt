@@ -21,6 +21,7 @@ import org.setu.laundrytracker.adapters.MachineAdapter
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
+import timber.log.Timber
 
 // Machine list screen - shows all the machines with search, the status filter and the menu
 // extends DrawerActivity so it gets the navigation drawer too
@@ -138,6 +139,7 @@ class MachineListActivity : DrawerActivity() {
     // empties the search box and sets the drop-down back to All,
     // both of these redraw the list by themselves
     private fun clearFilters() {
+        Timber.d("Clear filters pressed")
         searchInput.setText("")
         statusFilter.setSelection(0)
     }
@@ -177,6 +179,7 @@ class MachineListActivity : DrawerActivity() {
         }
 
         adapter.updateMachines(machines)
+        Timber.d("Showing ${machines.size} of ${allMachines.size} machines (search=\"$search\", status=$status)")
 
         // nothing to show, the message depends on if there's no machines at all or just no matches
         if (machines.isEmpty()) {
@@ -190,6 +193,7 @@ class MachineListActivity : DrawerActivity() {
 
     // Edit pressed on a row: open the form and send the machine's id so it knows which one to edit
     private fun editMachine(machine: MachineModel) {
+        Timber.d("Edit pressed, machine id=${machine.id}")
 
         val intent =
             Intent(this, AddEditActivity::class.java)
@@ -201,6 +205,7 @@ class MachineListActivity : DrawerActivity() {
 
     // Delete pressed on a row: remove it from the store then redraw the list
     private fun deleteMachine(machine: MachineModel) {
+        Timber.d("Delete pressed, machine id=${machine.id}")
 
         AppData.machines.delete(machine.id)
 

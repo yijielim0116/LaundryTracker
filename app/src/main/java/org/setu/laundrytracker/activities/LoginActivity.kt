@@ -13,6 +13,7 @@ import org.setu.laundrytracker.R
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.main.Session
 import org.setu.laundrytracker.models.Passwords
+import timber.log.Timber
 
 // Login screen - shows after the splash when nobody is logged in
 class LoginActivity : AppCompatActivity() {
@@ -43,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.goToSignupButton).setOnClickListener {
+            Timber.d("Sign up link pressed")
             startActivity(Intent(this, SignupActivity::class.java))
         }
     }
@@ -55,11 +57,13 @@ class LoginActivity : AppCompatActivity() {
             passwordInput.text.toString()
 
         if (email.isEmpty()) {
+            Timber.d("Login blocked: email is empty")
             emailInput.error = "Email is required"
             return
         }
 
         if (password.isEmpty()) {
+            Timber.d("Login blocked: password is empty")
             passwordInput.error = "Password is required"
             return
         }
@@ -68,6 +72,8 @@ class LoginActivity : AppCompatActivity() {
 
         // same message for a wrong email or a wrong password, so nobody can guess which emails have accounts
         if (user == null || !Passwords.matches(password, user)) {
+            // never log the password, just that it failed
+            Timber.d("Login failed for $email")
             Toast.makeText(
                 this,
                 "Wrong email or password",
@@ -77,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         Session.login(this, user.email)
+        Timber.d("Login ok for ${user.email}")
 
         // CLEAR_TASK so Back on the home screen closes the app instead of coming back to login
         val intent = Intent(this, MainActivity::class.java)

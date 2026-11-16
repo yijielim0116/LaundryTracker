@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import org.setu.laundrytracker.R
 import org.setu.laundrytracker.main.Session
+import timber.log.Timber
 
 /**
  * The screens with the navigation drawer (Home and Machines) extend this,
@@ -90,6 +91,8 @@ abstract class DrawerActivity : AppCompatActivity() {
     }
 
     private fun onDrawerItemSelected(itemId: Int) {
+        Timber.d("Drawer item tapped: ${resources.getResourceEntryName(itemId)}")
+
         // tapping the screen I'm already on just closes the drawer
         if (itemId == currentNavItem) {
             return
@@ -128,6 +131,7 @@ abstract class DrawerActivity : AppCompatActivity() {
 
     // moved here from MainActivity so Log out works from any screen with the drawer
     private fun logOut() {
+        Timber.d("Logging out ${Session.currentEmail(this)}")
         Session.logout(this)
 
         // CLEAR_TASK so Back on the login screen can't get back into the app

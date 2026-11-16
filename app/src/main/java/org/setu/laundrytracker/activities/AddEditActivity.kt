@@ -21,6 +21,7 @@ import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
 import org.setu.laundrytracker.models.MachineType
 import java.io.File
+import timber.log.Timber
 
 class AddEditActivity : AppCompatActivity() {
 
@@ -50,10 +51,14 @@ class AddEditActivity : AppCompatActivity() {
                     )
                 } catch (_: SecurityException) {
                     // some pickers don't allow it, the photo still shows for now
+                    Timber.w("Could not keep access to $uri")
                 }
 
+                Timber.d("Picked image $uri")
                 selectedImageUri = uri
                 machineImage.setImageURI(uri)
+            } else {
+                Timber.d("Image picker cancelled")
             }
         }
 
@@ -65,12 +70,14 @@ class AddEditActivity : AppCompatActivity() {
     private val takePhoto =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { saved: Boolean ->
             if (saved) {
+                Timber.d("Photo taken: $cameraUri")
                 selectedImageUri = cameraUri
                 // clear it first, otherwise setImageURI sometimes skips redrawing
                 machineImage.setImageDrawable(null)
                 machineImage.setImageURI(cameraUri)
             } else {
                 // cancelled, so get rid of the empty file the camera never wrote to
+                Timber.d("Camera cancelled")
                 cameraFile?.delete()
             }
         }
@@ -138,9 +145,13 @@ class AddEditActivity : AppCompatActivity() {
 
         if (editingId != null) {
 
+            Timber.d("Form opened to edit machine id=$editingId")
+
             supportActionBar?.title = "Edit Machine"
 
             loadExistingMachine(editingId!!)
+        } else {
+            Timber.d("Form opened to add a new machine")
         }
 
         // Android can close this screen while the camera is open (e.g. low memory),
@@ -298,6 +309,7 @@ class AddEditActivity : AppCompatActivity() {
             locationInput.text.toString().trim()
 
         if (name.isEmpty()) {
+            Timber.d("Save blocked: name is empty")
             nameInput.error = "Name is required"
             return
         }
