@@ -46,7 +46,7 @@
   <line x1="1050" y1="257" x2="1300" y2="257" stroke="#333" stroke-width="1.5"/>
   <text x="1175.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">MainApp</text>
   <text x="1060" y="277" font-size="12">+ onCreate()</text>
-  <text x="1060" y="294" font-size="11" fill="#555">« creates both JSON stores »</text>
+  <text x="1060" y="294" font-size="11" fill="#555">« plants Timber, calls initialize() »</text>
   <rect x="30" y="511" width="400" height="178" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
   <line x1="30" y1="555" x2="430" y2="555" stroke="#333" stroke-width="1.5"/>
   <line x1="30" y1="605" x2="430" y2="605" stroke="#333" stroke-width="1.5"/>
@@ -58,13 +58,15 @@
   <text x="40" y="642" font-size="12">+ logout(context: Context)</text>
   <text x="40" y="659" font-size="12">+ currentEmail(context: Context): String?</text>
   <text x="40" y="676" font-size="11" fill="#555">« saved in SharedPreferences »</text>
-  <rect x="560" y="511" width="340" height="106" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="560" y1="555" x2="900" y2="555" stroke="#333" stroke-width="1.5"/>
-  <line x1="560" y1="605" x2="900" y2="605" stroke="#333" stroke-width="1.5"/>
-  <text x="730.0" y="528" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
-  <text x="730.0" y="546" font-size="15" font-weight="bold" text-anchor="middle">AppData</text>
-  <text x="570" y="575" font-size="12">+ machines: MachineStore  (lateinit)</text>
-  <text x="570" y="592" font-size="12">+ users: UserStore  (lateinit)</text>
+  <rect x="560" y="511" width="360" height="144" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="560" y1="555" x2="920" y2="555" stroke="#333" stroke-width="1.5"/>
+  <line x1="560" y1="605" x2="920" y2="605" stroke="#333" stroke-width="1.5"/>
+  <text x="740.0" y="528" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
+  <text x="740.0" y="546" font-size="15" font-weight="bold" text-anchor="middle">AppData</text>
+  <text x="570" y="575" font-size="12">+ machines: MachineStore  (lateinit, private set)</text>
+  <text x="570" y="592" font-size="12">+ users: UserStore  (lateinit, private set)</text>
+  <text x="570" y="625" font-size="12">+ initialize(context: Context)</text>
+  <text x="570" y="642" font-size="11" fill="#555">« creates the JSON stores once »</text>
   <rect x="30" y="799" width="400" height="157" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
   <line x1="30" y1="843" x2="430" y2="843" stroke="#333" stroke-width="1.5"/>
   <line x1="30" y1="855" x2="430" y2="855" stroke="#333" stroke-width="1.5"/>
@@ -88,7 +90,7 @@
   <line x1="1000" y1="930" x2="1410" y2="930" stroke="#333" stroke-width="1.5"/>
   <text x="1205.0" y="819" font-size="15" font-weight="bold" text-anchor="middle">UserJSONStore</text>
   <text x="1010" y="849" font-size="12">- file: File  (users.json)</text>
-  <text x="1010" y="866" font-size="12">- gson: Gson</text>
+  <text x="1010" y="866" font-size="12">- gson: Gson  (pretty printing)</text>
   <text x="1010" y="883" font-size="12">- listType: Type</text>
   <text x="1010" y="900" font-size="12">- users: ArrayList&lt;UserModel&gt;</text>
   <text x="1010" y="917" font-size="12">- lastId: AtomicLong</text>
@@ -118,18 +120,18 @@
   <text x="375.0" y="258" font-size="11" fill="#555" text-anchor="middle">« opens »</text>
   <path d="M 180.0 362 L 180.0 441" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
   <path d="M 590.0 396 L 590.0 441" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
-  <path d="M 14 441 L 730.0 441" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
+  <path d="M 14 441 L 740.0 441" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
   <path d="M 230.0 441 L 230.0 511" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <path d="M 730.0 441 L 730.0 511" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <path d="M 740.0 441 L 740.0 511" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
   <path d="M 14 441 L 14 824 L 30 824" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="738.0" y="433" font-size="11" fill="#555" text-anchor="start">« uses »</text>
-  <path d="M 1090 307 L 1090 561 L 900 561" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="910" y="554" font-size="11" fill="#555" text-anchor="start">« sets users »</text>
-  <path d="M 1260 307 L 1260 799" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="1254" y="789" font-size="11" fill="#555" text-anchor="end">« creates »</text>
-  <path d="M 730.0 617 L 730.0 799" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
-  <text x="738.0" y="791" font-size="11" fill="#555" text-anchor="start">1</text>
-  <text x="738.0" y="635" font-size="11" fill="#555" text-anchor="start">users</text>
+  <text x="748.0" y="433" font-size="11" fill="#555" text-anchor="start">« uses »</text>
+  <path d="M 1175.0 307 L 1175.0 561 L 920 561" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="930" y="554" font-size="11" fill="#555" text-anchor="start">« initialize() »</text>
+  <path d="M 920 611 L 1205.0 611 L 1205.0 799" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="1213.0" y="789" font-size="11" fill="#555" text-anchor="start">« creates »</text>
+  <path d="M 740.0 655 L 740.0 799" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
+  <text x="748.0" y="791" font-size="11" fill="#555" text-anchor="start">1</text>
+  <text x="748.0" y="673" font-size="11" fill="#555" text-anchor="start">users</text>
   <path d="M 1000 859 L 900 859" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#hollowTriangle)"/>
   <text x="950.0" y="852" font-size="11" fill="#555" text-anchor="middle">« implements »</text>
   <path d="M 730.0 922 L 730.0 1121" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>

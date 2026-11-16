@@ -16,7 +16,8 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 - **Back navigation** between Home → Machines → Add/Edit, and an up arrow on the Add/Edit form
 - **Machine photos**: pick a photo from the phone or take one with the camera; it shows on the form and as a thumbnail in the list
 - **Data validation**: a machine must have a name; sign up checks the email, password length and that both passwords match
-- **Saved to JSON**: machines are kept in `machines.json` and are still there after the app is closed
+- **Saved to JSON**: machines and accounts are kept in pretty-printed `machines.json` and `users.json` and are still there after the app is closed
+- **Logging with Timber**: the stores and the main actions on each screen write to Logcat (passwords are never logged)
 - **Unit tests** for the machine stores and the user store
 
 ## Screens
@@ -39,7 +40,7 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 - The screens extend `AppCompatActivity`. Home and Machines extend it through `DrawerActivity`, an abstract class that sets up the navigation drawer once for both: the ☰ button, the drawer items, About and Log out. Each screen sets `currentNavItem` so its item is highlighted. `SplashActivity` is the launcher screen. After 2 seconds it opens Home if someone is logged in, or Login if not, then finishes so Back doesn't return to it. Home opens the list, and the list opens the form (sending the machine's id when editing).
 - The machines list uses a `RecyclerView` with `MachineAdapter`, which turns each `MachineModel` into a row from `item_machine.xml`.
 - Every screen uses the same store through `AppData.machines`, typed as the `MachineStore` interface.
-- `MainApp` (an `Application` class) runs once when the app starts and sets `AppData.machines` to a `MachineJSONStore` and `AppData.users` to a `UserJSONStore`.
+- `MainApp` (an `Application` class) runs once when the app starts. It plants Timber and calls `AppData.initialize(context)`, which creates a `MachineJSONStore` and a `UserJSONStore` once. `AppData`'s stores have a `private set`, so only `initialize()` can set them (the same pattern as the PlacedMark lab).
 - `MachineJSONStore` and `MachineMemStore` both implement `MachineStore`. The JSON store saves to a file with Gson; the memory store is used in the unit tests.
 - `AddEditActivity` picks a photo with the `OpenDocument` contract (keeping access with `takePersistableUriPermission`) or takes one with the `TakePicture` contract through a `FileProvider`. The photo's uri is saved in `MachineModel.imageUri`.
 
@@ -69,7 +70,7 @@ app/src/main/java/org/setu/laundrytracker/
 
 ## Persistence
 
-Machines are saved by `MachineJSONStore` to `machines.json` in the app's private storage (`/data/data/org.setu.laundrytracker/files/`). The whole list is written after every add, edit or delete and read back when the app starts. New ids carry on from the highest saved id, so an id is never reused.
+Machines are saved by `MachineJSONStore` to `machines.json` in the app's private storage (`/data/data/org.setu.laundrytracker/files/`). The whole list is written after every add, edit or delete and read back when the app starts. New ids carry on from the highest saved id, so an id is never reused. The JSON is pretty-printed with `GsonBuilder().setPrettyPrinting()` so it's easy to read, the folder is created before saving if needed, and a broken file starts an empty list instead of crashing.
 
 Accounts are saved the same way by `UserJSONStore` to `users.json`. Each user is stored as an email, a password hash and a salt.
 
@@ -78,6 +79,18 @@ Photos picked from the phone are saved as their `content://` uri. Photos taken w
 Who is logged in is kept in SharedPreferences (`shared_prefs/session.xml`).
 
 To see the files, open **View → Tool Windows → Device Explorer** in Android Studio and go to `data/data/org.setu.laundrytracker/`.
+
+## Logging
+
+The app logs with [Timber](https://github.com/JakeWharton/timber), planted once in `MainApp`. Open **Logcat** in Android Studio and filter by `org.setu.laundrytracker` to see messages like:
+
+```
+D/MachineJSONStore: load: 3 machines from machines.json
+D/LoginActivity: Login ok for test@example.com
+D/MachineJSONStore: create: id=5, name=Washer 4
+```
+
+Logins and sign ups only log the email and whether it worked. Passwords, hashes and salts are never logged.
 
 ## Running the app
 
@@ -97,10 +110,11 @@ Unit tests are in `app/src/test/java/org/setu/laundrytracker/models/`:
 - `MachineMemStoreTest`: create, update, delete and cycle length on the in-memory store
 - `MachineJSONStoreTest`: saves to a temporary file, then reopens it to check machines, edits, deletes, ids and photos are kept, and that machines saved before photos existed still load
 - `UserJSONStoreTest`: users are kept after reopening, email lookup ignores capitals, the password isn't saved as plain text, right/wrong passwords, and a broken file doesn't crash
+- Both JSON store tests also check the file is pretty-printed and that saving into a folder that doesn't exist yet works
 
 ## Built with
 
-Kotlin, AndroidX AppCompat, Material Components (NavigationView), DrawerLayout, RecyclerView, Activity Result APIs, FileProvider, Gson, JUnit.
+Kotlin, AndroidX AppCompat, Material Components (NavigationView), DrawerLayout, RecyclerView, Activity Result APIs, FileProvider, Gson, Timber, JUnit.
 
 ## Development
 
