@@ -6,13 +6,14 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 
 - **Splash screen** with the app logo and name for 2 seconds when the app opens
 - **Sign up and log in**: accounts are saved with salted SHA-256 password hashes, never the real password
-- **Stays logged in** between launches; the home screen shows who is logged in and has a **Log out** button
+- **Stays logged in** between launches; the home screen shows who is logged in
+- **Navigation drawer** on Home and Machines (tap ☰ or swipe from the left) with Home, Machines, Add machine, About and Log out, and who is logged in at the top
 - **Home screen** with a View Machines button
 - **Add, list, edit and delete machines** (name, location, washer/dryer, status)
 - **Search** machines by name or location, and **filter** by status with a drop-down
 - **Cycle length** picked with a NumberPicker (10–120 minutes), shown only when a machine is *In use*
-- **Toolbar menu** with Add, Clear filters and About
-- **Up / Back navigation** between Home → Machines → Add/Edit
+- **Toolbar menu** on Machines with Add and Clear filters
+- **Back navigation** between Home → Machines → Add/Edit, and an up arrow on the Add/Edit form
 - **Machine photos**: pick a photo from the phone or take one with the camera; it shows on the form and as a thumbnail in the list
 - **Data validation**: a machine must have a name; sign up checks the email, password length and that both passwords match
 - **Saved to JSON**: machines are kept in `machines.json` and are still there after the app is closed
@@ -35,7 +36,7 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 
 ([SVG version](docs/laundrytracker-uml.svg))
 
-- The screens extend `AppCompatActivity`. `SplashActivity` is the launcher screen. After 2 seconds it opens Home if someone is logged in, or Login if not, then finishes so Back doesn't return to it. Home opens the list, and the list opens the form (sending the machine's id when editing).
+- The screens extend `AppCompatActivity`. Home and Machines extend it through `DrawerActivity`, an abstract class that sets up the navigation drawer once for both: the ☰ button, the drawer items, About and Log out. Each screen sets `currentNavItem` so its item is highlighted. `SplashActivity` is the launcher screen. After 2 seconds it opens Home if someone is logged in, or Login if not, then finishes so Back doesn't return to it. Home opens the list, and the list opens the form (sending the machine's id when editing).
 - The machines list uses a `RecyclerView` with `MachineAdapter`, which turns each `MachineModel` into a row from `item_machine.xml`.
 - Every screen uses the same store through `AppData.machines`, typed as the `MachineStore` interface.
 - `MainApp` (an `Application` class) runs once when the app starts and sets `AppData.machines` to a `MachineJSONStore` and `AppData.users` to a `UserJSONStore`.
@@ -57,8 +58,8 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 
 ```
 app/src/main/java/org/setu/laundrytracker/
-├── activities/   SplashActivity, LoginActivity, SignupActivity, MainActivity,
-│                 MachineListActivity, AddEditActivity
+├── activities/   SplashActivity, LoginActivity, SignupActivity, DrawerActivity,
+│                 MainActivity, MachineListActivity, AddEditActivity
 ├── adapters/     MachineAdapter
 ├── main/         MainApp, AppData, Session
 └── models/       MachineModel (+ MachineType, MachineStatus), MachineStore,
@@ -99,7 +100,7 @@ Unit tests are in `app/src/test/java/org/setu/laundrytracker/models/`:
 
 ## Built with
 
-Kotlin, AndroidX AppCompat, RecyclerView, Activity Result APIs, FileProvider, Gson, JUnit.
+Kotlin, AndroidX AppCompat, Material Components (NavigationView), DrawerLayout, RecyclerView, Activity Result APIs, FileProvider, Gson, JUnit.
 
 ## Development
 

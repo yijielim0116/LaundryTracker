@@ -1,5 +1,5 @@
-<svg viewBox="0 0 1580 1897" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
-  <rect width="1580" height="1897" fill="#ffffff"/>
+<svg viewBox="0 0 1580 2183" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1580" height="2183" fill="#ffffff"/>
   <defs>
     <marker id="openArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
       <path d="M 0 0 L 9 5 L 0 10" fill="none" stroke="#333" stroke-width="1.2"/>
@@ -21,218 +21,234 @@
   <text x="1425.0" y="77" font-size="12" font-style="italic" text-anchor="middle">« Android »</text>
   <text x="1425.0" y="95" font-size="15" font-weight="bold" text-anchor="middle">Application</text>
   <text x="1290" y="136" font-size="11" fill="#555">(from the Android framework)</text>
-  <rect x="30" y="215" width="250" height="109" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="245" x2="280" y2="245" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="257" x2="280" y2="257" stroke="#333" stroke-width="1.5"/>
-  <text x="155.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">MainActivity</text>
-  <text x="40" y="277" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
-  <text x="40" y="294" font-size="12">- logOut()</text>
-  <text x="40" y="311" font-size="11" fill="#555">« home screen »</text>
-  <rect x="350" y="215" width="450" height="351" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="350" y1="245" x2="800" y2="245" stroke="#333" stroke-width="1.5"/>
-  <line x1="350" y1="346" x2="800" y2="346" stroke="#333" stroke-width="1.5"/>
-  <text x="575.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">MachineListActivity</text>
-  <text x="360" y="265" font-size="12">- recyclerView: RecyclerView</text>
-  <text x="360" y="282" font-size="12">- adapter: MachineAdapter</text>
-  <text x="360" y="299" font-size="12">- emptyText: TextView</text>
-  <text x="360" y="316" font-size="12">- searchInput: EditText</text>
-  <text x="360" y="333" font-size="12">- statusFilter: Spinner</text>
-  <text x="360" y="366" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
-  <text x="360" y="383" font-size="12">+ onResume()</text>
-  <text x="360" y="400" font-size="12">+ onSupportNavigateUp(): Boolean</text>
-  <text x="360" y="417" font-size="12">+ onCreateOptionsMenu(menu: Menu): Boolean</text>
-  <text x="360" y="434" font-size="12">+ onOptionsItemSelected(item: MenuItem): Boolean</text>
-  <text x="360" y="451" font-size="12">- openAddMachine()</text>
-  <text x="360" y="468" font-size="12">- clearFilters()</text>
-  <text x="360" y="485" font-size="12">- showAbout()</text>
-  <text x="360" y="502" font-size="12">- displayMachines()</text>
-  <text x="360" y="519" font-size="12">- editMachine(machine: MachineModel)</text>
-  <text x="360" y="536" font-size="12">- deleteMachine(machine: MachineModel)</text>
-  <text x="360" y="553" font-size="12">- selectedStatus(): MachineStatus?</text>
-  <rect x="880" y="215" width="370" height="555" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="880" y1="245" x2="1250" y2="245" stroke="#333" stroke-width="1.5"/>
-  <line x1="880" y1="533" x2="1250" y2="533" stroke="#333" stroke-width="1.5"/>
-  <text x="1065.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">AddEditActivity</text>
-  <text x="890" y="265" font-size="12">- nameInput: EditText</text>
-  <text x="890" y="282" font-size="12">- locationInput: EditText</text>
-  <text x="890" y="299" font-size="12">- typeGroup: RadioGroup</text>
-  <text x="890" y="316" font-size="12">- statusGroup: RadioGroup</text>
-  <text x="890" y="333" font-size="12">- cyclePicker: NumberPicker</text>
-  <text x="890" y="350" font-size="12">- cycleSection: LinearLayout</text>
-  <text x="890" y="367" font-size="12">- machineImage: ImageView</text>
-  <text x="890" y="384" font-size="12">- selectedImageUri: Uri?</text>
-  <text x="890" y="401" font-size="12">- cameraFile: File?</text>
-  <text x="890" y="418" font-size="12">- cameraUri: Uri?</text>
-  <text x="890" y="435" font-size="12">- imagePicker: launcher (OpenDocument)</text>
-  <text x="890" y="452" font-size="12">- takePhoto: launcher (TakePicture)</text>
-  <text x="890" y="469" font-size="12">- editingId: Long?</text>
-  <text x="890" y="486" font-size="12">- MIN_MINUTES: Int = 10</text>
-  <text x="890" y="503" font-size="12">- MAX_MINUTES: Int = 120</text>
-  <text x="890" y="520" font-size="12">- STEP_MINUTES: Int = 5</text>
-  <text x="890" y="553" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
-  <text x="890" y="570" font-size="12">+ onSupportNavigateUp(): Boolean</text>
-  <text x="890" y="587" font-size="12">+ onSaveInstanceState(outState: Bundle)</text>
-  <text x="890" y="604" font-size="12">- restorePhotoState(state: Bundle)</text>
-  <text x="890" y="621" font-size="12">- openCamera()</text>
-  <text x="890" y="638" font-size="12">- loadExistingMachine(id: Long)</text>
-  <text x="890" y="655" font-size="12">- updateCycleSection()</text>
-  <text x="890" y="672" font-size="12">- setUpCyclePicker()</text>
-  <text x="890" y="689" font-size="12">- minutesToIndex(minutes: Int): Int</text>
-  <text x="890" y="706" font-size="12">- selectedCycleMinutes(): Int</text>
-  <text x="890" y="723" font-size="12">- selectedType(): MachineType</text>
-  <text x="890" y="740" font-size="12">- selectedStatus(): MachineStatus</text>
-  <text x="890" y="757" font-size="12">- saveMachine()</text>
-  <rect x="30" y="414" width="250" height="181" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="444" x2="280" y2="444" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="511" x2="280" y2="511" stroke="#333" stroke-width="1.5"/>
-  <text x="155.0" y="434" font-size="15" font-weight="bold" text-anchor="middle">SplashActivity</text>
-  <text x="40" y="464" font-size="12">- handler: Handler</text>
-  <text x="40" y="481" font-size="12">- goToHome: Runnable</text>
-  <text x="40" y="498" font-size="12">- SPLASH_TIME_MS: Long = 2000</text>
-  <text x="40" y="531" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
-  <text x="40" y="548" font-size="12">+ onDestroy()</text>
-  <text x="40" y="565" font-size="11" fill="#555">« launcher, first screen »</text>
-  <text x="40" y="582" font-size="11" fill="#555">« opens Login if nobody is logged in »</text>
-  <rect x="1300" y="215" width="250" height="109" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="1300" y1="245" x2="1550" y2="245" stroke="#333" stroke-width="1.5"/>
-  <line x1="1300" y1="257" x2="1550" y2="257" stroke="#333" stroke-width="1.5"/>
-  <text x="1425.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">MainApp</text>
-  <text x="1310" y="277" font-size="12">+ onCreate()</text>
-  <text x="1310" y="294" font-size="11" fill="#555">« runs once when the app starts »</text>
-  <text x="1310" y="311" font-size="11" fill="#555">« also creates the user store »</text>
-  <rect x="350" y="880" width="410" height="246" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="350" y1="924" x2="760" y2="924" stroke="#333" stroke-width="1.5"/>
-  <line x1="350" y1="991" x2="760" y2="991" stroke="#333" stroke-width="1.5"/>
-  <text x="555.0" y="897" font-size="12" font-style="italic" text-anchor="middle">« RecyclerView.Adapter »</text>
-  <text x="555.0" y="915" font-size="15" font-weight="bold" text-anchor="middle">MachineAdapter</text>
-  <text x="360" y="944" font-size="12">- machines: List&lt;MachineModel&gt;</text>
-  <text x="360" y="961" font-size="12">- onEdit: (MachineModel) -&gt; Unit</text>
-  <text x="360" y="978" font-size="12">- onDelete: (MachineModel) -&gt; Unit</text>
-  <text x="360" y="1011" font-size="12">+ onCreateViewHolder(parent, viewType): MachineViewHolder</text>
-  <text x="360" y="1028" font-size="12">+ onBindViewHolder(holder, position)</text>
-  <text x="360" y="1045" font-size="12">+ getItemCount(): Int</text>
-  <text x="360" y="1062" font-size="12">+ updateMachines(newMachines: List&lt;MachineModel&gt;)</text>
-  <text x="360" y="1079" font-size="12">- statusLine(machine: MachineModel): String</text>
-  <text x="360" y="1096" font-size="12">- typeLabel(type: MachineType): String</text>
-  <text x="360" y="1113" font-size="12">- statusLabel(status: MachineStatus): String</text>
-  <rect x="880" y="880" width="300" height="106" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="880" y1="924" x2="1180" y2="924" stroke="#333" stroke-width="1.5"/>
-  <line x1="880" y1="974" x2="1180" y2="974" stroke="#333" stroke-width="1.5"/>
-  <text x="1030.0" y="897" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
-  <text x="1030.0" y="915" font-size="15" font-weight="bold" text-anchor="middle">AppData</text>
-  <text x="890" y="944" font-size="12">+ machines: MachineStore  (lateinit)</text>
-  <text x="890" y="961" font-size="12">+ users: UserStore  (lateinit, see Accounts)</text>
-  <rect x="30" y="1236" width="400" height="198" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="1266" x2="430" y2="1266" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="1316" x2="430" y2="1316" stroke="#333" stroke-width="1.5"/>
-  <text x="230.0" y="1256" font-size="15" font-weight="bold" text-anchor="middle">MachineMemStore</text>
-  <text x="40" y="1286" font-size="12">- machines: ArrayList&lt;MachineModel&gt;</text>
-  <text x="40" y="1303" font-size="12">- lastId: AtomicLong</text>
-  <text x="40" y="1336" font-size="12">+ findAll(): List&lt;MachineModel&gt;</text>
-  <text x="40" y="1353" font-size="12">+ create(machine: MachineModel)</text>
-  <text x="40" y="1370" font-size="12">+ update(machine: MachineModel): Boolean</text>
-  <text x="40" y="1387" font-size="12">+ delete(id: Long): Boolean</text>
-  <text x="40" y="1404" font-size="12">+ findOne(id: Long): MachineModel?</text>
-  <text x="40" y="1421" font-size="11" fill="#555">« in memory, used by the unit tests »</text>
-  <rect x="570" y="1236" width="400" height="157" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="570" y1="1280" x2="970" y2="1280" stroke="#333" stroke-width="1.5"/>
-  <line x1="570" y1="1292" x2="970" y2="1292" stroke="#333" stroke-width="1.5"/>
-  <text x="770.0" y="1253" font-size="12" font-style="italic" text-anchor="middle">« interface »</text>
-  <text x="770.0" y="1271" font-size="15" font-weight="bold" text-anchor="middle">MachineStore</text>
-  <text x="580" y="1312" font-size="12">+ findAll(): List&lt;MachineModel&gt;</text>
-  <text x="580" y="1329" font-size="12">+ create(machine: MachineModel)</text>
-  <text x="580" y="1346" font-size="12">+ update(machine: MachineModel): Boolean</text>
-  <text x="580" y="1363" font-size="12">+ delete(id: Long): Boolean</text>
-  <text x="580" y="1380" font-size="12">+ findOne(id: Long): MachineModel?</text>
-  <rect x="1110" y="1236" width="445" height="266" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="1110" y1="1266" x2="1555" y2="1266" stroke="#333" stroke-width="1.5"/>
-  <line x1="1110" y1="1367" x2="1555" y2="1367" stroke="#333" stroke-width="1.5"/>
-  <text x="1332.5" y="1256" font-size="15" font-weight="bold" text-anchor="middle">MachineJSONStore</text>
-  <text x="1120" y="1286" font-size="12">- file: File  (machines.json)</text>
-  <text x="1120" y="1303" font-size="12">- gson: Gson</text>
-  <text x="1120" y="1320" font-size="12">- listType: Type</text>
-  <text x="1120" y="1337" font-size="12">- machines: ArrayList&lt;MachineModel&gt;</text>
-  <text x="1120" y="1354" font-size="12">- lastId: AtomicLong</text>
-  <text x="1120" y="1387" font-size="12">+ findAll(): List&lt;MachineModel&gt;</text>
-  <text x="1120" y="1404" font-size="12">+ create(machine: MachineModel)</text>
-  <text x="1120" y="1421" font-size="12">+ update(machine: MachineModel): Boolean</text>
-  <text x="1120" y="1438" font-size="12">+ delete(id: Long): Boolean</text>
-  <text x="1120" y="1455" font-size="12">+ findOne(id: Long): MachineModel?</text>
-  <text x="1120" y="1472" font-size="12">- save()</text>
-  <text x="1120" y="1489" font-size="12">- load()</text>
-  <rect x="570" y="1602" width="400" height="215" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="570" y1="1632" x2="970" y2="1632" stroke="#333" stroke-width="1.5"/>
-  <line x1="570" y1="1767" x2="970" y2="1767" stroke="#333" stroke-width="1.5"/>
-  <text x="770.0" y="1622" font-size="15" font-weight="bold" text-anchor="middle">MachineModel</text>
-  <text x="580" y="1652" font-size="12">+ id: Long = 0</text>
-  <text x="580" y="1669" font-size="12">+ name: String</text>
-  <text x="580" y="1686" font-size="12">+ location: String</text>
-  <text x="580" y="1703" font-size="12">+ type: MachineType</text>
-  <text x="580" y="1720" font-size="12">+ status: MachineStatus</text>
-  <text x="580" y="1737" font-size="12">+ cycleMinutes: Int = 60</text>
-  <text x="580" y="1754" font-size="12">+ imageUri: String? = null</text>
-  <text x="580" y="1787" font-size="11" fill="#555">« data class »</text>
-  <text x="580" y="1804" font-size="12">auto: equals(), hashCode(), toString(), copy()</text>
-  <rect x="1110" y="1602" width="200" height="106" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="1110" y1="1646" x2="1310" y2="1646" stroke="#333" stroke-width="1.5"/>
-  <line x1="1110" y1="1696" x2="1310" y2="1696" stroke="#333" stroke-width="1.5"/>
-  <text x="1210.0" y="1619" font-size="12" font-style="italic" text-anchor="middle">« enumeration »</text>
-  <text x="1210.0" y="1637" font-size="15" font-weight="bold" text-anchor="middle">MachineType</text>
-  <text x="1120" y="1666" font-size="12">WASHER</text>
-  <text x="1120" y="1683" font-size="12">DRYER</text>
-  <rect x="1340" y="1602" width="215" height="123" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="1340" y1="1646" x2="1555" y2="1646" stroke="#333" stroke-width="1.5"/>
-  <line x1="1340" y1="1713" x2="1555" y2="1713" stroke="#333" stroke-width="1.5"/>
-  <text x="1447.5" y="1619" font-size="12" font-style="italic" text-anchor="middle">« enumeration »</text>
-  <text x="1447.5" y="1637" font-size="15" font-weight="bold" text-anchor="middle">MachineStatus</text>
-  <text x="1350" y="1666" font-size="12">AVAILABLE</text>
-  <text x="1350" y="1683" font-size="12">IN_USE</text>
-  <text x="1350" y="1700" font-size="12">OUT_OF_ORDER</text>
-  <path d="M 155.0 215 L 155.0 194" fill="none" stroke="#333" stroke-width="1.2"/>
-  <path d="M 575.0 215 L 575.0 194" fill="none" stroke="#333" stroke-width="1.2"/>
-  <path d="M 1065.0 215 L 1065.0 194" fill="none" stroke="#333" stroke-width="1.2"/>
-  <path d="M 14 194 L 1065.0 194" fill="none" stroke="#333" stroke-width="1.2"/>
-  <path d="M 14 194 L 14 436 L 30 436" fill="none" stroke="#333" stroke-width="1.2"/>
-  <path d="M 640.0 194 L 640.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
-  <text x="862" y="186" font-size="11" fill="#555" text-anchor="start">« extends »</text>
-  <path d="M 1425.0 215 L 1425.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
-  <text x="1433.0" y="186.0" font-size="11" fill="#555" text-anchor="start">« extends »</text>
-  <path d="M 280 275 L 350 275" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="315.0" y="268" font-size="11" fill="#555" text-anchor="middle">« opens »</text>
-  <path d="M 800 275 L 880 275" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="840.0" y="268" font-size="11" fill="#555" text-anchor="middle">« opens (id) »</text>
-  <path d="M 155.0 414 L 155.0 324" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="163.0" y="373.0" font-size="11" fill="#555" text-anchor="start">« opens after 2s »</text>
-  <polygon points="555.0,566 562.0,577 555.0,588 548.0,577" fill="#333" stroke="#333" stroke-width="1.2"/>
-  <path d="M 555.0 588 L 555.0 880" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
-  <text x="565.0" y="872" font-size="11" fill="#555" text-anchor="start">1</text>
-  <text x="565.0" y="604" font-size="11" fill="#555" text-anchor="start">shows the list with</text>
-  <path d="M 780 566 L 780 920 L 880 920" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <path d="M 1090.0 770 L 1090.0 880" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="1098.0" y="870" font-size="11" fill="#555" text-anchor="start">« uses »</text>
-  <path d="M 1385.0 324 L 1385.0 940 L 1180 940" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="1190" y="933" font-size="11" fill="#555" text-anchor="start">« sets machines »</text>
-  <path d="M 1525 324 L 1525 1236" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="1519" y="1226" font-size="11" fill="#555" text-anchor="end">« creates »</text>
-  <path d="M 990.0 986 L 990.0 1201 L 770.0 1201 L 770.0 1236" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
-  <text x="778.0" y="1228" font-size="11" fill="#555" text-anchor="start">1</text>
-  <text x="998.0" y="1004" font-size="11" fill="#555" text-anchor="start">machines</text>
-  <path d="M 430 1311 L 570 1311" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#hollowTriangle)"/>
-  <text x="500.0" y="1304" font-size="11" fill="#555" text-anchor="middle">« implements »</text>
-  <path d="M 1110 1311 L 970 1311" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#hollowTriangle)"/>
-  <text x="1040.0" y="1304" font-size="11" fill="#555" text-anchor="middle">« implements »</text>
-  <polygon points="230.0,1434 237.0,1445 230.0,1456 223.0,1445" fill="#fff" stroke="#333" stroke-width="1.2"/>
-  <path d="M 230.0 1456 L 230.0 1672 L 570 1672" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
-  <text x="562" y="1666" font-size="11" fill="#555" text-anchor="end">0..*</text>
-  <polygon points="1332.5,1502 1339.5,1513 1332.5,1524 1325.5,1513" fill="#fff" stroke="#333" stroke-width="1.2"/>
-  <path d="M 1332.5 1524 L 1332.5 1567 L 920 1567 L 920 1602" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
-  <text x="928" y="1594" font-size="11" fill="#555" text-anchor="start">0..*</text>
-  <text x="1342.5" y="1540" font-size="11" fill="#555" text-anchor="start">saves / loads with Gson</text>
-  <path d="M 710.0 1393 L 710.0 1602" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="718.0" y="1413" font-size="11" fill="#555" text-anchor="start">« uses »</text>
-  <path d="M 970 1677 L 1110 1677" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
-  <text x="980" y="1671" font-size="11" fill="#555" text-anchor="start">type</text>
-  <path d="M 970 1753 L 1447.5 1753 L 1447.5 1725" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
-  <text x="980" y="1747" font-size="11" fill="#555" text-anchor="start">status</text>
-  <text x="30" y="1869" font-size="11" fill="#555">Key:</text><text x="62" y="1869" font-size="11" fill="#555">+ public</text><text x="133" y="1869" font-size="11" fill="#555">- private</text><text x="210" y="1869" font-size="11" fill="#555">? can be null</text><text x="310" y="1869" font-size="11" fill="#555">solid line + hollow triangle = extends</text><text x="552" y="1869" font-size="11" fill="#555">dashed line + hollow triangle = implements</text><text x="817" y="1869" font-size="11" fill="#555">filled diamond = owns</text><text x="962" y="1869" font-size="11" fill="#555">hollow diamond = holds 0..*</text><text x="1141" y="1869" font-size="11" fill="#555">dashed arrow = uses / opens / creates</text>
+  <rect x="350" y="219" width="450" height="212" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="350" y1="263" x2="800" y2="263" stroke="#333" stroke-width="1.5"/>
+  <line x1="350" y1="330" x2="800" y2="330" stroke="#333" stroke-width="1.5"/>
+  <text x="575.0" y="236" font-size="12" font-style="italic" text-anchor="middle">« abstract »</text>
+  <text x="575.0" y="254" font-size="15" font-weight="bold" font-style="italic" text-anchor="middle">DrawerActivity</text>
+  <text x="360" y="283" font-size="12">- drawerLayout: DrawerLayout</text>
+  <text x="360" y="300" font-size="12">- navView: NavigationView</text>
+  <text x="360" y="317" font-size="12"># currentNavItem: Int  (abstract)</text>
+  <text x="360" y="350" font-size="12"># setUpDrawer(toolbar: Toolbar)</text>
+  <text x="360" y="367" font-size="12">- onDrawerItemSelected(itemId: Int)</text>
+  <text x="360" y="384" font-size="12">- showAbout()</text>
+  <text x="360" y="401" font-size="12">- logOut()</text>
+  <text x="360" y="418" font-size="11" fill="#555">« shared navigation drawer for Home + Machines »</text>
+  <rect x="30" y="501" width="250" height="113" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="531" x2="280" y2="531" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="564" x2="280" y2="564" stroke="#333" stroke-width="1.5"/>
+  <text x="155.0" y="521" font-size="15" font-weight="bold" text-anchor="middle">MainActivity</text>
+  <text x="40" y="551" font-size="12"># currentNavItem = nav_home</text>
+  <text x="40" y="584" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
+  <text x="40" y="601" font-size="11" fill="#555">« home screen »</text>
+  <rect x="30" y="704" width="250" height="181" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="734" x2="280" y2="734" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="801" x2="280" y2="801" stroke="#333" stroke-width="1.5"/>
+  <text x="155.0" y="724" font-size="15" font-weight="bold" text-anchor="middle">SplashActivity</text>
+  <text x="40" y="754" font-size="12">- handler: Handler</text>
+  <text x="40" y="771" font-size="12">- goToHome: Runnable</text>
+  <text x="40" y="788" font-size="12">- SPLASH_TIME_MS: Long = 2000</text>
+  <text x="40" y="821" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
+  <text x="40" y="838" font-size="12">+ onDestroy()</text>
+  <text x="40" y="855" font-size="11" fill="#555">« launcher, first screen »</text>
+  <text x="40" y="872" font-size="11" fill="#555">« opens Login if nobody is logged in »</text>
+  <rect x="350" y="501" width="450" height="334" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="350" y1="531" x2="800" y2="531" stroke="#333" stroke-width="1.5"/>
+  <line x1="350" y1="649" x2="800" y2="649" stroke="#333" stroke-width="1.5"/>
+  <text x="575.0" y="521" font-size="15" font-weight="bold" text-anchor="middle">MachineListActivity</text>
+  <text x="360" y="551" font-size="12"># currentNavItem = nav_machines</text>
+  <text x="360" y="568" font-size="12">- recyclerView: RecyclerView</text>
+  <text x="360" y="585" font-size="12">- adapter: MachineAdapter</text>
+  <text x="360" y="602" font-size="12">- emptyText: TextView</text>
+  <text x="360" y="619" font-size="12">- searchInput: EditText</text>
+  <text x="360" y="636" font-size="12">- statusFilter: Spinner</text>
+  <text x="360" y="669" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
+  <text x="360" y="686" font-size="12">+ onResume()</text>
+  <text x="360" y="703" font-size="12">+ onCreateOptionsMenu(menu: Menu): Boolean</text>
+  <text x="360" y="720" font-size="12">+ onOptionsItemSelected(item: MenuItem): Boolean</text>
+  <text x="360" y="737" font-size="12">- openAddMachine()</text>
+  <text x="360" y="754" font-size="12">- clearFilters()</text>
+  <text x="360" y="771" font-size="12">- displayMachines()</text>
+  <text x="360" y="788" font-size="12">- editMachine(machine: MachineModel)</text>
+  <text x="360" y="805" font-size="12">- deleteMachine(machine: MachineModel)</text>
+  <text x="360" y="822" font-size="12">- selectedStatus(): MachineStatus?</text>
+  <rect x="880" y="501" width="370" height="555" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="880" y1="531" x2="1250" y2="531" stroke="#333" stroke-width="1.5"/>
+  <line x1="880" y1="819" x2="1250" y2="819" stroke="#333" stroke-width="1.5"/>
+  <text x="1065.0" y="521" font-size="15" font-weight="bold" text-anchor="middle">AddEditActivity</text>
+  <text x="890" y="551" font-size="12">- nameInput: EditText</text>
+  <text x="890" y="568" font-size="12">- locationInput: EditText</text>
+  <text x="890" y="585" font-size="12">- typeGroup: RadioGroup</text>
+  <text x="890" y="602" font-size="12">- statusGroup: RadioGroup</text>
+  <text x="890" y="619" font-size="12">- cyclePicker: NumberPicker</text>
+  <text x="890" y="636" font-size="12">- cycleSection: LinearLayout</text>
+  <text x="890" y="653" font-size="12">- machineImage: ImageView</text>
+  <text x="890" y="670" font-size="12">- selectedImageUri: Uri?</text>
+  <text x="890" y="687" font-size="12">- cameraFile: File?</text>
+  <text x="890" y="704" font-size="12">- cameraUri: Uri?</text>
+  <text x="890" y="721" font-size="12">- imagePicker: launcher (OpenDocument)</text>
+  <text x="890" y="738" font-size="12">- takePhoto: launcher (TakePicture)</text>
+  <text x="890" y="755" font-size="12">- editingId: Long?</text>
+  <text x="890" y="772" font-size="12">- MIN_MINUTES: Int = 10</text>
+  <text x="890" y="789" font-size="12">- MAX_MINUTES: Int = 120</text>
+  <text x="890" y="806" font-size="12">- STEP_MINUTES: Int = 5</text>
+  <text x="890" y="839" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
+  <text x="890" y="856" font-size="12">+ onSupportNavigateUp(): Boolean</text>
+  <text x="890" y="873" font-size="12">+ onSaveInstanceState(outState: Bundle)</text>
+  <text x="890" y="890" font-size="12">- restorePhotoState(state: Bundle)</text>
+  <text x="890" y="907" font-size="12">- openCamera()</text>
+  <text x="890" y="924" font-size="12">- loadExistingMachine(id: Long)</text>
+  <text x="890" y="941" font-size="12">- updateCycleSection()</text>
+  <text x="890" y="958" font-size="12">- setUpCyclePicker()</text>
+  <text x="890" y="975" font-size="12">- minutesToIndex(minutes: Int): Int</text>
+  <text x="890" y="992" font-size="12">- selectedCycleMinutes(): Int</text>
+  <text x="890" y="1009" font-size="12">- selectedType(): MachineType</text>
+  <text x="890" y="1026" font-size="12">- selectedStatus(): MachineStatus</text>
+  <text x="890" y="1043" font-size="12">- saveMachine()</text>
+  <rect x="1300" y="501" width="250" height="109" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="1300" y1="531" x2="1550" y2="531" stroke="#333" stroke-width="1.5"/>
+  <line x1="1300" y1="543" x2="1550" y2="543" stroke="#333" stroke-width="1.5"/>
+  <text x="1425.0" y="521" font-size="15" font-weight="bold" text-anchor="middle">MainApp</text>
+  <text x="1310" y="563" font-size="12">+ onCreate()</text>
+  <text x="1310" y="580" font-size="11" fill="#555">« runs once when the app starts »</text>
+  <text x="1310" y="597" font-size="11" fill="#555">« also creates the user store »</text>
+  <rect x="350" y="1166" width="410" height="246" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="350" y1="1210" x2="760" y2="1210" stroke="#333" stroke-width="1.5"/>
+  <line x1="350" y1="1277" x2="760" y2="1277" stroke="#333" stroke-width="1.5"/>
+  <text x="555.0" y="1183" font-size="12" font-style="italic" text-anchor="middle">« RecyclerView.Adapter »</text>
+  <text x="555.0" y="1201" font-size="15" font-weight="bold" text-anchor="middle">MachineAdapter</text>
+  <text x="360" y="1230" font-size="12">- machines: List&lt;MachineModel&gt;</text>
+  <text x="360" y="1247" font-size="12">- onEdit: (MachineModel) -&gt; Unit</text>
+  <text x="360" y="1264" font-size="12">- onDelete: (MachineModel) -&gt; Unit</text>
+  <text x="360" y="1297" font-size="12">+ onCreateViewHolder(parent, viewType): MachineViewHolder</text>
+  <text x="360" y="1314" font-size="12">+ onBindViewHolder(holder, position)</text>
+  <text x="360" y="1331" font-size="12">+ getItemCount(): Int</text>
+  <text x="360" y="1348" font-size="12">+ updateMachines(newMachines: List&lt;MachineModel&gt;)</text>
+  <text x="360" y="1365" font-size="12">- statusLine(machine: MachineModel): String</text>
+  <text x="360" y="1382" font-size="12">- typeLabel(type: MachineType): String</text>
+  <text x="360" y="1399" font-size="12">- statusLabel(status: MachineStatus): String</text>
+  <rect x="880" y="1166" width="300" height="106" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="880" y1="1210" x2="1180" y2="1210" stroke="#333" stroke-width="1.5"/>
+  <line x1="880" y1="1260" x2="1180" y2="1260" stroke="#333" stroke-width="1.5"/>
+  <text x="1030.0" y="1183" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
+  <text x="1030.0" y="1201" font-size="15" font-weight="bold" text-anchor="middle">AppData</text>
+  <text x="890" y="1230" font-size="12">+ machines: MachineStore  (lateinit)</text>
+  <text x="890" y="1247" font-size="12">+ users: UserStore  (lateinit, see Accounts)</text>
+  <rect x="30" y="1522" width="400" height="198" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="1552" x2="430" y2="1552" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="1602" x2="430" y2="1602" stroke="#333" stroke-width="1.5"/>
+  <text x="230.0" y="1542" font-size="15" font-weight="bold" text-anchor="middle">MachineMemStore</text>
+  <text x="40" y="1572" font-size="12">- machines: ArrayList&lt;MachineModel&gt;</text>
+  <text x="40" y="1589" font-size="12">- lastId: AtomicLong</text>
+  <text x="40" y="1622" font-size="12">+ findAll(): List&lt;MachineModel&gt;</text>
+  <text x="40" y="1639" font-size="12">+ create(machine: MachineModel)</text>
+  <text x="40" y="1656" font-size="12">+ update(machine: MachineModel): Boolean</text>
+  <text x="40" y="1673" font-size="12">+ delete(id: Long): Boolean</text>
+  <text x="40" y="1690" font-size="12">+ findOne(id: Long): MachineModel?</text>
+  <text x="40" y="1707" font-size="11" fill="#555">« in memory, used by the unit tests »</text>
+  <rect x="570" y="1522" width="400" height="157" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="570" y1="1566" x2="970" y2="1566" stroke="#333" stroke-width="1.5"/>
+  <line x1="570" y1="1578" x2="970" y2="1578" stroke="#333" stroke-width="1.5"/>
+  <text x="770.0" y="1539" font-size="12" font-style="italic" text-anchor="middle">« interface »</text>
+  <text x="770.0" y="1557" font-size="15" font-weight="bold" text-anchor="middle">MachineStore</text>
+  <text x="580" y="1598" font-size="12">+ findAll(): List&lt;MachineModel&gt;</text>
+  <text x="580" y="1615" font-size="12">+ create(machine: MachineModel)</text>
+  <text x="580" y="1632" font-size="12">+ update(machine: MachineModel): Boolean</text>
+  <text x="580" y="1649" font-size="12">+ delete(id: Long): Boolean</text>
+  <text x="580" y="1666" font-size="12">+ findOne(id: Long): MachineModel?</text>
+  <rect x="1110" y="1522" width="445" height="266" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="1110" y1="1552" x2="1555" y2="1552" stroke="#333" stroke-width="1.5"/>
+  <line x1="1110" y1="1653" x2="1555" y2="1653" stroke="#333" stroke-width="1.5"/>
+  <text x="1332.5" y="1542" font-size="15" font-weight="bold" text-anchor="middle">MachineJSONStore</text>
+  <text x="1120" y="1572" font-size="12">- file: File  (machines.json)</text>
+  <text x="1120" y="1589" font-size="12">- gson: Gson</text>
+  <text x="1120" y="1606" font-size="12">- listType: Type</text>
+  <text x="1120" y="1623" font-size="12">- machines: ArrayList&lt;MachineModel&gt;</text>
+  <text x="1120" y="1640" font-size="12">- lastId: AtomicLong</text>
+  <text x="1120" y="1673" font-size="12">+ findAll(): List&lt;MachineModel&gt;</text>
+  <text x="1120" y="1690" font-size="12">+ create(machine: MachineModel)</text>
+  <text x="1120" y="1707" font-size="12">+ update(machine: MachineModel): Boolean</text>
+  <text x="1120" y="1724" font-size="12">+ delete(id: Long): Boolean</text>
+  <text x="1120" y="1741" font-size="12">+ findOne(id: Long): MachineModel?</text>
+  <text x="1120" y="1758" font-size="12">- save()</text>
+  <text x="1120" y="1775" font-size="12">- load()</text>
+  <rect x="570" y="1888" width="400" height="215" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="570" y1="1918" x2="970" y2="1918" stroke="#333" stroke-width="1.5"/>
+  <line x1="570" y1="2053" x2="970" y2="2053" stroke="#333" stroke-width="1.5"/>
+  <text x="770.0" y="1908" font-size="15" font-weight="bold" text-anchor="middle">MachineModel</text>
+  <text x="580" y="1938" font-size="12">+ id: Long = 0</text>
+  <text x="580" y="1955" font-size="12">+ name: String</text>
+  <text x="580" y="1972" font-size="12">+ location: String</text>
+  <text x="580" y="1989" font-size="12">+ type: MachineType</text>
+  <text x="580" y="2006" font-size="12">+ status: MachineStatus</text>
+  <text x="580" y="2023" font-size="12">+ cycleMinutes: Int = 60</text>
+  <text x="580" y="2040" font-size="12">+ imageUri: String? = null</text>
+  <text x="580" y="2073" font-size="11" fill="#555">« data class »</text>
+  <text x="580" y="2090" font-size="12">auto: equals(), hashCode(), toString(), copy()</text>
+  <rect x="1110" y="1888" width="200" height="106" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="1110" y1="1932" x2="1310" y2="1932" stroke="#333" stroke-width="1.5"/>
+  <line x1="1110" y1="1982" x2="1310" y2="1982" stroke="#333" stroke-width="1.5"/>
+  <text x="1210.0" y="1905" font-size="12" font-style="italic" text-anchor="middle">« enumeration »</text>
+  <text x="1210.0" y="1923" font-size="15" font-weight="bold" text-anchor="middle">MachineType</text>
+  <text x="1120" y="1952" font-size="12">WASHER</text>
+  <text x="1120" y="1969" font-size="12">DRYER</text>
+  <rect x="1340" y="1888" width="215" height="123" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="1340" y1="1932" x2="1555" y2="1932" stroke="#333" stroke-width="1.5"/>
+  <line x1="1340" y1="1999" x2="1555" y2="1999" stroke="#333" stroke-width="1.5"/>
+  <text x="1447.5" y="1905" font-size="12" font-style="italic" text-anchor="middle">« enumeration »</text>
+  <text x="1447.5" y="1923" font-size="15" font-weight="bold" text-anchor="middle">MachineStatus</text>
+  <text x="1350" y="1952" font-size="12">AVAILABLE</text>
+  <text x="1350" y="1969" font-size="12">IN_USE</text>
+  <text x="1350" y="1986" font-size="12">OUT_OF_ORDER</text>
+  <path d="M 14 179 L 1065.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 575.0 219 L 575.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 1065.0 501 L 1065.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 14 179 L 14 726 L 30 726" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 640.0 179 L 640.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
+  <text x="862" y="171" font-size="11" fill="#555" text-anchor="start">« extends »</text>
+  <path d="M 155.0 501 L 155.0 461" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 575.0 501 L 575.0 461" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 155.0 461 L 575.0 461" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 575.0 461 L 575.0 431" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
+  <text x="585.0" y="475" font-size="11" fill="#555" text-anchor="start">« extends »</text>
+  <path d="M 1425.0 501 L 1425.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
+  <text x="1433.0" y="329.0" font-size="11" fill="#555" text-anchor="start">« extends »</text>
+  <path d="M 280 561 L 350 561" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="315.0" y="554" font-size="11" fill="#555" text-anchor="middle">« opens »</text>
+  <path d="M 800 561 L 880 561" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="840.0" y="554" font-size="11" fill="#555" text-anchor="middle">« opens (id) »</text>
+  <path d="M 155.0 704 L 155.0 614" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="163.0" y="663.0" font-size="11" fill="#555" text-anchor="start">« opens after 2s »</text>
+  <polygon points="555.0,835 562.0,846 555.0,857 548.0,846" fill="#333" stroke="#333" stroke-width="1.2"/>
+  <path d="M 555.0 857 L 555.0 1166" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
+  <text x="565.0" y="1158" font-size="11" fill="#555" text-anchor="start">1</text>
+  <text x="565.0" y="873" font-size="11" fill="#555" text-anchor="start">shows the list with</text>
+  <path d="M 780 835 L 780 1206 L 880 1206" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <path d="M 1090.0 1056 L 1090.0 1166" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="1098.0" y="1156" font-size="11" fill="#555" text-anchor="start">« uses »</text>
+  <path d="M 1385.0 610 L 1385.0 1226 L 1180 1226" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="1190" y="1219" font-size="11" fill="#555" text-anchor="start">« sets machines »</text>
+  <path d="M 1525 610 L 1525 1522" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="1519" y="1512" font-size="11" fill="#555" text-anchor="end">« creates »</text>
+  <path d="M 990.0 1272 L 990.0 1487 L 770.0 1487 L 770.0 1522" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
+  <text x="778.0" y="1514" font-size="11" fill="#555" text-anchor="start">1</text>
+  <text x="998.0" y="1290" font-size="11" fill="#555" text-anchor="start">machines</text>
+  <path d="M 430 1597 L 570 1597" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#hollowTriangle)"/>
+  <text x="500.0" y="1590" font-size="11" fill="#555" text-anchor="middle">« implements »</text>
+  <path d="M 1110 1597 L 970 1597" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#hollowTriangle)"/>
+  <text x="1040.0" y="1590" font-size="11" fill="#555" text-anchor="middle">« implements »</text>
+  <polygon points="230.0,1720 237.0,1731 230.0,1742 223.0,1731" fill="#fff" stroke="#333" stroke-width="1.2"/>
+  <path d="M 230.0 1742 L 230.0 1958 L 570 1958" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
+  <text x="562" y="1952" font-size="11" fill="#555" text-anchor="end">0..*</text>
+  <polygon points="1332.5,1788 1339.5,1799 1332.5,1810 1325.5,1799" fill="#fff" stroke="#333" stroke-width="1.2"/>
+  <path d="M 1332.5 1810 L 1332.5 1853 L 920 1853 L 920 1888" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
+  <text x="928" y="1880" font-size="11" fill="#555" text-anchor="start">0..*</text>
+  <text x="1342.5" y="1826" font-size="11" fill="#555" text-anchor="start">saves / loads with Gson</text>
+  <path d="M 710.0 1679 L 710.0 1888" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="718.0" y="1699" font-size="11" fill="#555" text-anchor="start">« uses »</text>
+  <path d="M 970 1963 L 1110 1963" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
+  <text x="980" y="1957" font-size="11" fill="#555" text-anchor="start">type</text>
+  <path d="M 970 2039 L 1447.5 2039 L 1447.5 2011" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
+  <text x="980" y="2033" font-size="11" fill="#555" text-anchor="start">status</text>
+  <text x="30" y="2155" font-size="11" fill="#555">Key:</text><text x="62" y="2155" font-size="11" fill="#555">+ public</text><text x="127" y="2155" font-size="11" fill="#555">- private</text><text x="198" y="2155" font-size="11" fill="#555"># protected</text><text x="280" y="2155" font-size="11" fill="#555">? can be null</text><text x="374" y="2155" font-size="11" fill="#555">italic = abstract</text><text x="490" y="2155" font-size="11" fill="#555">solid line + hollow triangle = extends</text><text x="726" y="2155" font-size="11" fill="#555">dashed line + hollow triangle = implements</text><text x="985" y="2155" font-size="11" fill="#555">filled diamond = owns</text><text x="1124" y="2155" font-size="11" fill="#555">hollow diamond = holds 0..*</text><text x="1297" y="2155" font-size="11" fill="#555">dashed arrow = uses / opens / creates</text>
 </svg>
