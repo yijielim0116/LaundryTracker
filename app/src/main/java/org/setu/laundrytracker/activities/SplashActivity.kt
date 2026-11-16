@@ -7,6 +7,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import org.setu.laundrytracker.R
 import org.setu.laundrytracker.main.Session
+import timber.log.Timber
 
 // Splash screen - shows my logo for a bit, then goes to login (or home if already logged in)
 class SplashActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class SplashActivity : AppCompatActivity() {
         } else {
             LoginActivity::class.java
         }
+        Timber.d("Splash done, opening ${next.simpleName}")
         startActivity(Intent(this, next))
         // finish so pressing back on the home screen doesn't bring the splash back
         finish()

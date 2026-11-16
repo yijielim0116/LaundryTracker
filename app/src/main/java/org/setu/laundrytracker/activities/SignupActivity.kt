@@ -15,6 +15,7 @@ import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.main.Session
 import org.setu.laundrytracker.models.Passwords
 import org.setu.laundrytracker.models.UserModel
+import timber.log.Timber
 
 // Sign up screen - makes a new account and logs you straight in
 class SignupActivity : AppCompatActivity() {
@@ -66,21 +67,25 @@ class SignupActivity : AppCompatActivity() {
 
         // Patterns.EMAIL_ADDRESS is Android's own check for something@something.something
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Timber.d("Sign up blocked: email not valid")
             emailInput.error = "Enter a valid email"
             return
         }
 
         if (AppData.users.findByEmail(email) != null) {
+            Timber.d("Sign up blocked: $email already has an account")
             emailInput.error = "An account with this email already exists"
             return
         }
 
         if (password.length < MIN_PASSWORD_LENGTH) {
+            Timber.d("Sign up blocked: password too short")
             passwordInput.error = "Password must be at least $MIN_PASSWORD_LENGTH characters"
             return
         }
 
         if (password != confirm) {
+            Timber.d("Sign up blocked: passwords don't match")
             confirmInput.error = "Passwords don't match"
             return
         }
@@ -96,6 +101,7 @@ class SignupActivity : AppCompatActivity() {
         )
 
         Session.login(this, email)
+        Timber.d("Account created and logged in: $email")
 
         Toast.makeText(
             this,
