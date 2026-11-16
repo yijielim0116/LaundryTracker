@@ -1,65 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- DrawerLayout = the machine list with the navigation drawer that slides in over it from the left -->
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activities.MachineListActivity">
 
-    <!-- toolbar at the top with the up arrow back to home and the menu -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-    <!-- everything under the toolbar, padding is here so the toolbar can go edge to edge -->
+    <!-- first child = the screen itself -->
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="32dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- search box, the list updates while typing -->
-        <EditText
-            android:id="@+id/searchInput"
+        <!-- toolbar at the top with the ☰ button for the drawer and the menu -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Search by name or location"
-            android:importantForAutofill="no"
-            android:inputType="text" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <!-- drop-down to only show machines with a certain status, options are in strings.xml -->
-        <Spinner
-            android:id="@+id/statusFilter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:entries="@array/status_filter_options" />
-
-        <!-- shows when there's nothing in the list (no machines, or nothing matches) -->
-        <TextView
-            android:id="@+id/emptyText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:textSize="18sp"
-            android:visibility="gone" />
-
-        <!-- the machine list, MachineAdapter makes a row (item_machine.xml) for each machine
-             RecyclerView scrolls by itself so it doesn't need a ScrollView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/machinesRecyclerView"
+        <!-- everything under the toolbar, padding is here so the toolbar can go edge to edge -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="32dp">
 
+            <!-- search box, the list updates while typing -->
+            <EditText
+                android:id="@+id/searchInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Search by name or location"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <!-- drop-down to only show machines with a certain status, options are in strings.xml -->
+            <Spinner
+                android:id="@+id/statusFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:entries="@array/status_filter_options" />
+
+            <!-- shows when there's nothing in the list (no machines, or nothing matches) -->
+            <TextView
+                android:id="@+id/emptyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <!-- the machine list, MachineAdapter makes a row (item_machine.xml) for each machine
+                 RecyclerView scrolls by itself so it doesn't need a ScrollView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/machinesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <!-- second child = the drawer, same one as on the home screen -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
