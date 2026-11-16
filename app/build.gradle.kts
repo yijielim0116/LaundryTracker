@@ -41,6 +41,8 @@ dependencies {
     implementation(libs.gson)
     // Material Components, I need it for the NavigationView in the navigation drawer
     implementation(libs.material)
+    // Timber for logging, same as my PlacedMark lab (shows in Logcat)
+    implementation(libs.timber)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
