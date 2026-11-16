@@ -5,6 +5,7 @@ import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.util.concurrent.atomic.AtomicLong
+import timber.log.Timber
 
 /**
  * Keeps machines in a JSON file so they're still there after the app is closed.
@@ -37,6 +38,7 @@ class MachineJSONStore(private val file: File) : MachineStore {
         machine.id = lastId.incrementAndGet()
         machines.add(machine)
         save()
+        Timber.d("create: id=${machine.id}, name=${machine.name}")
     }
 
     override fun update(machine: MachineModel): Boolean {
@@ -51,8 +53,10 @@ class MachineJSONStore(private val file: File) : MachineStore {
                 imageUri = machine.imageUri
             )
             save()
+            Timber.d("update: id=${machine.id}, name=${machine.name}")
             true
         } else {
+            Timber.w("update: no machine with id=${machine.id}")
             false
         }
     }
@@ -62,8 +66,10 @@ class MachineJSONStore(private val file: File) : MachineStore {
         return if (foundMachine != null) {
             machines.remove(foundMachine)
             save()
+            Timber.d("delete: id=$id")
             true
         } else {
+            Timber.w("delete: no machine with id=$id")
             false
         }
     }
@@ -77,11 +83,13 @@ class MachineJSONStore(private val file: File) : MachineStore {
         // make sure the folder exists first, like the lab does
         file.parentFile?.mkdirs()
         file.writeText(gson.toJson(machines, listType))
+        Timber.d("save: ${machines.size} machines to ${file.name}")
     }
 
     // reads the file back into the list (first time the app runs there's no file yet)
     private fun load() {
         if (!file.exists()) {
+            Timber.d("load: no ${file.name} yet, starting empty")
             return
         }
 
@@ -89,10 +97,12 @@ class MachineJSONStore(private val file: File) : MachineStore {
             gson.fromJson<ArrayList<MachineModel>>(file.readText(), listType) ?: ArrayList()
         } catch (e: JsonParseException) {
             // the file is broken somehow, start with an empty list instead of crashing
+            Timber.e(e, "load: ${file.name} is broken, starting empty")
             ArrayList()
         }
 
         // carry on the ids from the biggest one saved, so a new machine never gets an old id
         lastId.set(machines.maxOfOrNull { it.id } ?: 0L)
+        Timber.d("load: ${machines.size} machines from ${file.name}")
     }
 }
