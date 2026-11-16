@@ -39,6 +39,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     // Gson turns my machines into JSON text and back again
     implementation(libs.gson)
+    // Material Components, I need it for the NavigationView in the navigation drawer
+    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)

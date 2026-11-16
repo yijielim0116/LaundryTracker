@@ -2,6 +2,10 @@
     <string name="app_name">Laundry Tracker</string>
     <string name="splash_tagline">Never miss a free machine</string>
 
+    <!-- read out by TalkBack when the ☰ button opens or closes the drawer -->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
     <!-- options for the status drop-down on the machine list, the order matters (see MachineListActivity) -->
     <string-array name="status_filter_options">
         <item>All</item>

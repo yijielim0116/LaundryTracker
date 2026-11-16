@@ -9,14 +9,9 @@
         android:title="Add"
         app:showAsAction="ifRoom" />
 
-    <!-- these two are always in the ⋮ overflow menu -->
+    <!-- always in the ⋮ overflow menu (About is in the navigation drawer now) -->
     <item
         android:id="@+id/action_clear_filters"
         android:title="Clear filters"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_about"
-        android:title="About"
         app:showAsAction="never" />
 </menu>

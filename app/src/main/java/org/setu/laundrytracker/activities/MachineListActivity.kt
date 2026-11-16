@@ -10,8 +10,6 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -25,7 +23,11 @@ import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
 
 // Machine list screen - shows all the machines with search, the status filter and the menu
-class MachineListActivity : AppCompatActivity() {
+// extends DrawerActivity so it gets the navigation drawer too
+class MachineListActivity : DrawerActivity() {
+
+    // Machines is highlighted in the drawer on this screen
+    override val currentNavItem = R.id.nav_machines
 
     // the RecyclerView shows the machines, the adapter turns each machine into a row
     private lateinit var recyclerView: RecyclerView
@@ -51,8 +53,8 @@ class MachineListActivity : AppCompatActivity() {
             findViewById<Toolbar>(R.id.toolbar)
 
         setSupportActionBar(toolbar)
-        // up arrow to go back to the home screen
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // the ☰ button replaces the up arrow, Back still goes to the home screen
+        setUpDrawer(toolbar)
 
         emptyText =
             findViewById(R.id.emptyText)
@@ -103,12 +105,6 @@ class MachineListActivity : AppCompatActivity() {
         displayMachines()
     }
 
-    // up arrow on the toolbar, just closes this screen and goes back to home
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
-
     // puts my menu (res/menu/menu_main.xml) on the toolbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -128,11 +124,6 @@ class MachineListActivity : AppCompatActivity() {
                 true
             }
 
-            R.id.action_about -> {
-                showAbout()
-                true
-            }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -149,15 +140,6 @@ class MachineListActivity : AppCompatActivity() {
     private fun clearFilters() {
         searchInput.setText("")
         statusFilter.setSelection(0)
-    }
-
-    // small pop up with info about the app
-    private fun showAbout() {
-        AlertDialog.Builder(this)
-            .setTitle("About Laundry Tracker")
-            .setMessage("Check if the laundry machines are free before going down, and keep track of your wash and dry cycles.")
-            .setPositiveButton("OK", null)
-            .show()
     }
 
     // onResume runs when I come back from AddEditActivity,

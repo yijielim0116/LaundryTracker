@@ -5,14 +5,18 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.setu.laundrytracker.R
 import org.setu.laundrytracker.main.Session
 
-// Home screen - the first thing you see when the app opens
-class MainActivity : AppCompatActivity() {
+// Home screen - the first thing you see after logging in
+// extends DrawerActivity so it gets the navigation drawer
+class MainActivity : DrawerActivity() {
+
+    // Home is highlighted in the drawer on this screen
+    override val currentNavItem = R.id.nav_home
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +30,13 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        // my toolbar becomes the action bar, the title comes from the label in the manifest
+        val toolbar =
+            findViewById<Toolbar>(R.id.toolbar)
+
+        setSupportActionBar(toolbar)
+        setUpDrawer(toolbar)
+
         val viewMachinesButton =
             findViewById<Button>(R.id.viewMachinesButton)
 
@@ -38,18 +49,5 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.loggedInText).text =
             "Logged in as ${Session.currentEmail(this)}"
-
-        findViewById<Button>(R.id.logoutButton).setOnClickListener {
-            logOut()
-        }
-    }
-
-    private fun logOut() {
-        Session.logout(this)
-
-        // CLEAR_TASK so Back on the login screen can't get back into the app
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
     }
 }

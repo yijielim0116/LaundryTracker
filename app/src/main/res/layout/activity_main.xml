@@ -1,46 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- home screen, everything in the middle like my PlacedMark lab -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- DrawerLayout = the home screen with the navigation drawer that slides in over it from the left -->
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".activities.MainActivity">
 
-    <!-- big app name in the middle -->
-    <TextView
-        android:id="@+id/mainTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="32sp"
-        android:textStyle="bold" />
+    <!-- first child = the screen itself -->
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!-- opens the machine list -->
-    <Button
-        android:id="@+id/viewMachinesButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="View Machines" />
+        <!-- toolbar with the ☰ button that opens the drawer -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <!-- who is logged in, filled in by the code -->
-    <TextView
-        android:id="@+id/loggedInText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        tools:text="Logged in as test@example.com" />
+        <!-- everything in the middle like my PlacedMark lab -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    <!-- logs out and goes back to the login screen -->
-    <Button
-        android:id="@+id/logoutButton"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log out" />
+            <!-- big app name in the middle -->
+            <TextView
+                android:id="@+id/mainTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
-</LinearLayout>
+            <!-- opens the machine list -->
+            <Button
+                android:id="@+id/viewMachinesButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="View Machines" />
+
+            <!-- who is logged in, filled in by the code (Log out is in the drawer now) -->
+            <TextView
+                android:id="@+id/loggedInText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                tools:text="Logged in as test@example.com" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- second child = the drawer, layout_gravity start = it comes in from the left -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
