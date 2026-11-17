@@ -17,6 +17,23 @@ enum class MachineStatus {
     OUT_OF_ORDER
 }
 
+// the enum names (WASHER, IN_USE...) look ugly on screen, so these give normal words
+// (they used to be in MachineAdapter, moved here so the map can use them too)
+fun MachineType.label(): String {
+    return when (this) {
+        MachineType.WASHER -> "Washer"
+        MachineType.DRYER -> "Dryer"
+    }
+}
+
+fun MachineStatus.label(): String {
+    return when (this) {
+        MachineStatus.AVAILABLE -> "Available"
+        MachineStatus.IN_USE -> "In use"
+        MachineStatus.OUT_OF_ORDER -> "Out of order"
+    }
+}
+
 /**
  * Data class representing a single laundry machine.
  * Kotlin automatically generates toString(), equals(), hashCode(), and copy().
@@ -36,4 +53,9 @@ data class MachineModel(
     // (nullable for the same reason as imageUri, old machines.json files don't have these)
     val latitude: Double? = null,
     val longitude: Double? = null
-)
+) {
+    // only machines with both numbers can go on the map
+    fun hasLocation(): Boolean {
+        return latitude != null && longitude != null
+    }
+}

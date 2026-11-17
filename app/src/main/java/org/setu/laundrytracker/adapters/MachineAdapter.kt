@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.setu.laundrytracker.R
 import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
-import org.setu.laundrytracker.models.MachineType
+import org.setu.laundrytracker.models.label
 
 // adapter for the RecyclerView, it turns each machine into a row (item_machine.xml)
 // same idea as the PlacedMarkAdapter in my lab
@@ -110,29 +110,12 @@ class MachineAdapter(
 
     // only add the cycle length for machines that are in use, it doesn't mean anything otherwise
     private fun statusLine(machine: MachineModel): String {
-        val line = "${typeLabel(machine.type)} · ${statusLabel(machine.status)}"
+        val line = "${machine.type.label()} · ${machine.status.label()}"
 
         return if (machine.status == MachineStatus.IN_USE) {
             "$line · ${machine.cycleMinutes} min"
         } else {
             line
-        }
-    }
-
-    // the enum names (WASHER, DRYER) look ugly on screen so I change them to normal words
-    private fun typeLabel(type: MachineType): String {
-        return when (type) {
-            MachineType.WASHER -> "Washer"
-            MachineType.DRYER -> "Dryer"
-        }
-    }
-
-    // same thing for the status
-    private fun statusLabel(status: MachineStatus): String {
-        return when (status) {
-            MachineStatus.AVAILABLE -> "Available"
-            MachineStatus.IN_USE -> "In use"
-            MachineStatus.OUT_OF_ORDER -> "Out of order"
         }
     }
 }
