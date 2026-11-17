@@ -1,5 +1,15 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
+}
+
+// my Google Maps key lives in local.properties (git ignores that file) so it never ends up on GitHub
+val localProperties = Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) {
+        file.inputStream().use { load(it) }
+    }
 }
 
 android {
@@ -16,6 +26,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // puts the key into the manifest as ${MAPS_API_KEY}, empty if it's not set (the map just shows grey)
+        manifestPlaceholders["MAPS_API_KEY"] = localProperties.getProperty("MAPS_API_KEY", "")
     }
 
     buildTypes {
@@ -43,6 +56,8 @@ dependencies {
     implementation(libs.material)
     // Timber for logging, same as my PlacedMark lab (shows in Logcat)
     implementation(libs.timber)
+    // Google Maps, for picking a machine's location and showing all machines on a map
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)

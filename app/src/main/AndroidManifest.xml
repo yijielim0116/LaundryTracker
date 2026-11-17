@@ -60,6 +60,11 @@
             android:theme="@style/Theme.LaundryTracker"
             android:windowSoftInputMode="adjustResize" />
 
+        <!-- my Google Maps key, filled in from local.properties by build.gradle.kts -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
         <!-- lets the camera app save a photo into my app's private images folder -->
         <provider
             android:name="androidx.core.content.FileProvider"
