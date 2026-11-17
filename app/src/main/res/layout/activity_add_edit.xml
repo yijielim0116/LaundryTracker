@@ -167,6 +167,28 @@
                     android:text="Take Photo" />
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Map location"
+                android:textStyle="bold" />
+
+            <!-- shows the picked coordinates, or that there isn't one yet -->
+            <TextView
+                android:id="@+id/mapLocationText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="No location set yet" />
+
+            <!-- opens the Google map to pick the spot -->
+            <Button
+                android:id="@+id/setLocationButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Location" />
+
             <Button
                 android:id="@+id/saveButton"
                 android:layout_width="match_parent"

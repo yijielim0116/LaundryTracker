@@ -31,5 +31,9 @@ data class MachineModel(
     val cycleMinutes: Int = 60,
     // the machine's photo as a uri string, null if it doesn't have one
     // nullable so the machines saved before photos existed still load from machines.json
-    val imageUri: String? = null
+    val imageUri: String? = null,
+    // where the machine is, picked on the map, null until I set it
+    // (nullable for the same reason as imageUri, old machines.json files don't have these)
+    val latitude: Double? = null,
+    val longitude: Double? = null
 )

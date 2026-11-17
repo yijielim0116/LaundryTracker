@@ -53,12 +53,23 @@
             android:theme="@style/Theme.LaundryTracker"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".activities.MapPickerActivity"
+            android:exported="false"
+            android:label="Set Location"
+            android:parentActivityName=".activities.AddEditActivity"
+            android:theme="@style/Theme.LaundryTracker" />
+        <activity
             android:name=".activities.AddEditActivity"
             android:exported="false"
             android:label="Add Machine"
             android:parentActivityName=".activities.MachineListActivity"
             android:theme="@style/Theme.LaundryTracker"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- my Google Maps key, filled in from local.properties by build.gradle.kts -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
 
         <!-- lets the camera app save a photo into my app's private images folder -->
         <provider
