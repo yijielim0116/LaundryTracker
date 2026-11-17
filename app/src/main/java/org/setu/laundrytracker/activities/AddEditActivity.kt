@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.RadioGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +33,11 @@ class AddEditActivity : AppCompatActivity() {
     private lateinit var cyclePicker: NumberPicker
     private lateinit var cycleSection: LinearLayout
     private lateinit var machineImage: ImageView
+    private lateinit var mapLocationText: TextView
+
+    // the spot picked on the map, null until I pick one (same as my PlacedMark lab)
+    private var selectedLatitude: Double? = null
+    private var selectedLongitude: Double? = null
 
     // the photo I picked, null until I pick one (same as selectedImageUri in my PlacedMark lab)
     private var selectedImageUri: Uri? = null
@@ -67,6 +73,22 @@ class AddEditActivity : AppCompatActivity() {
     private var cameraUri: Uri? = null
 
     // opens the camera app, it saves the photo straight into cameraUri and tells me if it worked
+    // opens the map, and when I confirm a spot it comes back here with the latitude and longitude
+    private val mapPicker =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data ?: return@registerForActivityResult
+
+                selectedLatitude = data.getDoubleExtra(MapPickerActivity.EXTRA_LATITUDE, 0.0)
+                selectedLongitude = data.getDoubleExtra(MapPickerActivity.EXTRA_LONGITUDE, 0.0)
+
+                Timber.d("Map location picked lat=$selectedLatitude, lon=$selectedLongitude")
+                showMapLocation()
+            } else {
+                Timber.d("Map picker cancelled")
+            }
+        }
+
     private val takePhoto =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { saved: Boolean ->
             if (saved) {
@@ -119,6 +141,13 @@ class AddEditActivity : AppCompatActivity() {
         // only images show up in the picker
         findViewById<Button>(R.id.selectImageButton).setOnClickListener {
             imagePicker.launch(arrayOf("image/*"))
+        }
+
+        mapLocationText =
+            findViewById(R.id.mapLocationText)
+
+        findViewById<Button>(R.id.setLocationButton).setOnClickListener {
+            openMapPicker()
         }
 
         findViewById<Button>(R.id.takePhotoButton).setOnClickListener {
@@ -220,12 +249,60 @@ class AddEditActivity : AppCompatActivity() {
         // show the photo this machine already has (the gallery icon is already there if it has none)
         selectedImageUri = machine.imageUri?.let { Uri.parse(it) }
         selectedImageUri?.let { machineImage.setImageURI(it) }
+
+        // and the spot on the map, if it has one
+        selectedLatitude = machine.latitude
+        selectedLongitude = machine.longitude
+        showMapLocation()
+    }
+
+    // opens the map, starting on the machine's spot if it already has one (otherwise the map uses Waterford)
+    private fun openMapPicker() {
+        val intent = Intent(this, MapPickerActivity::class.java)
+
+        val lat = selectedLatitude
+        val lon = selectedLongitude
+
+        if (lat != null && lon != null) {
+            intent.putExtra(MapPickerActivity.EXTRA_LATITUDE, lat)
+            intent.putExtra(MapPickerActivity.EXTRA_LONGITUDE, lon)
+        }
+
+        // the name shows on the pin
+        val name = nameInput.text.toString().trim()
+        if (name.isNotEmpty()) {
+            intent.putExtra(MapPickerActivity.EXTRA_TITLE, name)
+        }
+
+        Timber.d("Set Location pressed")
+        mapPicker.launch(intent)
+    }
+
+    // 5 decimal places is about 1 metre, plenty for finding a washing machine
+    private fun showMapLocation() {
+        val lat = selectedLatitude
+        val lon = selectedLongitude
+
+        mapLocationText.text =
+            if (lat != null && lon != null) {
+                "Lat %.5f, Lng %.5f".format(lat, lon)
+            } else {
+                "No location set yet"
+            }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(KEY_IMAGE_URI, selectedImageUri?.toString())
         outState.putString(KEY_CAMERA_PATH, cameraFile?.absolutePath)
+
+        // Bundle can't hold a null Double, so only save the location if there is one
+        val lat = selectedLatitude
+        val lon = selectedLongitude
+        if (lat != null && lon != null) {
+            outState.putDouble(KEY_LATITUDE, lat)
+            outState.putDouble(KEY_LONGITUDE, lon)
+        }
     }
 
     private fun restorePhotoState(state: Bundle) {
@@ -236,6 +313,12 @@ class AddEditActivity : AppCompatActivity() {
 
         selectedImageUri = state.getString(KEY_IMAGE_URI)?.let { Uri.parse(it) }
         selectedImageUri?.let { machineImage.setImageURI(it) }
+
+        if (state.containsKey(KEY_LATITUDE) && state.containsKey(KEY_LONGITUDE)) {
+            selectedLatitude = state.getDouble(KEY_LATITUDE)
+            selectedLongitude = state.getDouble(KEY_LONGITUDE)
+        }
+        showMapLocation()
     }
 
     // makes an empty file in filesDir/images and gives the camera a content:// uri for it
@@ -323,7 +406,9 @@ class AddEditActivity : AppCompatActivity() {
                 type = selectedType(),
                 status = selectedStatus(),
                 cycleMinutes = selectedCycleMinutes(),
-                imageUri = selectedImageUri?.toString()
+                imageUri = selectedImageUri?.toString(),
+                latitude = selectedLatitude,
+                longitude = selectedLongitude
             )
 
             AppData.machines.create(machine)
@@ -344,7 +429,9 @@ class AddEditActivity : AppCompatActivity() {
                 type = selectedType(),
                 status = selectedStatus(),
                 cycleMinutes = selectedCycleMinutes(),
-                imageUri = selectedImageUri?.toString()
+                imageUri = selectedImageUri?.toString(),
+                latitude = selectedLatitude,
+                longitude = selectedLongitude
             )
 
             AppData.machines.update(machine)
@@ -368,5 +455,7 @@ class AddEditActivity : AppCompatActivity() {
         // keys for saving the photo when the screen gets recreated
         private const val KEY_IMAGE_URI = "imageUri"
         private const val KEY_CAMERA_PATH = "cameraPath"
+        private const val KEY_LATITUDE = "latitude"
+        private const val KEY_LONGITUDE = "longitude"
     }
 }
