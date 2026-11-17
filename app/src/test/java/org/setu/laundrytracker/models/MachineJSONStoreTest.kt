@@ -138,4 +138,31 @@ class MachineJSONStoreTest {
         assertTrue(nested.exists())
         assertEquals("Washer 1", MachineJSONStore(nested).findOne(1L)?.name)
     }
+
+    @Test
+    fun locationIsKeptAfterReopening() {
+        reopen().create(MachineModel(name = "Washer 1", latitude = 52.245954, longitude = -7.139539))
+
+        val machine = reopen().findOne(1L)
+        assertEquals(52.245954, machine?.latitude!!, 0.000001)
+        assertEquals(-7.139539, machine.longitude!!, 0.000001)
+    }
+
+    @Test
+    fun updateChangesTheLocation() {
+        val store = reopen()
+        store.create(MachineModel(name = "Washer 1"))
+        store.update(MachineModel(id = 1L, name = "Washer 1", latitude = 52.25, longitude = -7.14))
+
+        assertEquals(52.25, reopen().findOne(1L)?.latitude!!, 0.000001)
+    }
+
+    @Test
+    fun machinesSavedBeforeLocationsExistedHaveNoLocation() {
+        file.writeText("""[{"id":1,"name":"Washer 1","location":"Block A","type":"WASHER","status":"AVAILABLE","cycleMinutes":60}]""")
+
+        val machine = reopen().findOne(1L)
+        assertNull(machine?.latitude)
+        assertNull(machine?.longitude)
+    }
 }
