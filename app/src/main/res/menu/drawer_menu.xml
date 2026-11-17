@@ -2,7 +2,7 @@
 <!-- the items in the navigation drawer -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- the two main screens, "single" means only one of them is highlighted (the one I'm on) -->
+    <!-- the main screens, "single" means only one of them is highlighted (the one I'm on) -->
     <group
         android:id="@+id/nav_group_screens"
         android:checkableBehavior="single">
@@ -16,6 +16,11 @@
             android:id="@+id/nav_machines"
             android:icon="@drawable/ic_nav_machines"
             android:title="Machines" />
+
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_nav_map"
+            android:title="Map" />
     </group>
 
     <!-- a different group so the drawer draws a line above these -->

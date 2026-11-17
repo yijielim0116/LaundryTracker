@@ -17,7 +17,7 @@ import org.setu.laundrytracker.main.Session
 import timber.log.Timber
 
 /**
- * The screens with the navigation drawer (Home and Machines) extend this,
+ * The screens with the navigation drawer (Home, Machines and Map) extend this,
  * so the drawer code is only written once instead of copied into both.
  */
 // abstract = I never open a DrawerActivity by itself, only the screens that extend it
@@ -108,6 +108,9 @@ abstract class DrawerActivity : AppCompatActivity() {
 
             R.id.nav_machines ->
                 startActivity(Intent(this, MachineListActivity::class.java))
+
+            R.id.nav_map ->
+                startActivity(Intent(this, MachineMapActivity::class.java))
 
             R.id.nav_add_machine ->
                 startActivity(Intent(this, AddEditActivity::class.java))

@@ -36,4 +36,9 @@ data class MachineModel(
     // (nullable for the same reason as imageUri, old machines.json files don't have these)
     val latitude: Double? = null,
     val longitude: Double? = null
-)
+) {
+    // only machines with both numbers can go on the map
+    fun hasLocation(): Boolean {
+        return latitude != null && longitude != null
+    }
+}
