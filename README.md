@@ -7,7 +7,7 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 - **Splash screen** with the app logo and name for 2 seconds when the app opens
 - **Sign up and log in**: accounts are saved with salted SHA-256 password hashes, never the real password
 - **Stays logged in** between launches; the home screen shows who is logged in
-- **Navigation drawer** on Home and Machines (tap ☰ or swipe from the left) with Home, Machines, Add machine, About and Log out, and who is logged in at the top
+- **Navigation drawer** on Home, Machines and Map (tap ☰ or swipe from the left) with Home, Machines, Map, Add machine, About and Log out, and who is logged in at the top
 - **Home screen** with a View Machines button
 - **Add, list, edit and delete machines** (name, location, washer/dryer, status)
 - **Search** machines by name or location, and **filter** by status with a drop-down
@@ -15,6 +15,8 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 - **Toolbar menu** on Machines with Add and Clear filters
 - **Back navigation** between Home → Machines → Add/Edit, and an up arrow on the Add/Edit form
 - **Machine photos**: pick a photo from the phone or take one with the camera; it shows on the form and as a thumbnail in the list
+- **Google Maps location**: *Set Location* on the form opens a map where you tap, long-press or drag a pin to where the machine is
+- **Map of all machines**: every machine with a location is a pin, coloured by status (green available, orange in use, red out of order); tapping a pin shows its name and status, and tapping that opens the machine
 - **Data validation**: a machine must have a name; sign up checks the email, password length and that both passwords match
 - **Saved to JSON**: machines and accounts are kept in pretty-printed `machines.json` and `users.json` and are still there after the app is closed
 - **Logging with Timber**: the stores and the main actions on each screen write to Logcat (passwords are never logged)
@@ -30,6 +32,8 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 | Home | `MainActivity` | `activity_main.xml` |
 | Machines list | `MachineListActivity` + `MachineAdapter` | `activity_machine_list.xml`, `item_machine.xml` |
 | Add / Edit machine | `AddEditActivity` | `activity_add_edit.xml` |
+| Set location | `MapPickerActivity` | `activity_map_picker.xml` |
+| Map of all machines | `MachineMapActivity` | `activity_machine_map.xml` |
 
 ## Class diagram
 
@@ -55,12 +59,24 @@ Laundry Tracker is a Kotlin Android app for keeping track of the laundry machine
 - `Passwords` makes a random salt for each user and stores a SHA-256 hash of salt + password, so the real password is never saved.
 - `Session` keeps the logged-in email in SharedPreferences, so the app skips Login next time. Logging out clears it.
 
+### Maps
+
+![Laundry Tracker maps diagram](docs/laundrytracker-uml-maps.png)
+
+([SVG version](docs/laundrytracker-uml-maps.svg))
+
+- Both map screens use Google Maps' `SupportMapFragment` and implement `OnMapReadyCallback`, so they add their pins once `onMapReady()` is called.
+- `AddEditActivity` opens `MapPickerActivity` with an Activity Result launcher and gets the latitude and longitude back, like the map picker in the PlacedMark lab. The location is saved in `MachineModel.latitude` / `longitude`.
+- `MachineMapActivity` extends `DrawerActivity`, reads every machine from `AppData.machines`, and only shows the ones where `hasLocation()` is true. Tapping a pin's pop-up opens `AddEditActivity` with that machine's id.
+- `MachineType.label()` and `MachineStatus.label()` give the words shown on screen, so the list and the map say the same thing.
+
 ## Project structure
 
 ```
 app/src/main/java/org/setu/laundrytracker/
 ├── activities/   SplashActivity, LoginActivity, SignupActivity, DrawerActivity,
-│                 MainActivity, MachineListActivity, AddEditActivity
+│                 MainActivity, MachineListActivity, AddEditActivity,
+│                 MapPickerActivity, MachineMapActivity
 ├── adapters/     MachineAdapter
 ├── main/         MainApp, AppData, Session
 └── models/       MachineModel (+ MachineType, MachineStatus), MachineStore,
@@ -95,7 +111,18 @@ Logins and sign ups only log the email and whether it worked. Passwords, hashes 
 ## Running the app
 
 1. Open the project folder in Android Studio.
-2. Let Gradle sync, choose an emulator (e.g. Pixel 4a, API 34) and press **Run**.
+2. Add a Google Maps API key to `local.properties` (see below).
+3. Let Gradle sync, choose an emulator with Google APIs (e.g. Pixel 4a, API 34) and press **Run**.
+
+### Google Maps API key
+
+The maps need a key for the **Maps SDK for Android** from the Google Cloud Console (restrict it to Android apps with the package `org.setu.laundrytracker` and your debug SHA-1). Put it in `local.properties` in the project folder:
+
+```
+MAPS_API_KEY=your-key-here
+```
+
+`build.gradle.kts` reads it from there and puts it in the manifest. `local.properties` is git-ignored, so the key is never committed. Without a key the app still builds, but the maps stay grey.
 
 From the terminal:
 
@@ -108,13 +135,14 @@ From the terminal:
 Unit tests are in `app/src/test/java/org/setu/laundrytracker/models/`:
 
 - `MachineMemStoreTest`: create, update, delete and cycle length on the in-memory store
-- `MachineJSONStoreTest`: saves to a temporary file, then reopens it to check machines, edits, deletes, ids and photos are kept, and that machines saved before photos existed still load
+- `MachineJSONStoreTest`: saves to a temporary file, then reopens it to check machines, edits, deletes, ids, photos and locations are kept, and that machines saved before photos or locations existed still load
+- `MachineModelTest`: `hasLocation()` is only true when both latitude and longitude are set, and the type/status labels
 - `UserJSONStoreTest`: users are kept after reopening, email lookup ignores capitals, the password isn't saved as plain text, right/wrong passwords, and a broken file doesn't crash
 - Both JSON store tests also check the file is pretty-printed and that saving into a folder that doesn't exist yet works
 
 ## Built with
 
-Kotlin, AndroidX AppCompat, Material Components (NavigationView), DrawerLayout, RecyclerView, Activity Result APIs, FileProvider, Gson, Timber, JUnit.
+Kotlin, AndroidX AppCompat, Material Components (NavigationView), DrawerLayout, RecyclerView, Google Maps SDK for Android, Activity Result APIs, FileProvider, Gson, Timber, JUnit.
 
 ## Development
 
