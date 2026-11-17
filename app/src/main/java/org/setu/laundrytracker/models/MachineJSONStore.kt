@@ -50,7 +50,9 @@ class MachineJSONStore(private val file: File) : MachineStore {
                 type = machine.type,
                 status = machine.status,
                 cycleMinutes = machine.cycleMinutes,
-                imageUri = machine.imageUri
+                imageUri = machine.imageUri,
+                latitude = machine.latitude,
+                longitude = machine.longitude
             )
             save()
             Timber.d("update: id=${machine.id}, name=${machine.name}")
