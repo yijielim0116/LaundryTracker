@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:background="@color/teal_700"
+            android:background="@color/toolbar"
             android:contentDescription="@string/app_name"
             android:padding="8dp"
             android:src="@drawable/ic_washing_machine" />

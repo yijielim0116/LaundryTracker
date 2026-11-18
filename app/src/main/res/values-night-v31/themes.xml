@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- dark mode on Android 12+ would skip values-v31, so the teal system splash is set here too -->
+    <style name="Theme.LaundryTracker.Splash" parent="Theme.LaundryTracker">
+        <item name="android:windowBackground">@color/teal_700</item>
+        <item name="android:windowSplashScreenBackground">@color/teal_700</item>
+    </style>
+</resources>

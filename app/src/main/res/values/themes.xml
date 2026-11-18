@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- NoActionBar because I put my own Toolbar in the layouts
-         Bridge = a Material theme that still keeps the normal AppCompat buttons/radio buttons,
-         I only switched so the Material NavigationView (the drawer) works -->
-    <style name="Theme.LaundryTracker" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
-        <!-- teal for the toolbar, and the radio buttons / buttons use it too -->
+    <!-- DayNight = light normally, dark when the phone (or my Dark mode setting) is in dark mode
+         NoActionBar because I put my own Toolbar in the layouts
+         full Material theme now, so buttons, radio buttons and text fields are Material ones -->
+    <style name="Theme.LaundryTracker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- teal for buttons, radio buttons and the ticked drawer item -->
         <item name="colorPrimary">@color/teal_700</item>
-        <item name="colorPrimaryDark">@color/teal_700</item>
-        <item name="colorAccent">@color/teal_700</item>
-        <!-- Material uses colorSecondary where AppCompat used colorAccent -->
+        <item name="colorPrimaryVariant">@color/toolbar</item>
+        <!-- otherwise screens without edge-to-edge (the add/edit form) get Material's default purple status bar -->
+        <item name="android:statusBarColor">@color/toolbar</item>
+        <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/white</item>
     </style>
 
     <!-- splash theme, teal background so there's no white flash before my layout shows -->

@@ -13,7 +13,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -140,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:layout_marginTop="8dp"
-                android:background="#EEEEEE"
+                android:background="@color/photo_placeholder"
                 android:contentDescription="Machine photo"
                 android:scaleType="centerCrop"
                 android:src="@android:drawable/ic_menu_gallery" />

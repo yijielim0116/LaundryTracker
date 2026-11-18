@@ -18,7 +18,7 @@
             android:id="@+id/machineImage"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:background="#EEEEEE"
+            android:background="@color/photo_placeholder"
             android:contentDescription="Machine photo"
             android:scaleType="centerCrop" />
 
