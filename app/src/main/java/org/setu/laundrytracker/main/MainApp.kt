@@ -17,6 +17,9 @@ class MainApp : Application() {
         }
         Timber.d("MainApp created")
 
+        // put the app in light / dark / follow-the-phone mode before the first screen shows
+        ThemeSetting.applySaved(this)
+
         // the lab calls this in MainActivity, but my app opens Splash and Login before Home
         // (and Login already needs AppData.users), so I load the stores here instead.
         // MainApp always runs first, even when Android reopens the app straight on another screen

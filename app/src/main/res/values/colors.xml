@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- colours that change in dark mode (values-night/colors.xml has the dark versions) -->
+    <!-- toolbars, the drawer header and the login logo -->
+    <color name="toolbar">#FF018786</color>
+    <!-- grey box behind a machine with no photo yet -->
+    <color name="photo_placeholder">#FFEEEEEE</color>
+    <!-- the little message box on top of the map -->
+    <color name="message_background">#FFFFFFFF</color>
 </resources>

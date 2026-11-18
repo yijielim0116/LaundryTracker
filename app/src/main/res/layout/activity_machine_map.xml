@@ -20,7 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/toolbar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|center_horizontal"
                 android:layout_margin="16dp"
-                android:background="@color/white"
+                android:background="@color/message_background"
                 android:elevation="4dp"
                 android:padding="12dp"
                 android:text="No machines have a location yet. Use Set Location on a machine to add one."
