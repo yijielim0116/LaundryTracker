@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.main.useNightStyleIfDark
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineStatus
 import org.setu.laundrytracker.models.label
@@ -64,6 +65,8 @@ class MachineMapActivity : DrawerActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         googleMap.uiSettings.isZoomControlsEnabled = true
+        // dark map in dark mode
+        googleMap.useNightStyleIfDark(this)
         // the campus buildings have floors, but my machines don't have a floor so I hide that picker
         googleMap.uiSettings.isIndoorLevelPickerEnabled = false
 

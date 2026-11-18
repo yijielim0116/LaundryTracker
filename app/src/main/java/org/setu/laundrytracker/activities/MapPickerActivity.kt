@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.main.useNightStyleIfDark
 import timber.log.Timber
 
 // Map screen for picking where a machine is - same idea as MapPickerActivity in my PlacedMark lab,
@@ -70,6 +71,8 @@ class MapPickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         map.uiSettings.isZoomControlsEnabled = true
+        // dark map in dark mode
+        map.useNightStyleIfDark(this)
 
         // draggable so I can also hold the pin and move it
         marker = map.addMarker(
