@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import org.setu.laundrytracker.R
 import org.setu.laundrytracker.main.Session
+import org.setu.laundrytracker.main.ThemeSetting
 import timber.log.Timber
 
 /**
@@ -115,12 +116,32 @@ abstract class DrawerActivity : AppCompatActivity() {
             R.id.nav_add_machine ->
                 startActivity(Intent(this, AddEditActivity::class.java))
 
+            R.id.nav_dark_mode ->
+                showDarkModeChoice()
+
             R.id.nav_about ->
                 showAbout()
 
             R.id.nav_logout ->
                 logOut()
         }
+    }
+
+    // pop up with the 3 choices, the one I picked last time is ticked
+    private fun showDarkModeChoice() {
+        val options = arrayOf("Follow the phone", "Light", "Dark")
+
+        AlertDialog.Builder(this)
+            .setTitle("Dark mode")
+            .setSingleChoiceItems(options, ThemeSetting.saved(this)) { dialog, which ->
+                Timber.d("Dark mode set to ${options[which]}")
+                ThemeSetting.save(this, which)
+                dialog.dismiss()
+                // every open screen gets redrawn in the new mode
+                ThemeSetting.apply(which)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     // small pop up with info about the app (it used to be in the machine list menu)

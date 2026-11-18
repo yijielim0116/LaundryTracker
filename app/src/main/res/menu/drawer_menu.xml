@@ -32,6 +32,11 @@
             android:title="Add machine" />
 
         <item
+            android:id="@+id/nav_dark_mode"
+            android:icon="@drawable/ic_nav_dark_mode"
+            android:title="Dark mode" />
+
+        <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_nav_about"
             android:title="About" />
