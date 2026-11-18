@@ -33,13 +33,20 @@
             android:padding="32dp">
 
             <!-- search box, the list updates while typing -->
-            <EditText
-                android:id="@+id/searchInput"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Search by name or location"
-                android:importantForAutofill="no"
-                android:inputType="text" />
+                android:layout_marginTop="8dp"
+                android:hint="Search by name or location">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- drop-down to only show machines with a certain status, options are in strings.xml -->
             <Spinner
