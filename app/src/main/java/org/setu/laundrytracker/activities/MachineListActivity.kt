@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.setu.laundrytracker.R
 import org.setu.laundrytracker.adapters.MachineAdapter
 import org.setu.laundrytracker.main.AppData
@@ -83,6 +84,11 @@ class MachineListActivity : DrawerActivity() {
 
         recyclerView.adapter = adapter
 
+        // the round + button opens the add form (it used to be ADD on the toolbar)
+        findViewById<FloatingActionButton>(R.id.addMachineFab).setOnClickListener {
+            openAddMachine()
+        }
+
         searchInput =
             findViewById(R.id.searchInput)
 
@@ -115,11 +121,6 @@ class MachineListActivity : DrawerActivity() {
     // what happens when a menu item is tapped
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_add -> {
-                openAddMachine()
-                true
-            }
-
             R.id.action_clear_filters -> {
                 clearFilters()
                 true
@@ -129,7 +130,7 @@ class MachineListActivity : DrawerActivity() {
         }
     }
 
-    // opens the form to add a new machine (from the Add item on the toolbar)
+    // opens the form to add a new machine (from the round + button)
     private fun openAddMachine() {
         startActivity(
             Intent(this, AddEditActivity::class.java)

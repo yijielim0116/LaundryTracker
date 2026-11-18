@@ -3,11 +3,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- shows as "ADD" on the toolbar itself when there's room -->
-    <item
-        android:id="@+id/action_add"
-        android:title="Add"
-        app:showAsAction="ifRoom" />
+    <!-- Add is the round + button on the screen now, not in this menu -->
 
     <!-- always in the ⋮ overflow menu (About is in the navigation drawer now) -->
     <item
