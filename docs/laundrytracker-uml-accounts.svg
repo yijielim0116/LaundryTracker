@@ -1,5 +1,5 @@
-<svg viewBox="0 0 1440 1365" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
-  <rect width="1440" height="1365" fill="#ffffff"/>
+<svg viewBox="0 0 1440 1684" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1440" height="1684" fill="#ffffff"/>
   <defs>
     <marker id="openArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
       <path d="M 0 0 L 9 5 L 0 10" fill="none" stroke="#333" stroke-width="1.2"/>
@@ -8,7 +8,7 @@
       <path d="M 0 0 L 13 7 L 0 14 Z" fill="#ffffff" stroke="#333" stroke-width="1.2"/>
     </marker>
   </defs>
-  <text x="720.0" y="34" font-size="17" font-weight="bold" text-anchor="middle">Laundry Tracker: accounts (sign up, login, session)</text>
+  <text x="720.0" y="34" font-size="17" font-weight="bold" text-anchor="middle">Laundry Tracker: accounts and settings (sign up, login, session, dark mode)</text>
 <rect x="200" y="60" width="380" height="89" fill="#f2f2f2" stroke="#333" stroke-width="1.5"/>
   <line x1="200" y1="104" x2="580" y2="104" stroke="#333" stroke-width="1.5"/>
   <line x1="200" y1="116" x2="580" y2="116" stroke="#333" stroke-width="1.5"/>
@@ -41,12 +41,13 @@
   <text x="430" y="349" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
   <text x="430" y="366" font-size="12">- signUp()</text>
   <text x="430" y="383" font-size="12">- openHome()</text>
-  <rect x="1050" y="215" width="250" height="92" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="1050" y1="245" x2="1300" y2="245" stroke="#333" stroke-width="1.5"/>
-  <line x1="1050" y1="257" x2="1300" y2="257" stroke="#333" stroke-width="1.5"/>
-  <text x="1175.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">MainApp</text>
+  <rect x="1050" y="215" width="300" height="109" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="1050" y1="245" x2="1350" y2="245" stroke="#333" stroke-width="1.5"/>
+  <line x1="1050" y1="257" x2="1350" y2="257" stroke="#333" stroke-width="1.5"/>
+  <text x="1200.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">MainApp</text>
   <text x="1060" y="277" font-size="12">+ onCreate()</text>
-  <text x="1060" y="294" font-size="11" fill="#555">« plants Timber, calls initialize() »</text>
+  <text x="1060" y="294" font-size="11" fill="#555">« plants Timber, applies ThemeSetting, »</text>
+  <text x="1060" y="311" font-size="11" fill="#555">« calls AppData.initialize() »</text>
   <rect x="30" y="511" width="400" height="178" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
   <line x1="30" y1="555" x2="430" y2="555" stroke="#333" stroke-width="1.5"/>
   <line x1="30" y1="605" x2="430" y2="605" stroke="#333" stroke-width="1.5"/>
@@ -109,13 +110,36 @@
   <text x="570" y="1222" font-size="12">+ salt: String</text>
   <text x="570" y="1255" font-size="11" fill="#555">« data class »</text>
   <text x="570" y="1272" font-size="12">never stores the real password</text>
+  <text x="30" y="1345" font-size="14" font-weight="bold" fill="#333">Settings</text>
+  <line x1="30" y1="1353" x2="1410" y2="1353" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="30" y="1375" width="460" height="229" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="1419" x2="490" y2="1419" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="1486" x2="490" y2="1486" stroke="#333" stroke-width="1.5"/>
+  <text x="260.0" y="1392" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
+  <text x="260.0" y="1410" font-size="15" font-weight="bold" text-anchor="middle">ThemeSetting</text>
+  <text x="40" y="1439" font-size="12">+ SYSTEM = 0, LIGHT = 1, DARK = 2</text>
+  <text x="40" y="1456" font-size="12">- PREFS_NAME: String = "settings"</text>
+  <text x="40" y="1473" font-size="12">- KEY_THEME: String = "theme"</text>
+  <text x="40" y="1506" font-size="12">+ saved(context: Context): Int</text>
+  <text x="40" y="1523" font-size="12">+ save(context: Context, choice: Int)</text>
+  <text x="40" y="1540" font-size="12">+ toNightMode(choice: Int): Int</text>
+  <text x="40" y="1557" font-size="12">+ apply(choice: Int)</text>
+  <text x="40" y="1574" font-size="12">+ applySaved(context: Context)</text>
+  <text x="40" y="1591" font-size="11" fill="#555">« saved in SharedPreferences like Session »</text>
+  <rect x="620" y="1375" width="380" height="106" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="620" y1="1419" x2="1000" y2="1419" stroke="#333" stroke-width="1.5"/>
+  <line x1="620" y1="1431" x2="1000" y2="1431" stroke="#333" stroke-width="1.5"/>
+  <text x="810.0" y="1392" font-size="12" font-style="italic" text-anchor="middle">« abstract »</text>
+  <text x="810.0" y="1410" font-size="15" font-weight="bold" font-style="italic" text-anchor="middle">DrawerActivity</text>
+  <text x="630" y="1451" font-size="12">- showDarkModeChoice()</text>
+  <text x="630" y="1468" font-size="11" fill="#555">« Dark mode item in the drawer, full box in main diagram »</text>
   <path d="M 180.0 215 L 180.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
   <path d="M 590.0 215 L 590.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
   <path d="M 180.0 179 L 590.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
   <path d="M 390.0 179 L 390.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
   <text x="592" y="173" font-size="11" fill="#555" text-anchor="start">« extends »</text>
-  <path d="M 1175.0 215 L 1175.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
-  <text x="1183.0" y="186.0" font-size="11" fill="#555" text-anchor="start">« extends »</text>
+  <path d="M 1200.0 215 L 1200.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
+  <text x="1208.0" y="186.0" font-size="11" fill="#555" text-anchor="start">« extends »</text>
   <path d="M 330 265 L 420 265" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
   <text x="375.0" y="258" font-size="11" fill="#555" text-anchor="middle">« opens »</text>
   <path d="M 180.0 362 L 180.0 441" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
@@ -125,7 +149,7 @@
   <path d="M 740.0 441 L 740.0 511" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
   <path d="M 14 441 L 14 824 L 30 824" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
   <text x="748.0" y="433" font-size="11" fill="#555" text-anchor="start">« uses »</text>
-  <path d="M 1175.0 307 L 1175.0 561 L 920 561" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <path d="M 1140.0 324 L 1140.0 561 L 920 561" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
   <text x="930" y="554" font-size="11" fill="#555" text-anchor="start">« initialize() »</text>
   <path d="M 920 611 L 1205.0 611 L 1205.0 799" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
   <text x="1213.0" y="789" font-size="11" fill="#555" text-anchor="start">« creates »</text>
@@ -142,5 +166,9 @@
   <text x="1215.0" y="1069" font-size="11" fill="#555" text-anchor="start">saves / loads with Gson</text>
   <path d="M 230.0 956 L 230.0 1161 L 560 1161" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
   <text x="238.0" y="976" font-size="11" fill="#555" text-anchor="start">« checks »</text>
-  <text x="30" y="1337" font-size="11" fill="#555">Key:</text><text x="62" y="1337" font-size="11" fill="#555">+ public</text><text x="133" y="1337" font-size="11" fill="#555">- private</text><text x="210" y="1337" font-size="11" fill="#555">? can be null</text><text x="310" y="1337" font-size="11" fill="#555">hollow triangle = extends / implements</text><text x="552" y="1337" font-size="11" fill="#555">hollow diamond = holds 0..*</text><text x="731" y="1337" font-size="11" fill="#555">dashed arrow = uses / opens / creates</text>
+  <path d="M 1350 255 L 1426 255 L 1426 1634 L 260.0 1634 L 260.0 1604" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="1418" y="1626" font-size="11" fill="#555" text-anchor="end">« applySaved() »</text>
+  <path d="M 620 1425 L 490 1425" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="555.0" y="1418" font-size="11" fill="#555" text-anchor="middle">« save(), apply() »</text>
+  <text x="30" y="1656" font-size="11" fill="#555">Key:</text><text x="62" y="1656" font-size="11" fill="#555">+ public</text><text x="127" y="1656" font-size="11" fill="#555">- private</text><text x="198" y="1656" font-size="11" fill="#555">? can be null</text><text x="292" y="1656" font-size="11" fill="#555">italic = abstract</text><text x="408" y="1656" font-size="11" fill="#555">hollow triangle = extends / implements</text><text x="644" y="1656" font-size="11" fill="#555">hollow diamond = holds 0..*</text><text x="817" y="1656" font-size="11" fill="#555">dashed arrow = uses / opens / creates</text>
 </svg>
