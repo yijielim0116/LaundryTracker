@@ -1,5 +1,5 @@
-<svg viewBox="0 0 1440 1684" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
-  <rect width="1440" height="1684" fill="#ffffff"/>
+<svg viewBox="0 0 1440 1178" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1440" height="1178" fill="#ffffff"/>
   <defs>
     <marker id="openArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
       <path d="M 0 0 L 9 5 L 0 10" fill="none" stroke="#333" stroke-width="1.2"/>
@@ -8,7 +8,7 @@
       <path d="M 0 0 L 13 7 L 0 14 Z" fill="#ffffff" stroke="#333" stroke-width="1.2"/>
     </marker>
   </defs>
-  <text x="720.0" y="34" font-size="17" font-weight="bold" text-anchor="middle">Laundry Tracker: accounts and settings (sign up, login, session, dark mode)</text>
+  <text x="720.0" y="34" font-size="17" font-weight="bold" text-anchor="middle">Laundry Tracker: accounts and settings (Firebase Auth, session, dark mode)</text>
 <rect x="200" y="60" width="380" height="89" fill="#f2f2f2" stroke="#333" stroke-width="1.5"/>
   <line x1="200" y1="104" x2="580" y2="104" stroke="#333" stroke-width="1.5"/>
   <line x1="200" y1="116" x2="580" y2="116" stroke="#333" stroke-width="1.5"/>
@@ -21,26 +21,31 @@
   <text x="1175.0" y="77" font-size="12" font-style="italic" text-anchor="middle">« Android »</text>
   <text x="1175.0" y="95" font-size="15" font-weight="bold" text-anchor="middle">Application</text>
   <text x="1040" y="136" font-size="11" fill="#555">(from the Android framework)</text>
-  <rect x="30" y="215" width="300" height="147" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="245" x2="330" y2="245" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="295" x2="330" y2="295" stroke="#333" stroke-width="1.5"/>
-  <text x="180.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">LoginActivity</text>
+  <rect x="30" y="215" width="320" height="198" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="245" x2="350" y2="245" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="312" x2="350" y2="312" stroke="#333" stroke-width="1.5"/>
+  <text x="190.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">LoginActivity</text>
   <text x="40" y="265" font-size="12">- emailInput: EditText</text>
   <text x="40" y="282" font-size="12">- passwordInput: EditText</text>
-  <text x="40" y="315" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
-  <text x="40" y="332" font-size="12">- logIn()</text>
-  <text x="40" y="349" font-size="11" fill="#555">« after the splash if not logged in »</text>
-  <rect x="420" y="215" width="340" height="181" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="420" y1="245" x2="760" y2="245" stroke="#333" stroke-width="1.5"/>
-  <line x1="420" y1="329" x2="760" y2="329" stroke="#333" stroke-width="1.5"/>
-  <text x="590.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">SignupActivity</text>
+  <text x="40" y="299" font-size="12">- loginButton: Button</text>
+  <text x="40" y="332" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
+  <text x="40" y="349" font-size="12">- logIn()</text>
+  <text x="40" y="366" font-size="12">- showLoginError(error: Exception?)</text>
+  <text x="40" y="383" font-size="12">- openHome()</text>
+  <text x="40" y="400" font-size="11" fill="#555">« after the splash if not logged in »</text>
+  <rect x="420" y="215" width="380" height="215" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="420" y1="245" x2="800" y2="245" stroke="#333" stroke-width="1.5"/>
+  <line x1="420" y1="346" x2="800" y2="346" stroke="#333" stroke-width="1.5"/>
+  <text x="610.0" y="235" font-size="15" font-weight="bold" text-anchor="middle">SignupActivity</text>
   <text x="430" y="265" font-size="12">- emailInput: EditText</text>
   <text x="430" y="282" font-size="12">- passwordInput: EditText</text>
   <text x="430" y="299" font-size="12">- confirmInput: EditText</text>
-  <text x="430" y="316" font-size="12">- MIN_PASSWORD_LENGTH: Int = 6</text>
-  <text x="430" y="349" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
-  <text x="430" y="366" font-size="12">- signUp()</text>
-  <text x="430" y="383" font-size="12">- openHome()</text>
+  <text x="430" y="316" font-size="12">- signupButton: Button</text>
+  <text x="430" y="333" font-size="12">- MIN_PASSWORD_LENGTH: Int = 6</text>
+  <text x="430" y="366" font-size="12">+ onCreate(savedInstanceState: Bundle?)</text>
+  <text x="430" y="383" font-size="12">- signUp()</text>
+  <text x="430" y="400" font-size="12">- showSignupError(error: Exception?)</text>
+  <text x="430" y="417" font-size="12">- openHome()</text>
   <rect x="1050" y="215" width="300" height="109" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
   <line x1="1050" y1="245" x2="1350" y2="245" stroke="#333" stroke-width="1.5"/>
   <line x1="1050" y1="257" x2="1350" y2="257" stroke="#333" stroke-width="1.5"/>
@@ -48,127 +53,88 @@
   <text x="1060" y="277" font-size="12">+ onCreate()</text>
   <text x="1060" y="294" font-size="11" fill="#555">« plants Timber, applies ThemeSetting, »</text>
   <text x="1060" y="311" font-size="11" fill="#555">« calls AppData.initialize() »</text>
-  <rect x="30" y="511" width="400" height="178" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="555" x2="430" y2="555" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="605" x2="430" y2="605" stroke="#333" stroke-width="1.5"/>
-  <text x="230.0" y="528" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
-  <text x="230.0" y="546" font-size="15" font-weight="bold" text-anchor="middle">Session</text>
-  <text x="40" y="575" font-size="12">- PREFS_NAME: String = "session"</text>
-  <text x="40" y="592" font-size="12">- KEY_EMAIL: String = "email"</text>
-  <text x="40" y="625" font-size="12">+ login(context: Context, email: String)</text>
-  <text x="40" y="642" font-size="12">+ logout(context: Context)</text>
-  <text x="40" y="659" font-size="12">+ currentEmail(context: Context): String?</text>
-  <text x="40" y="676" font-size="11" fill="#555">« saved in SharedPreferences »</text>
-  <rect x="560" y="511" width="360" height="144" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="560" y1="555" x2="920" y2="555" stroke="#333" stroke-width="1.5"/>
-  <line x1="560" y1="605" x2="920" y2="605" stroke="#333" stroke-width="1.5"/>
-  <text x="740.0" y="528" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
-  <text x="740.0" y="546" font-size="15" font-weight="bold" text-anchor="middle">AppData</text>
-  <text x="570" y="575" font-size="12">+ machines: MachineStore  (lateinit, private set)</text>
-  <text x="570" y="592" font-size="12">+ users: UserStore  (lateinit, private set)</text>
-  <text x="570" y="625" font-size="12">+ initialize(context: Context)</text>
-  <text x="570" y="642" font-size="11" fill="#555">« creates the JSON stores once »</text>
-  <rect x="30" y="799" width="400" height="157" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="843" x2="430" y2="843" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="855" x2="430" y2="855" stroke="#333" stroke-width="1.5"/>
-  <text x="230.0" y="816" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
-  <text x="230.0" y="834" font-size="15" font-weight="bold" text-anchor="middle">Passwords</text>
-  <text x="40" y="875" font-size="12">+ newSalt(): String</text>
-  <text x="40" y="892" font-size="12">+ hash(password: String, salt: String): String</text>
-  <text x="40" y="909" font-size="12">+ matches(password: String, user: UserModel): Boolean</text>
-  <text x="40" y="926" font-size="12">- toHex(bytes: ByteArray): String</text>
-  <text x="40" y="943" font-size="11" fill="#555">« SHA-256 of salt + password »</text>
-  <rect x="560" y="799" width="340" height="123" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="560" y1="843" x2="900" y2="843" stroke="#333" stroke-width="1.5"/>
-  <line x1="560" y1="855" x2="900" y2="855" stroke="#333" stroke-width="1.5"/>
-  <text x="730.0" y="816" font-size="12" font-style="italic" text-anchor="middle">« interface »</text>
-  <text x="730.0" y="834" font-size="15" font-weight="bold" text-anchor="middle">UserStore</text>
-  <text x="570" y="875" font-size="12">+ findAll(): List&lt;UserModel&gt;</text>
-  <text x="570" y="892" font-size="12">+ create(user: UserModel)</text>
-  <text x="570" y="909" font-size="12">+ findByEmail(email: String): UserModel?</text>
-  <rect x="1000" y="799" width="410" height="232" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="1000" y1="829" x2="1410" y2="829" stroke="#333" stroke-width="1.5"/>
-  <line x1="1000" y1="930" x2="1410" y2="930" stroke="#333" stroke-width="1.5"/>
-  <text x="1205.0" y="819" font-size="15" font-weight="bold" text-anchor="middle">UserJSONStore</text>
-  <text x="1010" y="849" font-size="12">- file: File  (users.json)</text>
-  <text x="1010" y="866" font-size="12">- gson: Gson  (pretty printing)</text>
-  <text x="1010" y="883" font-size="12">- listType: Type</text>
-  <text x="1010" y="900" font-size="12">- users: ArrayList&lt;UserModel&gt;</text>
-  <text x="1010" y="917" font-size="12">- lastId: AtomicLong</text>
-  <text x="1010" y="950" font-size="12">+ findAll(): List&lt;UserModel&gt;</text>
-  <text x="1010" y="967" font-size="12">+ create(user: UserModel)</text>
-  <text x="1010" y="984" font-size="12">+ findByEmail(email: String): UserModel?</text>
-  <text x="1010" y="1001" font-size="12">- save()</text>
-  <text x="1010" y="1018" font-size="12">- load()</text>
-  <rect x="560" y="1121" width="340" height="164" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="560" y1="1151" x2="900" y2="1151" stroke="#333" stroke-width="1.5"/>
-  <line x1="560" y1="1235" x2="900" y2="1235" stroke="#333" stroke-width="1.5"/>
-  <text x="730.0" y="1141" font-size="15" font-weight="bold" text-anchor="middle">UserModel</text>
-  <text x="570" y="1171" font-size="12">+ id: Long = 0</text>
-  <text x="570" y="1188" font-size="12">+ email: String</text>
-  <text x="570" y="1205" font-size="12">+ passwordHash: String</text>
-  <text x="570" y="1222" font-size="12">+ salt: String</text>
-  <text x="570" y="1255" font-size="11" fill="#555">« data class »</text>
-  <text x="570" y="1272" font-size="12">never stores the real password</text>
-  <text x="30" y="1345" font-size="14" font-weight="bold" fill="#333">Settings</text>
-  <line x1="30" y1="1353" x2="1410" y2="1353" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
-  <rect x="30" y="1375" width="460" height="229" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="1419" x2="490" y2="1419" stroke="#333" stroke-width="1.5"/>
-  <line x1="30" y1="1486" x2="490" y2="1486" stroke="#333" stroke-width="1.5"/>
-  <text x="260.0" y="1392" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
-  <text x="260.0" y="1410" font-size="15" font-weight="bold" text-anchor="middle">ThemeSetting</text>
-  <text x="40" y="1439" font-size="12">+ SYSTEM = 0, LIGHT = 1, DARK = 2</text>
-  <text x="40" y="1456" font-size="12">- PREFS_NAME: String = "settings"</text>
-  <text x="40" y="1473" font-size="12">- KEY_THEME: String = "theme"</text>
-  <text x="40" y="1506" font-size="12">+ saved(context: Context): Int</text>
-  <text x="40" y="1523" font-size="12">+ save(context: Context, choice: Int)</text>
-  <text x="40" y="1540" font-size="12">+ toNightMode(choice: Int): Int</text>
-  <text x="40" y="1557" font-size="12">+ apply(choice: Int)</text>
-  <text x="40" y="1574" font-size="12">+ applySaved(context: Context)</text>
-  <text x="40" y="1591" font-size="11" fill="#555">« saved in SharedPreferences like Session »</text>
-  <rect x="620" y="1375" width="380" height="106" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-  <line x1="620" y1="1419" x2="1000" y2="1419" stroke="#333" stroke-width="1.5"/>
-  <line x1="620" y1="1431" x2="1000" y2="1431" stroke="#333" stroke-width="1.5"/>
-  <text x="810.0" y="1392" font-size="12" font-style="italic" text-anchor="middle">« abstract »</text>
-  <text x="810.0" y="1410" font-size="15" font-weight="bold" font-style="italic" text-anchor="middle">DrawerActivity</text>
-  <text x="630" y="1451" font-size="12">- showDarkModeChoice()</text>
-  <text x="630" y="1468" font-size="11" fill="#555">« Dark mode item in the drawer, full box in main diagram »</text>
-  <path d="M 180.0 215 L 180.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
-  <path d="M 590.0 215 L 590.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
-  <path d="M 180.0 179 L 590.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
+  <rect x="30" y="545" width="380" height="157" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="589" x2="410" y2="589" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="601" x2="410" y2="601" stroke="#333" stroke-width="1.5"/>
+  <text x="220.0" y="562" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
+  <text x="220.0" y="580" font-size="15" font-weight="bold" text-anchor="middle">Session</text>
+  <text x="40" y="621" font-size="12">+ userId(): String?</text>
+  <text x="40" y="638" font-size="12">+ currentEmail(): String?</text>
+  <text x="40" y="655" font-size="12">+ isLoggedIn(): Boolean</text>
+  <text x="40" y="672" font-size="12">+ logout()</text>
+  <text x="40" y="689" font-size="11" fill="#555">« just asks Firebase who is logged in »</text>
+  <rect x="520" y="545" width="360" height="161" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="520" y1="589" x2="880" y2="589" stroke="#333" stroke-width="1.5"/>
+  <line x1="520" y1="622" x2="880" y2="622" stroke="#333" stroke-width="1.5"/>
+  <text x="700.0" y="562" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
+  <text x="700.0" y="580" font-size="15" font-weight="bold" text-anchor="middle">AppData</text>
+  <text x="530" y="609" font-size="12">+ machines: MachineStore  (lateinit, private set)</text>
+  <text x="530" y="642" font-size="12">+ initialize()</text>
+  <text x="530" y="659" font-size="12">+ useCloudStoreFor(userId: String)</text>
+  <text x="530" y="676" font-size="12">+ signedOut()</text>
+  <text x="530" y="693" font-size="11" fill="#555">« full box in the main diagram »</text>
+  <rect x="990" y="545" width="420" height="174" fill="#f2f2f2" stroke="#333" stroke-width="1.5"/>
+  <line x1="990" y1="589" x2="1410" y2="589" stroke="#333" stroke-width="1.5"/>
+  <line x1="990" y1="601" x2="1410" y2="601" stroke="#333" stroke-width="1.5"/>
+  <text x="1200.0" y="562" font-size="12" font-style="italic" text-anchor="middle">« Firebase »</text>
+  <text x="1200.0" y="580" font-size="15" font-weight="bold" text-anchor="middle">FirebaseAuth</text>
+  <text x="1000" y="621" font-size="12">+ getInstance(): FirebaseAuth</text>
+  <text x="1000" y="638" font-size="12">+ createUserWithEmailAndPassword(email, password)</text>
+  <text x="1000" y="655" font-size="12">+ signInWithEmailAndPassword(email, password)</text>
+  <text x="1000" y="672" font-size="12">+ currentUser: FirebaseUser?</text>
+  <text x="1000" y="689" font-size="12">+ signOut()</text>
+  <text x="1000" y="706" font-size="11" fill="#555">« keeps passwords safe and remembers who is logged in »</text>
+  <text x="30" y="839" font-size="14" font-weight="bold" fill="#333">Settings</text>
+  <line x1="30" y1="847" x2="1410" y2="847" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="30" y="869" width="460" height="229" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="913" x2="490" y2="913" stroke="#333" stroke-width="1.5"/>
+  <line x1="30" y1="980" x2="490" y2="980" stroke="#333" stroke-width="1.5"/>
+  <text x="260.0" y="886" font-size="12" font-style="italic" text-anchor="middle">« object »</text>
+  <text x="260.0" y="904" font-size="15" font-weight="bold" text-anchor="middle">ThemeSetting</text>
+  <text x="40" y="933" font-size="12">+ SYSTEM = 0, LIGHT = 1, DARK = 2</text>
+  <text x="40" y="950" font-size="12">- PREFS_NAME: String = "settings"</text>
+  <text x="40" y="967" font-size="12">- KEY_THEME: String = "theme"</text>
+  <text x="40" y="1000" font-size="12">+ saved(context: Context): Int</text>
+  <text x="40" y="1017" font-size="12">+ save(context: Context, choice: Int)</text>
+  <text x="40" y="1034" font-size="12">+ toNightMode(choice: Int): Int</text>
+  <text x="40" y="1051" font-size="12">+ apply(choice: Int)</text>
+  <text x="40" y="1068" font-size="12">+ applySaved(context: Context)</text>
+  <text x="40" y="1085" font-size="11" fill="#555">« saved in SharedPreferences »</text>
+  <rect x="620" y="869" width="420" height="140" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+  <line x1="620" y1="913" x2="1040" y2="913" stroke="#333" stroke-width="1.5"/>
+  <line x1="620" y1="925" x2="1040" y2="925" stroke="#333" stroke-width="1.5"/>
+  <text x="830.0" y="886" font-size="12" font-style="italic" text-anchor="middle">« abstract »</text>
+  <text x="830.0" y="904" font-size="15" font-weight="bold" font-style="italic" text-anchor="middle">DrawerActivity</text>
+  <text x="630" y="945" font-size="12">- showDarkModeChoice()</text>
+  <text x="630" y="962" font-size="12">- logOut()</text>
+  <text x="630" y="979" font-size="11" fill="#555">« logOut(): Session.logout() + AppData.signedOut() »</text>
+  <text x="630" y="996" font-size="11" fill="#555">« full box in the main diagram »</text>
+  <path d="M 190.0 215 L 190.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 610.0 215 L 610.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
+  <path d="M 190.0 179 L 610.0 179" fill="none" stroke="#333" stroke-width="1.2"/>
   <path d="M 390.0 179 L 390.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
   <text x="592" y="173" font-size="11" fill="#555" text-anchor="start">« extends »</text>
   <path d="M 1200.0 215 L 1200.0 149" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#hollowTriangle)"/>
   <text x="1208.0" y="186.0" font-size="11" fill="#555" text-anchor="start">« extends »</text>
-  <path d="M 330 265 L 420 265" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="375.0" y="258" font-size="11" fill="#555" text-anchor="middle">« opens »</text>
-  <path d="M 180.0 362 L 180.0 441" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
-  <path d="M 590.0 396 L 590.0 441" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
-  <path d="M 14 441 L 740.0 441" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
-  <path d="M 230.0 441 L 230.0 511" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <path d="M 740.0 441 L 740.0 511" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <path d="M 14 441 L 14 824 L 30 824" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="748.0" y="433" font-size="11" fill="#555" text-anchor="start">« uses »</text>
-  <path d="M 1140.0 324 L 1140.0 561 L 920 561" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="930" y="554" font-size="11" fill="#555" text-anchor="start">« initialize() »</text>
-  <path d="M 920 611 L 1205.0 611 L 1205.0 799" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="1213.0" y="789" font-size="11" fill="#555" text-anchor="start">« creates »</text>
-  <path d="M 740.0 655 L 740.0 799" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
-  <text x="748.0" y="791" font-size="11" fill="#555" text-anchor="start">1</text>
-  <text x="748.0" y="673" font-size="11" fill="#555" text-anchor="start">users</text>
-  <path d="M 1000 859 L 900 859" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#hollowTriangle)"/>
-  <text x="950.0" y="852" font-size="11" fill="#555" text-anchor="middle">« implements »</text>
-  <path d="M 730.0 922 L 730.0 1121" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="738.0" y="942" font-size="11" fill="#555" text-anchor="start">« uses »</text>
-  <polygon points="1205.0,1031 1212.0,1042 1205.0,1053 1198.0,1042" fill="#fff" stroke="#333" stroke-width="1.2"/>
-  <path d="M 1205.0 1053 L 1205.0 1161 L 900 1161" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#openArrow)"/>
-  <text x="908" y="1155" font-size="11" fill="#555" text-anchor="start">0..*</text>
-  <text x="1215.0" y="1069" font-size="11" fill="#555" text-anchor="start">saves / loads with Gson</text>
-  <path d="M 230.0 956 L 230.0 1161 L 560 1161" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="238.0" y="976" font-size="11" fill="#555" text-anchor="start">« checks »</text>
-  <path d="M 1350 255 L 1426 255 L 1426 1634 L 260.0 1634 L 260.0 1604" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="1418" y="1626" font-size="11" fill="#555" text-anchor="end">« applySaved() »</text>
-  <path d="M 620 1425 L 490 1425" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-  <text x="555.0" y="1418" font-size="11" fill="#555" text-anchor="middle">« save(), apply() »</text>
-  <text x="30" y="1656" font-size="11" fill="#555">Key:</text><text x="62" y="1656" font-size="11" fill="#555">+ public</text><text x="127" y="1656" font-size="11" fill="#555">- private</text><text x="198" y="1656" font-size="11" fill="#555">? can be null</text><text x="292" y="1656" font-size="11" fill="#555">italic = abstract</text><text x="408" y="1656" font-size="11" fill="#555">hollow triangle = extends / implements</text><text x="644" y="1656" font-size="11" fill="#555">hollow diamond = holds 0..*</text><text x="817" y="1656" font-size="11" fill="#555">dashed arrow = uses / opens / creates</text>
+  <path d="M 350 265 L 420 265" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="385.0" y="258" font-size="11" fill="#555" text-anchor="middle">« opens »</text>
+  <path d="M 190.0 413 L 190.0 475" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
+  <path d="M 610.0 430 L 610.0 475" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
+  <path d="M 190.0 475 L 1200.0 475" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4"/>
+  <path d="M 220.0 475 L 220.0 545" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <path d="M 700.0 475 L 700.0 545" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <path d="M 1200.0 475 L 1200.0 545" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="708.0" y="467" font-size="11" fill="#555" text-anchor="start">« uses »</text>
+  <text x="1208.0" y="537" font-size="11" fill="#555" text-anchor="start">sign in / create user</text>
+  <path d="M 220.0 702 L 220.0 759 L 1280.0 759 L 1280.0 719" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="228.0" y="753" font-size="11" fill="#555" text-anchor="start">« currentUser, signOut() »</text>
+  <path d="M 1050 275 L 840 275 L 840 545" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="1042" y="269" font-size="11" fill="#555" text-anchor="end">« initialize() »</text>
+  <path d="M 1350 255 L 1426 255 L 1426 1128 L 260.0 1128 L 260.0 1098" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="1418" y="1120" font-size="11" fill="#555" text-anchor="end">« applySaved() »</text>
+  <path d="M 620 919 L 490 919" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="555.0" y="912" font-size="11" fill="#555" text-anchor="middle">« save(), apply() »</text>
+  <path d="M 830.0 869 L 830.0 706" fill="none" stroke="#333" stroke-width="1.2" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
+  <text x="838.0" y="839" font-size="11" fill="#555" text-anchor="start">« signedOut() »</text>
+  <text x="30" y="1150" font-size="11" fill="#555">Key:</text><text x="62" y="1150" font-size="11" fill="#555">+ public</text><text x="127" y="1150" font-size="11" fill="#555">- private</text><text x="198" y="1150" font-size="11" fill="#555">? can be null</text><text x="292" y="1150" font-size="11" fill="#555">italic = abstract</text><text x="408" y="1150" font-size="11" fill="#555">grey = library class</text><text x="542" y="1150" font-size="11" fill="#555">hollow triangle = extends</text><text x="704" y="1150" font-size="11" fill="#555">dashed arrow = uses / opens / calls</text>
 </svg>
