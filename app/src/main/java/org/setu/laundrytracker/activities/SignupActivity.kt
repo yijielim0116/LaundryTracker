@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.main.Session
+import org.setu.laundrytracker.main.AppData
 import timber.log.Timber
 
 // Sign up screen - makes a new account and logs you straight in
@@ -133,6 +135,9 @@ class SignupActivity : AppCompatActivity() {
 
     // CLEAR_TASK wipes login + sign up off the back stack, so Back on home doesn't come back here
     private fun openHome() {
+        // load this user's machines from Firestore before Home opens
+        Session.userId()?.let { AppData.useCloudStoreFor(it) }
+
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

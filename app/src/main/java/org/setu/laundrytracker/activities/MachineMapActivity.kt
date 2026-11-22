@@ -88,6 +88,14 @@ class MachineMapActivity : DrawerActivity(), OnMapReadyCallback {
     override fun onResume() {
         super.onResume()
         showMachines()
+
+        // Firestore loads in the background, so put the pins on again when the machines change
+        AppData.machines.setOnChangeListener { showMachines() }
+    }
+
+    override fun onPause() {
+        AppData.machines.setOnChangeListener(null)
+        super.onPause()
     }
 
     // puts a pin on the map for every machine that has a location

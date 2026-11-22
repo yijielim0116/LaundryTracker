@@ -23,6 +23,6 @@ class MainApp : Application() {
         // the lab calls this in MainActivity, but my app opens Splash and Login before Home,
         // so I load the store here instead.
         // MainApp always runs first, even when Android reopens the app straight on another screen
-        AppData.initialize(this)
+        AppData.initialize()
     }
 }
