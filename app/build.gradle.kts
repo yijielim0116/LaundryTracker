@@ -2,6 +2,8 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
+    // Firebase setup comes from app/google-services.json (git ignores it, like local.properties)
+    alias(libs.plugins.google.services)
 }
 
 // my Google Maps key lives in local.properties (git ignores that file) so it never ends up on GitHub
@@ -58,6 +60,10 @@ dependencies {
     implementation(libs.timber)
     // Google Maps, for picking a machine's location and showing all machines on a map
     implementation(libs.play.services.maps)
+    // Firebase, the BoM picks versions of the Firebase libraries that work together
+    implementation(platform(libs.firebase.bom))
+    // Firebase Authentication for sign up / login with email and password
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
