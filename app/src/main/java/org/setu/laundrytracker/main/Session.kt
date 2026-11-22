@@ -9,6 +9,11 @@ import com.google.firebase.auth.FirebaseAuth
 // so I don't need my own SharedPreferences for this anymore
 object Session {
 
+    // Firebase's id for the user, each user's machines are saved under it in Firestore
+    fun userId(): String? {
+        return FirebaseAuth.getInstance().currentUser?.uid
+    }
+
     // null means nobody is logged in
     fun currentEmail(): String? {
         return FirebaseAuth.getInstance().currentUser?.email

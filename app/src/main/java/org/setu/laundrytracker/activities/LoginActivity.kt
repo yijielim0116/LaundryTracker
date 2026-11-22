@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.main.Session
+import org.setu.laundrytracker.main.AppData
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -112,6 +114,9 @@ class LoginActivity : AppCompatActivity() {
 
     // CLEAR_TASK so Back on the home screen closes the app instead of coming back to login
     private fun openHome() {
+        // load this user's machines from Firestore before Home opens
+        Session.userId()?.let { AppData.useCloudStoreFor(it) }
+
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

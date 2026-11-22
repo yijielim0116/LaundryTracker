@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.main.Session
 import org.setu.laundrytracker.main.ThemeSetting
 import timber.log.Timber
@@ -157,6 +158,8 @@ abstract class DrawerActivity : AppCompatActivity() {
     private fun logOut() {
         Timber.d("Logging out ${Session.currentEmail()}")
         Session.logout()
+        // stop listening to this user's machines in Firestore
+        AppData.signedOut()
 
         // CLEAR_TASK so Back on the login screen can't get back into the app
         val intent = Intent(this, LoginActivity::class.java)

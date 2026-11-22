@@ -1,9 +1,9 @@
 package org.setu.laundrytracker.main
 
-import android.content.Context
-import org.setu.laundrytracker.models.MachineJSONStore
+import org.setu.laundrytracker.models.MachineFirestoreStore
+import org.setu.laundrytracker.models.MachineMemStore
 import org.setu.laundrytracker.models.MachineStore
-import java.io.File
+import timber.log.Timber
 
 /**
  * Holds the machine store that every screen shares.
@@ -12,18 +12,40 @@ import java.io.File
 object AppData {
 
     // the screens only use the MachineStore functions so they don't care which store it is
-    // private set = only initialize() can set it, a screen can't swap the store by accident
+    // private set = only these functions can change it, a screen can't swap the store by accident
     lateinit var machines: MachineStore
         private set
 
-    // (accounts aren't kept here anymore, Firebase Auth looks after them)
-
-    // makes the store once, using json files in the app's own files folder
-    // filesDir is the app's private folder on the phone, so nothing else can mess with the files
-    fun initialize(context: Context) {
-        // already done, no need to load the files twice
+    // runs once when the app starts (MainApp)
+    // Firebase remembers who is logged in, so if someone is, load their machines from Firestore straight away
+    fun initialize() {
         if (::machines.isInitialized) return
 
-        machines = MachineJSONStore(File(context.filesDir, "machines.json"))
+        val userId = Session.userId()
+        if (userId != null) {
+            useCloudStoreFor(userId)
+        } else {
+            // nobody logged in yet, an empty store until they log in
+            machines = MachineMemStore()
+        }
+    }
+
+    // after logging in / signing up: each user gets their own machines in Firestore
+    fun useCloudStoreFor(userId: String) {
+        stopCloudStore()
+        machines = MachineFirestoreStore(userId)
+        Timber.d("Using Firestore machines for user $userId")
+    }
+
+    // on log out: stop listening to Firestore and forget the last user's machines
+    fun signedOut() {
+        stopCloudStore()
+        machines = MachineMemStore()
+    }
+
+    private fun stopCloudStore() {
+        if (::machines.isInitialized) {
+            (machines as? MachineFirestoreStore)?.stop()
+        }
     }
 }

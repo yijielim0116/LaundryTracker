@@ -153,6 +153,15 @@ class MachineListActivity : DrawerActivity() {
         if (::adapter.isInitialized) {
             displayMachines()
         }
+
+        // Firestore loads in the background, so redraw again whenever the machines change
+        AppData.machines.setOnChangeListener { displayMachines() }
+    }
+
+    // stop redrawing a screen I can't see
+    override fun onPause() {
+        AppData.machines.setOnChangeListener(null)
+        super.onPause()
     }
 
     // filters the machines and gives them to the adapter, the RecyclerView redraws the rows
