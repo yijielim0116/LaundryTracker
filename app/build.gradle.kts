@@ -64,6 +64,8 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     // Firebase Authentication for sign up / login with email and password
     implementation(libs.firebase.auth)
+    // Cloud Firestore, where each user's machines are saved now
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
