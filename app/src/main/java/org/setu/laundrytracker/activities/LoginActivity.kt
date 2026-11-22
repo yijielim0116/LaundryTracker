@@ -10,16 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.setu.laundrytracker.R
-import org.setu.laundrytracker.main.AppData
-import org.setu.laundrytracker.main.Session
-import org.setu.laundrytracker.models.Passwords
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import timber.log.Timber
 
 // Login screen - shows after the splash when nobody is logged in
+// the email + password are checked by Firebase Auth
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var emailInput: EditText
     private lateinit var passwordInput: EditText
+    private lateinit var loginButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +42,10 @@ class LoginActivity : AppCompatActivity() {
         passwordInput =
             findViewById(R.id.passwordInput)
 
-        findViewById<Button>(R.id.loginButton).setOnClickListener {
+        loginButton =
+            findViewById(R.id.loginButton)
+
+        loginButton.setOnClickListener {
             logIn()
         }
 
@@ -68,24 +74,44 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        val user = AppData.users.findByEmail(email)
+        // Firebase checks the password on its server, so this takes a moment
+        // greyed out until it answers so you can't tap Log in twice
+        loginButton.isEnabled = false
 
-        // same message for a wrong email or a wrong password, so nobody can guess which emails have accounts
-        if (user == null || !Passwords.matches(password, user)) {
-            // never log the password, just that it failed
-            Timber.d("Login failed for $email")
-            Toast.makeText(
-                this,
-                "Wrong email or password",
-                Toast.LENGTH_SHORT
-            ).show()
-            return
+        FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                loginButton.isEnabled = true
+
+                if (task.isSuccessful) {
+                    Timber.d("Login ok for $email")
+                    openHome()
+                } else {
+                    // never log the password, just that it failed
+                    Timber.d("Login failed for $email: ${task.exception?.javaClass?.simpleName}")
+                    showLoginError(task.exception)
+                }
+            }
+    }
+
+    // same message for a wrong email or a wrong password, so nobody can guess which emails have accounts
+    private fun showLoginError(error: Exception?) {
+        val message = when (error) {
+            is FirebaseAuthInvalidUserException,
+            is FirebaseAuthInvalidCredentialsException -> "Wrong email or password"
+            is FirebaseNetworkException -> "No internet connection, try again"
+            else -> "Couldn't log in, try again"
         }
 
-        Session.login(this, user.email)
-        Timber.d("Login ok for ${user.email}")
+        Toast.makeText(
+            this,
+            message,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 
-        // CLEAR_TASK so Back on the home screen closes the app instead of coming back to login
+    // CLEAR_TASK so Back on the home screen closes the app instead of coming back to login
+    private fun openHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
