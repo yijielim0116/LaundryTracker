@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
     // what to do when the time is up
     private val goToHome = Runnable {
         // logged in already -> home screen, otherwise they have to log in first
-        val next = if (Session.currentEmail(this) != null) {
+        val next = if (Session.isLoggedIn()) {
             MainActivity::class.java
         } else {
             LoginActivity::class.java

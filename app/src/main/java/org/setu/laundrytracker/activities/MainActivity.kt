@@ -50,6 +50,6 @@ class MainActivity : DrawerActivity() {
         }
 
         findViewById<TextView>(R.id.loggedInText).text =
-            "Logged in as ${Session.currentEmail(this)}"
+            "Logged in as ${Session.currentEmail()}"
     }
 }

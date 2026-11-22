@@ -55,7 +55,7 @@ abstract class DrawerActivity : AppCompatActivity() {
 
         // show who is logged in at the top of the drawer
         header.findViewById<TextView>(R.id.drawerEmail)
-            .text = "Logged in as ${Session.currentEmail(this)}"
+            .text = "Logged in as ${Session.currentEmail()}"
 
         // the drawer goes up behind the status bar, so push the header down by the status bar's height
         // (otherwise the logo sits under the clock)
@@ -155,8 +155,8 @@ abstract class DrawerActivity : AppCompatActivity() {
 
     // moved here from MainActivity so Log out works from any screen with the drawer
     private fun logOut() {
-        Timber.d("Logging out ${Session.currentEmail(this)}")
-        Session.logout(this)
+        Timber.d("Logging out ${Session.currentEmail()}")
+        Session.logout()
 
         // CLEAR_TASK so Back on the login screen can't get back into the app
         val intent = Intent(this, LoginActivity::class.java)

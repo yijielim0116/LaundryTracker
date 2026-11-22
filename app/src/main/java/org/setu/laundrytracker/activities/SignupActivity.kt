@@ -10,11 +10,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import org.setu.laundrytracker.R
-import org.setu.laundrytracker.main.AppData
-import org.setu.laundrytracker.main.Session
-import org.setu.laundrytracker.models.Passwords
-import org.setu.laundrytracker.models.UserModel
 import timber.log.Timber
 
 // Sign up screen - makes a new account and logs you straight in
@@ -23,6 +23,7 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var emailInput: EditText
     private lateinit var passwordInput: EditText
     private lateinit var confirmInput: EditText
+    private lateinit var signupButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +46,10 @@ class SignupActivity : AppCompatActivity() {
         confirmInput =
             findViewById(R.id.confirmInput)
 
-        findViewById<Button>(R.id.signupButton).setOnClickListener {
+        signupButton =
+            findViewById(R.id.signupButton)
+
+        signupButton.setOnClickListener {
             signUp()
         }
 
@@ -72,12 +76,6 @@ class SignupActivity : AppCompatActivity() {
             return
         }
 
-        if (AppData.users.findByEmail(email) != null) {
-            Timber.d("Sign up blocked: $email already has an account")
-            emailInput.error = "An account with this email already exists"
-            return
-        }
-
         if (password.length < MIN_PASSWORD_LENGTH) {
             Timber.d("Sign up blocked: password too short")
             passwordInput.error = "Password must be at least $MIN_PASSWORD_LENGTH characters"
@@ -90,26 +88,47 @@ class SignupActivity : AppCompatActivity() {
             return
         }
 
-        // only the hash + salt get saved, never the password itself
-        val salt = Passwords.newSalt()
-        AppData.users.create(
-            UserModel(
-                email = email,
-                passwordHash = Passwords.hash(password, salt),
-                salt = salt
-            )
-        )
+        // Firebase makes the account on its server (and keeps the password safe, not me)
+        // and logs you straight in when it works
+        signupButton.isEnabled = false
 
-        Session.login(this, email)
-        Timber.d("Account created and logged in: $email")
+        FirebaseAuth.getInstance()
+            .createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                signupButton.isEnabled = true
 
-        Toast.makeText(
-            this,
-            "Account created",
-            Toast.LENGTH_SHORT
-        ).show()
+                if (task.isSuccessful) {
+                    Timber.d("Account created and logged in: $email")
 
-        openHome()
+                    Toast.makeText(
+                        this,
+                        "Account created",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    openHome()
+                } else {
+                    Timber.d("Sign up failed for $email: ${task.exception?.javaClass?.simpleName}")
+                    showSignupError(task.exception)
+                }
+            }
+    }
+
+    // Firebase tells me why it failed, so the error goes on the right box
+    private fun showSignupError(error: Exception?) {
+        when (error) {
+            is FirebaseAuthUserCollisionException ->
+                emailInput.error = "An account with this email already exists"
+
+            is FirebaseAuthWeakPasswordException ->
+                passwordInput.error = "That password is too weak"
+
+            is FirebaseNetworkException ->
+                Toast.makeText(this, "No internet connection, try again", Toast.LENGTH_SHORT).show()
+
+            else ->
+                Toast.makeText(this, "Couldn't create the account, try again", Toast.LENGTH_SHORT).show()
+        }
     }
 
     // CLEAR_TASK wipes login + sign up off the back stack, so Back on home doesn't come back here
