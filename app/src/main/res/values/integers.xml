@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- how long the screen animations take, short so the app doesn't feel slow -->
+    <integer name="screen_transition_ms">250</integer>
+</resources>
