@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- map screen for picking where a machine is, like MapPickerActivity in my PlacedMark lab but with Google Maps -->
+<!-- map screen for picking where a machine is, like MapPickerView in my PlacedMark lab but with Google Maps -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
