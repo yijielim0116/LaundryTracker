@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.AddEditActivity">
+    tools:context=".views.addedit.AddEditView">
 
     <!-- toolbar with the up arrow, the title changes to Edit Machine in the code -->
     <androidx.appcompat.widget.Toolbar
@@ -117,7 +117,7 @@
                     android:text="Out of order" />
             </RadioGroup>
 
-            <!-- cycle length part, only shows when In use is ticked (AddEditActivity hides it otherwise) -->
+            <!-- cycle length part, only shows when In use is ticked (AddEditView hides it otherwise) -->
             <LinearLayout
                 android:id="@+id/cycleSection"
                 android:layout_width="match_parent"
@@ -133,7 +133,7 @@
                     android:textStyle="bold" />
 
                 <!-- scroll wheel for the cycle length, so I don't have to type a number
-                     the values (10 min to 120 min) are set in AddEditActivity -->
+                     the values (10 min to 120 min) are set in AddEditView -->
                 <NumberPicker
                     android:id="@+id/cyclePicker"
                     android:layout_width="wrap_content"

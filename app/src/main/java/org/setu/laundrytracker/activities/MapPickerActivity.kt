@@ -106,7 +106,7 @@ class MapPickerActivity : AppCompatActivity(), OnMapReadyCallback {
         Timber.d("Picked lat=${point.latitude}, lon=${point.longitude}")
     }
 
-    // sends the spot back to AddEditActivity
+    // sends the spot back to AddEditView
     private fun confirmLocation() {
         Timber.d("Location confirmed lat=${selectedPoint.latitude}, lon=${selectedPoint.longitude}")
 

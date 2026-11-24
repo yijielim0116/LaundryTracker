@@ -21,6 +21,7 @@ import org.setu.laundrytracker.main.useNightStyleIfDark
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineStatus
 import org.setu.laundrytracker.models.label
+import org.setu.laundrytracker.views.addedit.AddEditView
 import timber.log.Timber
 
 // Map screen - shows every machine that has a location as a pin
@@ -75,7 +76,7 @@ class MachineMapActivity : DrawerActivity(), OnMapReadyCallback {
             val id = marker.tag as? Long ?: return@setOnInfoWindowClickListener
             Timber.d("Map pin tapped, opening machine id=$id")
 
-            val intent = Intent(this, AddEditActivity::class.java)
+            val intent = Intent(this, AddEditView::class.java)
             intent.putExtra("id", id)
             startActivity(intent)
         }
