@@ -1,6 +1,8 @@
 package org.setu.laundrytracker.views.signup
 
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -53,6 +55,18 @@ class SignupView : AppCompatActivity() {
                 passwordInput.text.toString(),
                 confirmInput.text.toString()
             )
+        }
+
+        // Done on the keyboard in the last box does the same as tapping the button
+        confirmInput.setOnEditorActionListener { _, actionId, event ->
+            // a real Enter key sends a press and a release, so only act on the press (or it logs in twice)
+            val pressed = event == null || event.action == KeyEvent.ACTION_DOWN
+            if (actionId == EditorInfo.IME_ACTION_DONE && pressed) {
+                signupButton.performClick()
+                true
+            } else {
+                false
+            }
         }
 
         findViewById<Button>(R.id.goToLoginButton).setOnClickListener {
