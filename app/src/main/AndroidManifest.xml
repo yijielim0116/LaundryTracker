@@ -58,7 +58,7 @@
             android:label="Map"
             android:theme="@style/Theme.LaundryTracker" />
         <activity
-            android:name=".activities.MapPickerActivity"
+            android:name=".views.mappicker.MapPickerView"
             android:exported="false"
             android:label="Set Location"
             android:parentActivityName=".views.addedit.AddEditView"

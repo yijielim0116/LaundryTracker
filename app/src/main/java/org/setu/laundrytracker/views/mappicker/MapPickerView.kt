@@ -1,4 +1,4 @@
-package org.setu.laundrytracker.activities
+package org.setu.laundrytracker.views.mappicker
 
 import android.os.Bundle
 import android.widget.Button
@@ -20,7 +20,7 @@ import timber.log.Timber
 
 // Map screen for picking where a machine is - same idea as MapPickerActivity in my PlacedMark lab,
 // but with Google Maps instead of osmdroid
-class MapPickerActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapPickerView : AppCompatActivity(), OnMapReadyCallback {
 
     // the spot I picked, the marker sits on it
     private lateinit var selectedPoint: LatLng
@@ -56,7 +56,7 @@ class MapPickerActivity : AppCompatActivity(), OnMapReadyCallback {
         // the machine's name shows on the marker
         selectedTitle = intent.getStringExtra(EXTRA_TITLE) ?: "Machine location"
 
-        Timber.d("MapPickerActivity opened at lat=$lat, lon=$lon, title=$selectedTitle")
+        Timber.d("MapPickerView opened at lat=$lat, lon=$lon, title=$selectedTitle")
 
         // the map loads in the background and calls onMapReady when it's ready to use
         val mapFragment =
