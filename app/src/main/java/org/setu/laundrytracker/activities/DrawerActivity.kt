@@ -18,6 +18,7 @@ import org.setu.laundrytracker.main.Session
 import org.setu.laundrytracker.main.ThemeSetting
 import org.setu.laundrytracker.views.addedit.AddEditView
 import org.setu.laundrytracker.views.machinelist.MachineListView
+import org.setu.laundrytracker.views.machinemap.MachineMapView
 import timber.log.Timber
 
 /**
@@ -114,7 +115,7 @@ abstract class DrawerActivity : AppCompatActivity() {
                 startActivity(Intent(this, MachineListView::class.java))
 
             R.id.nav_map ->
-                startActivity(Intent(this, MachineMapActivity::class.java))
+                startActivity(Intent(this, MachineMapView::class.java))
 
             R.id.nav_add_machine ->
                 startActivity(Intent(this, AddEditView::class.java))

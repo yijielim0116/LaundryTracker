@@ -53,7 +53,7 @@
             android:theme="@style/Theme.LaundryTracker"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.MachineMapActivity"
+            android:name=".views.machinemap.MachineMapView"
             android:exported="false"
             android:label="Map"
             android:theme="@style/Theme.LaundryTracker" />

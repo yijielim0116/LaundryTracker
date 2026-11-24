@@ -1,4 +1,4 @@
-package org.setu.laundrytracker.activities
+package org.setu.laundrytracker.views.machinemap
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.activities.DrawerActivity
 import org.setu.laundrytracker.main.useNightStyleIfDark
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineStatus
@@ -26,7 +27,7 @@ import timber.log.Timber
 
 // Map screen - shows every machine that has a location as a pin
 // extends DrawerActivity so it gets the navigation drawer like Home and Machines
-class MachineMapActivity : DrawerActivity(), OnMapReadyCallback {
+class MachineMapView : DrawerActivity(), OnMapReadyCallback {
 
     // Map is highlighted in the drawer on this screen
     override val currentNavItem = R.id.nav_map
