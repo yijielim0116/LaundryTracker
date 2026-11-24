@@ -1,6 +1,5 @@
 package org.setu.laundrytracker.views.addedit
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -12,20 +11,18 @@ import android.widget.NumberPicker
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.FileProvider
 import org.setu.laundrytracker.R
-import org.setu.laundrytracker.activities.MapPickerActivity
-import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
 import org.setu.laundrytracker.models.MachineType
-import java.io.File
-import timber.log.Timber
 
+// the add/edit screen only sets up the controls and passes what I press on to the presenter,
+// the presenter decides what to do and tells this class what to show (same as AddEditView in my PlacedMark lab)
 class AddEditView : AppCompatActivity() {
+
+    private lateinit var presenter: AddEditPresenter
 
     private lateinit var nameInput: EditText
     private lateinit var locationInput: EditText
@@ -35,75 +32,6 @@ class AddEditView : AppCompatActivity() {
     private lateinit var cycleSection: LinearLayout
     private lateinit var machineImage: ImageView
     private lateinit var mapLocationText: TextView
-
-    // the spot picked on the map, null until I pick one (same as my PlacedMark lab)
-    private var selectedLatitude: Double? = null
-    private var selectedLongitude: Double? = null
-
-    // the photo I picked, null until I pick one (same as selectedImageUri in my PlacedMark lab)
-    private var selectedImageUri: Uri? = null
-
-    // null = adding a new machine, otherwise it's the id of the machine I'm editing
-    private var editingId: Long? = null
-
-    // opens the phone's file picker, uri comes back null if I cancel
-    private val imagePicker =
-        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
-            if (uri != null) {
-                // ask to keep access to the photo so it still loads after the app restarts
-                try {
-                    contentResolver.takePersistableUriPermission(
-                        uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    )
-                } catch (_: SecurityException) {
-                    // some pickers don't allow it, the photo still shows for now
-                    Timber.w("Could not keep access to $uri")
-                }
-
-                Timber.d("Picked image $uri")
-                selectedImageUri = uri
-                machineImage.setImageURI(uri)
-            } else {
-                Timber.d("Image picker cancelled")
-            }
-        }
-
-    // where the camera saves the photo it's taking right now
-    private var cameraFile: File? = null
-    private var cameraUri: Uri? = null
-
-    // opens the camera app, it saves the photo straight into cameraUri and tells me if it worked
-    // opens the map, and when I confirm a spot it comes back here with the latitude and longitude
-    private val mapPicker =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val data = result.data ?: return@registerForActivityResult
-
-                selectedLatitude = data.getDoubleExtra(MapPickerActivity.EXTRA_LATITUDE, 0.0)
-                selectedLongitude = data.getDoubleExtra(MapPickerActivity.EXTRA_LONGITUDE, 0.0)
-
-                Timber.d("Map location picked lat=$selectedLatitude, lon=$selectedLongitude")
-                showMapLocation()
-            } else {
-                Timber.d("Map picker cancelled")
-            }
-        }
-
-    private val takePhoto =
-        registerForActivityResult(ActivityResultContracts.TakePicture()) { saved: Boolean ->
-            if (saved) {
-                Timber.d("Photo taken: $cameraUri")
-                selectedImageUri = cameraUri
-                // clear it first, otherwise setImageURI sometimes skips redrawing
-                machineImage.setImageDrawable(null)
-                machineImage.setImageURI(cameraUri)
-            } else {
-                // cancelled, so get rid of the empty file the camera never wrote to
-                Timber.d("Camera cancelled")
-                cameraFile?.delete()
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,91 +67,72 @@ class AddEditView : AppCompatActivity() {
         machineImage =
             findViewById(R.id.machineImage)
 
-        // only images show up in the picker
-        findViewById<Button>(R.id.selectImageButton).setOnClickListener {
-            imagePicker.launch(arrayOf("image/*"))
-        }
-
         mapLocationText =
             findViewById(R.id.mapLocationText)
 
-        findViewById<Button>(R.id.setLocationButton).setOnClickListener {
-            openMapPicker()
+        setUpCyclePicker()
+
+        // the controls have to exist before this, because the presenter can ask the view
+        // to show an existing machine straight away when it is created
+        presenter = AddEditPresenter(this)
+
+        // put back the photo / camera file / map spot if Android rebuilt the screen
+        if (savedInstanceState != null) {
+            presenter.restoreState(savedInstanceState)
+        }
+
+        findViewById<Button>(R.id.selectImageButton).setOnClickListener {
+            presenter.doSelectImage()
         }
 
         findViewById<Button>(R.id.takePhotoButton).setOnClickListener {
-            openCamera()
+            presenter.doTakePhoto()
         }
 
-        setUpCyclePicker()
+        findViewById<Button>(R.id.setLocationButton).setOnClickListener {
+            presenter.doSetLocation(nameInput.text.toString())
+        }
 
-        // show or hide the cycle picker whenever a different status is ticked
+        // the presenter decides if the cycle picker shows for the ticked status
         statusGroup.setOnCheckedChangeListener { _, _ ->
-            updateCycleSection()
+            presenter.doStatusChanged(selectedStatus())
         }
 
-        val saveButton =
-            findViewById<Button>(R.id.saveButton)
-
-        val cancelButton =
-            findViewById<Button>(R.id.cancelButton)
-
-        // the machine list sends the id when Edit is pressed, -1 means no id was sent
-        editingId =
-            intent.getLongExtra("id", -1L)
-                .takeIf { it != -1L }
-
-        if (editingId != null) {
-
-            Timber.d("Form opened to edit machine id=$editingId")
-
-            supportActionBar?.title = "Edit Machine"
-
-            loadExistingMachine(editingId!!)
-        } else {
-            Timber.d("Form opened to add a new machine")
+        findViewById<Button>(R.id.saveButton).setOnClickListener {
+            presenter.doAddOrSave(
+                nameInput.text.toString(),
+                locationInput.text.toString(),
+                selectedType(),
+                selectedStatus(),
+                selectedCycleMinutes()
+            )
         }
 
-        // Android can close this screen while the camera is open (e.g. low memory),
-        // so put back the photo + camera file I saved in onSaveInstanceState
-        if (savedInstanceState != null) {
-            restorePhotoState(savedInstanceState)
-        }
-
-        saveButton.setOnClickListener {
-            saveMachine()
-        }
-
-        cancelButton.setOnClickListener {
-            finish()
+        findViewById<Button>(R.id.cancelButton).setOnClickListener {
+            presenter.doCancel()
         }
     }
 
-    // up arrow on the toolbar, just closes the form and goes back to the list (nothing gets saved)
-    // I use finish() so the list keeps its search and filter instead of opening a new main screen
+    // up arrow on the toolbar does the same as Cancel
+    // (finish() keeps the list's search and filter instead of opening a new list screen)
     override fun onSupportNavigateUp(): Boolean {
-        finish()
+        presenter.doCancel()
         return true
     }
 
-    // fills the form with the machine's current details so I can change them
-    private fun loadExistingMachine(id: Long) {
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        presenter.saveState(outState)
+    }
 
-        val machine =
-            AppData.machines.findOne(id)
+    // ---- things the presenter tells me to show ----
 
-        if (machine == null) {
+    fun showEditMode() {
+        supportActionBar?.title = "Edit Machine"
+    }
 
-            Toast.makeText(
-                this,
-                "Machine not found",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            finish()
-            return
-        }
-
+    // fills the form with the machine that is being edited
+    fun showMachine(machine: MachineModel) {
         nameInput.setText(machine.name)
         locationInput.setText(machine.location)
 
@@ -244,104 +153,46 @@ class AddEditView : AppCompatActivity() {
         )
 
         cyclePicker.value = minutesToIndex(machine.cycleMinutes)
-
-        updateCycleSection()
-
-        // show the photo this machine already has (the gallery icon is already there if it has none)
-        selectedImageUri = machine.imageUri?.let { Uri.parse(it) }
-        selectedImageUri?.let { machineImage.setImageURI(it) }
-
-        // and the spot on the map, if it has one
-        selectedLatitude = machine.latitude
-        selectedLongitude = machine.longitude
-        showMapLocation()
     }
 
-    // opens the map, starting on the machine's spot if it already has one (otherwise the map uses Waterford)
-    private fun openMapPicker() {
-        val intent = Intent(this, MapPickerActivity::class.java)
+    fun showCycleSection(visible: Boolean) {
+        cycleSection.visibility = if (visible) View.VISIBLE else View.GONE
+    }
 
-        val lat = selectedLatitude
-        val lon = selectedLongitude
-
-        if (lat != null && lon != null) {
-            intent.putExtra(MapPickerActivity.EXTRA_LATITUDE, lat)
-            intent.putExtra(MapPickerActivity.EXTRA_LONGITUDE, lon)
+    // shows the photo, or the gallery icon if there isn't one
+    fun showImage(uri: Uri?) {
+        if (uri != null) {
+            // clear it first, otherwise setImageURI sometimes skips redrawing (after the camera)
+            machineImage.setImageDrawable(null)
+            machineImage.setImageURI(uri)
+        } else {
+            machineImage.setImageResource(android.R.drawable.ic_menu_gallery)
         }
-
-        // the name shows on the pin
-        val name = nameInput.text.toString().trim()
-        if (name.isNotEmpty()) {
-            intent.putExtra(MapPickerActivity.EXTRA_TITLE, name)
-        }
-
-        Timber.d("Set Location pressed")
-        mapPicker.launch(intent)
     }
 
     // 5 decimal places is about 1 metre, plenty for finding a washing machine
-    private fun showMapLocation() {
-        val lat = selectedLatitude
-        val lon = selectedLongitude
-
+    fun showMapLocation(latitude: Double?, longitude: Double?) {
         mapLocationText.text =
-            if (lat != null && lon != null) {
-                "Lat %.5f, Lng %.5f".format(lat, lon)
+            if (latitude != null && longitude != null) {
+                "Lat %.5f, Lng %.5f".format(latitude, longitude)
             } else {
                 "No location set yet"
             }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(KEY_IMAGE_URI, selectedImageUri?.toString())
-        outState.putString(KEY_CAMERA_PATH, cameraFile?.absolutePath)
-
-        // Bundle can't hold a null Double, so only save the location if there is one
-        val lat = selectedLatitude
-        val lon = selectedLongitude
-        if (lat != null && lon != null) {
-            outState.putDouble(KEY_LATITUDE, lat)
-            outState.putDouble(KEY_LONGITUDE, lon)
-        }
+    fun showNameError(message: String) {
+        nameInput.error = message
     }
 
-    private fun restorePhotoState(state: Bundle) {
-        state.getString(KEY_CAMERA_PATH)?.let { path ->
-            cameraFile = File(path)
-            cameraUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", File(path))
-        }
-
-        selectedImageUri = state.getString(KEY_IMAGE_URI)?.let { Uri.parse(it) }
-        selectedImageUri?.let { machineImage.setImageURI(it) }
-
-        if (state.containsKey(KEY_LATITUDE) && state.containsKey(KEY_LONGITUDE)) {
-            selectedLatitude = state.getDouble(KEY_LATITUDE)
-            selectedLongitude = state.getDouble(KEY_LONGITUDE)
-        }
-        showMapLocation()
+    fun showMessage(message: String) {
+        Toast.makeText(
+            this,
+            message,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
-    // makes an empty file in filesDir/images and gives the camera a content:// uri for it
-    // (FileProvider turns my private file into a uri the camera app is allowed to write to)
-    private fun openCamera() {
-        val imagesDir = File(filesDir, "images")
-        imagesDir.mkdirs()
-
-        val file = File(imagesDir, "machine_${System.currentTimeMillis()}.jpg")
-        val uri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
-
-        cameraFile = file
-        cameraUri = uri
-        takePhoto.launch(uri)
-    }
-
-    // the cycle length only matters when someone is using the machine,
-    // so the picker only shows for In use (Available / Out of order hide it)
-    private fun updateCycleSection() {
-        cycleSection.visibility =
-            if (selectedStatus() == MachineStatus.IN_USE) View.VISIBLE else View.GONE
-    }
+    // ---- reading the controls (only the view knows about radio buttons and the picker) ----
 
     // the picker goes 10, 15, 20 ... 120 minutes
     // NumberPicker only counts 0, 1, 2 ... so I use displayedValues to show the minutes instead
@@ -384,79 +235,10 @@ class AddEditView : AppCompatActivity() {
         }
     }
 
-    private fun saveMachine() {
-
-        val name =
-            nameInput.text.toString().trim()
-
-        val location =
-            locationInput.text.toString().trim()
-
-        if (name.isEmpty()) {
-            Timber.d("Save blocked: name is empty")
-            nameInput.error = "Name is required"
-            return
-        }
-
-        // no id means it's a new machine, otherwise update the one I'm editing
-        if (editingId == null) {
-
-            val machine = MachineModel(
-                name = name,
-                location = location,
-                type = selectedType(),
-                status = selectedStatus(),
-                cycleMinutes = selectedCycleMinutes(),
-                imageUri = selectedImageUri?.toString(),
-                latitude = selectedLatitude,
-                longitude = selectedLongitude
-            )
-
-            AppData.machines.create(machine)
-
-            Toast.makeText(
-                this,
-                "Machine created",
-                Toast.LENGTH_SHORT
-            ).show()
-
-        } else {
-
-            // keep the same id so the store knows which machine to replace
-            val machine = MachineModel(
-                id = editingId!!,
-                name = name,
-                location = location,
-                type = selectedType(),
-                status = selectedStatus(),
-                cycleMinutes = selectedCycleMinutes(),
-                imageUri = selectedImageUri?.toString(),
-                latitude = selectedLatitude,
-                longitude = selectedLongitude
-            )
-
-            AppData.machines.update(machine)
-
-            Toast.makeText(
-                this,
-                "Machine updated",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        finish()
-    }
-
     // limits for the cycle length picker
     companion object {
         private const val MIN_MINUTES = 10
         private const val MAX_MINUTES = 120
         private const val STEP_MINUTES = 5
-
-        // keys for saving the photo when the screen gets recreated
-        private const val KEY_IMAGE_URI = "imageUri"
-        private const val KEY_CAMERA_PATH = "cameraPath"
-        private const val KEY_LATITUDE = "latitude"
-        private const val KEY_LONGITUDE = "longitude"
     }
 }
