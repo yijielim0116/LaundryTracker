@@ -1,6 +1,8 @@
 package org.setu.laundrytracker.views.login
 
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -25,10 +27,14 @@ class LoginView : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
-        // stops the form going under the status bar / nav bar
+        // stops the form going under the status bar / nav bar, and under the keyboard too
+        // (edge to edge means the screen doesn't shrink for the keyboard by itself,
+        // so without the ime part the keyboard covers the button)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            )
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
             insets
         }
 
@@ -48,6 +54,18 @@ class LoginView : AppCompatActivity() {
                 emailInput.text.toString().trim(),
                 passwordInput.text.toString()
             )
+        }
+
+        // Done on the keyboard in the last box does the same as tapping the button
+        passwordInput.setOnEditorActionListener { _, actionId, event ->
+            // a real Enter key sends a press and a release, so only act on the press (or it logs in twice)
+            val pressed = event == null || event.action == KeyEvent.ACTION_DOWN
+            if (actionId == EditorInfo.IME_ACTION_DONE && pressed) {
+                loginButton.performClick()
+                true
+            } else {
+                false
+            }
         }
 
         findViewById<Button>(R.id.goToSignupButton).setOnClickListener {
