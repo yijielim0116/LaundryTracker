@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- map screen for picking where a machine is, like MapPickerActivity in my PlacedMark lab but with Google Maps -->
+<!-- map screen for picking where a machine is, like MapPickerView in my PlacedMark lab but with Google Maps -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.MapPickerActivity">
+    tools:context=".views.mappicker.MapPickerView">
 
     <!-- toolbar with the up arrow back to the form -->
     <androidx.appcompat.widget.Toolbar

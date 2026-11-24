@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import org.setu.laundrytracker.activities.MapPickerActivity
+import org.setu.laundrytracker.views.mappicker.MapPickerView
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
@@ -130,19 +130,19 @@ class AddEditPresenter(private val view: AddEditView) {
     fun doSetLocation(name: String) {
         Timber.d("Set Location pressed")
 
-        val intent = Intent(view, MapPickerActivity::class.java)
+        val intent = Intent(view, MapPickerView::class.java)
 
         val lat = latitude
         val lon = longitude
 
         if (lat != null && lon != null) {
-            intent.putExtra(MapPickerActivity.EXTRA_LATITUDE, lat)
-            intent.putExtra(MapPickerActivity.EXTRA_LONGITUDE, lon)
+            intent.putExtra(MapPickerView.EXTRA_LATITUDE, lat)
+            intent.putExtra(MapPickerView.EXTRA_LONGITUDE, lon)
         }
 
         val cleanName = name.trim()
         if (cleanName.isNotEmpty()) {
-            intent.putExtra(MapPickerActivity.EXTRA_TITLE, cleanName)
+            intent.putExtra(MapPickerView.EXTRA_TITLE, cleanName)
         }
 
         mapIntentLauncher.launch(intent)
@@ -250,8 +250,8 @@ class AddEditPresenter(private val view: AddEditView) {
                 if (result.resultCode == Activity.RESULT_OK) {
                     val data = result.data ?: return@registerForActivityResult
 
-                    latitude = data.getDoubleExtra(MapPickerActivity.EXTRA_LATITUDE, 0.0)
-                    longitude = data.getDoubleExtra(MapPickerActivity.EXTRA_LONGITUDE, 0.0)
+                    latitude = data.getDoubleExtra(MapPickerView.EXTRA_LATITUDE, 0.0)
+                    longitude = data.getDoubleExtra(MapPickerView.EXTRA_LONGITUDE, 0.0)
 
                     Timber.d("Map location picked lat=$latitude, lon=$longitude")
                     view.showMapLocation(latitude, longitude)

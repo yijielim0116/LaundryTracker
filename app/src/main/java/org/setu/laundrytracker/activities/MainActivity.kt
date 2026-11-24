@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.setu.laundrytracker.R
 import org.setu.laundrytracker.main.Session
+import org.setu.laundrytracker.views.machinelist.MachineListView
 import timber.log.Timber
 
 // Home screen - the first thing you see after logging in
@@ -45,7 +46,7 @@ class MainActivity : DrawerActivity() {
         viewMachinesButton.setOnClickListener {
             Timber.d("View Machines pressed")
             startActivity(
-                Intent(this, MachineListActivity::class.java)
+                Intent(this, MachineListView::class.java)
             )
         }
 

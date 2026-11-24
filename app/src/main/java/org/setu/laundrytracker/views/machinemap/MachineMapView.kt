@@ -1,6 +1,5 @@
-package org.setu.laundrytracker.activities
+package org.setu.laundrytracker.views.machinemap
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -17,19 +16,21 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.activities.DrawerActivity
 import org.setu.laundrytracker.main.useNightStyleIfDark
-import org.setu.laundrytracker.main.AppData
+import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
 import org.setu.laundrytracker.models.label
-import org.setu.laundrytracker.views.addedit.AddEditView
-import timber.log.Timber
 
-// Map screen - shows every machine that has a location as a pin
+// Map screen - draws the map and the pins the presenter tells it about,
+// and passes a tapped pin on to the presenter (same idea as MapListView in my PlacedMark lab)
 // extends DrawerActivity so it gets the navigation drawer like Home and Machines
-class MachineMapActivity : DrawerActivity(), OnMapReadyCallback {
+class MachineMapView : DrawerActivity(), OnMapReadyCallback {
 
     // Map is highlighted in the drawer on this screen
     override val currentNavItem = R.id.nav_map
+
+    private lateinit var presenter: MachineMapPresenter
 
     // null until the map has loaded
     private var map: GoogleMap? = null
@@ -56,6 +57,8 @@ class MachineMapActivity : DrawerActivity(), OnMapReadyCallback {
         noLocationsText =
             findViewById(R.id.noLocationsText)
 
+        presenter = MachineMapPresenter(this)
+
         // the map loads in the background and calls onMapReady when it's ready
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -74,46 +77,38 @@ class MachineMapActivity : DrawerActivity(), OnMapReadyCallback {
         // tapping a pin shows its name + status, tapping that little box opens the machine
         googleMap.setOnInfoWindowClickListener { marker ->
             val id = marker.tag as? Long ?: return@setOnInfoWindowClickListener
-            Timber.d("Map pin tapped, opening machine id=$id")
-
-            val intent = Intent(this, AddEditView::class.java)
-            intent.putExtra("id", id)
-            startActivity(intent)
+            presenter.doOpenMachine(id)
         }
 
-        Timber.d("Machine map ready")
-        showMachines()
+        presenter.doMapReady()
     }
 
-    // coming back from editing a machine, redraw so moved / new pins show up
     override fun onResume() {
         super.onResume()
-        showMachines()
-
-        // Firestore loads in the background, so put the pins on again when the machines change
-        AppData.machines.setOnChangeListener { showMachines() }
+        presenter.doResume()
     }
 
     override fun onPause() {
-        AppData.machines.setOnChangeListener(null)
+        presenter.doPause()
         super.onPause()
     }
 
-    // puts a pin on the map for every machine that has a location
-    private fun showMachines() {
+    // ---- things the presenter tells me to show ----
+
+    fun isMapReady(): Boolean {
+        return map != null
+    }
+
+    // puts a pin on the map for every machine it gives me
+    fun showMachines(machines: List<MachineModel>) {
         val googleMap = map ?: return
 
         googleMap.clear()
 
-        val machines = AppData.machines.findAll().filter { it.hasLocation() }
-        Timber.d("Showing ${machines.size} machines on the map")
-
-        val points = machines.map { machine ->
-            val point = LatLng(machine.latitude!!, machine.longitude!!)
-
+        machines.forEach { machine ->
             val marker = googleMap.addMarker(
                 MarkerOptions()
-                    .position(point)
+                    .position(LatLng(machine.latitude!!, machine.longitude!!))
                     .title(machine.name)
                     // same words as the list, e.g. "Washer · Available"
                     .snippet("${machine.type.label()} · ${machine.status.label()}")
@@ -122,13 +117,30 @@ class MachineMapActivity : DrawerActivity(), OnMapReadyCallback {
 
             // remember which machine this pin is, so tapping it can open the right one
             marker?.tag = machine.id
-
-            point
         }
+    }
 
-        noLocationsText.visibility = if (points.isEmpty()) View.VISIBLE else View.GONE
+    fun showNoLocationsMessage(show: Boolean) {
+        noLocationsText.visibility = if (show) View.VISIBLE else View.GONE
+    }
 
-        moveCamera(googleMap, points)
+    // centre the map on one spot
+    fun showArea(center: LatLng, zoom: Float) {
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(center, zoom))
+    }
+
+    // zoom so every point fits on the screen
+    fun showAllPoints(points: List<LatLng>) {
+        val googleMap = map ?: return
+
+        val bounds = LatLngBounds.builder()
+        points.forEach { bounds.include(it) }
+
+        // the map has to be laid out before it knows how big the screen is,
+        // so I wait for it to load before fitting the box
+        googleMap.setOnMapLoadedCallback {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), BOUNDS_PADDING))
+        }
     }
 
     // green = free, orange = someone's using it, red = broken, so you can tell at a glance
@@ -140,34 +152,7 @@ class MachineMapActivity : DrawerActivity(), OnMapReadyCallback {
         }
     }
 
-    // zooms so every pin fits on the screen
-    private fun moveCamera(googleMap: GoogleMap, points: List<LatLng>) {
-        when (points.size) {
-            // nothing to show, so just show Waterford like the location picker does
-            0 -> googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(WATERFORD, EMPTY_ZOOM))
-
-            // one pin, a bounds box around one point would zoom in way too far
-            1 -> googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(points[0], SINGLE_ZOOM))
-
-            else -> {
-                val bounds = LatLngBounds.builder()
-                points.forEach { bounds.include(it) }
-
-                // the map has to be laid out before it knows how big the screen is,
-                // so I wait for it to load before fitting the box
-                googleMap.setOnMapLoadedCallback {
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), BOUNDS_PADDING))
-                }
-            }
-        }
-    }
-
     companion object {
-        // same Waterford spot as MapPickerActivity / my lab
-        private val WATERFORD = LatLng(52.245954, -7.139539)
-        private const val EMPTY_ZOOM = 15f
-        private const val SINGLE_ZOOM = 17f
-
         // space around the pins in pixels so they're not right on the edge
         private const val BOUNDS_PADDING = 150
     }

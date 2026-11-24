@@ -6,7 +6,7 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
-    <!-- options for the status drop-down on the machine list, the order matters (see MachineListActivity) -->
+    <!-- options for the status drop-down on the machine list, the order matters (see MachineListView) -->
     <string-array name="status_filter_options">
         <item>All</item>
         <item>Available</item>
