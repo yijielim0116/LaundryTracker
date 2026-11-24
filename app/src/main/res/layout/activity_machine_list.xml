@@ -6,7 +6,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MachineListActivity">
+    tools:context=".views.machinelist.MachineListView">
 
     <!-- first child = the screen itself -->
     <LinearLayout

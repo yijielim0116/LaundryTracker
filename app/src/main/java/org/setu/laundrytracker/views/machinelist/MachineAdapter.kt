@@ -1,4 +1,4 @@
-package org.setu.laundrytracker.adapters
+package org.setu.laundrytracker.views.machinelist
 
 import android.net.Uri
 import android.view.LayoutInflater

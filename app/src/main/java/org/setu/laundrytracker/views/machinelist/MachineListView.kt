@@ -1,4 +1,4 @@
-package org.setu.laundrytracker.activities
+package org.setu.laundrytracker.views.machinelist
 
 import android.content.Intent
 import android.os.Bundle
@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.setu.laundrytracker.R
-import org.setu.laundrytracker.adapters.MachineAdapter
+import org.setu.laundrytracker.activities.DrawerActivity
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
@@ -27,7 +27,7 @@ import timber.log.Timber
 
 // Machine list screen - shows all the machines with search, the status filter and the menu
 // extends DrawerActivity so it gets the navigation drawer too
-class MachineListActivity : DrawerActivity() {
+class MachineListView : DrawerActivity() {
 
     // Machines is highlighted in the drawer on this screen
     override val currentNavItem = R.id.nav_machines
