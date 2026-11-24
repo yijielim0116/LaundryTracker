@@ -9,7 +9,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".activities.SplashActivity">
+    tools:context=".views.splash.SplashView">
 
     <!-- the washing machine logo -->
     <ImageView

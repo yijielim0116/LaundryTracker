@@ -1,6 +1,5 @@
-package org.setu.laundrytracker.activities
+package org.setu.laundrytracker.views.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -9,13 +8,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.setu.laundrytracker.R
-import org.setu.laundrytracker.main.Session
-import org.setu.laundrytracker.views.machinelist.MachineListView
-import timber.log.Timber
+import org.setu.laundrytracker.activities.DrawerActivity
 
 // Home screen - the first thing you see after logging in
 // extends DrawerActivity so it gets the navigation drawer
-class MainActivity : DrawerActivity() {
+class HomeView : DrawerActivity() {
+
+    private lateinit var presenter: HomePresenter
 
     // Home is highlighted in the drawer on this screen
     override val currentNavItem = R.id.nav_home
@@ -39,18 +38,17 @@ class MainActivity : DrawerActivity() {
         setSupportActionBar(toolbar)
         setUpDrawer(toolbar)
 
-        val viewMachinesButton =
-            findViewById<Button>(R.id.viewMachinesButton)
+        presenter = HomePresenter(this)
 
-        // go to the list of all the machines
-        viewMachinesButton.setOnClickListener {
-            Timber.d("View Machines pressed")
-            startActivity(
-                Intent(this, MachineListView::class.java)
-            )
+        findViewById<Button>(R.id.viewMachinesButton).setOnClickListener {
+            presenter.doViewMachines()
         }
 
+        presenter.doShowUser()
+    }
+
+    fun showLoggedInAs(email: String?) {
         findViewById<TextView>(R.id.loggedInText).text =
-            "Logged in as ${Session.currentEmail()}"
+            "Logged in as $email"
     }
 }

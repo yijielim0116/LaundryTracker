@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.views.login.LoginView
+import org.setu.laundrytracker.views.home.HomeView
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.main.Session
 import org.setu.laundrytracker.main.ThemeSetting
@@ -106,7 +108,7 @@ abstract class DrawerActivity : AppCompatActivity() {
         when (itemId) {
             R.id.nav_home -> {
                 // CLEAR_TOP goes back to the Home that's already open instead of stacking a new one
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, HomeView::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
             }
@@ -165,7 +167,7 @@ abstract class DrawerActivity : AppCompatActivity() {
         AppData.signedOut()
 
         // CLEAR_TASK so Back on the login screen can't get back into the app
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, LoginView::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
