@@ -1,4 +1,4 @@
-package org.setu.laundrytracker.activities
+package org.setu.laundrytracker.views.addedit
 
 import android.content.Intent
 import android.net.Uri
@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.activities.MapPickerActivity
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
@@ -24,7 +25,7 @@ import org.setu.laundrytracker.models.MachineType
 import java.io.File
 import timber.log.Timber
 
-class AddEditActivity : AppCompatActivity() {
+class AddEditView : AppCompatActivity() {
 
     private lateinit var nameInput: EditText
     private lateinit var locationInput: EditText

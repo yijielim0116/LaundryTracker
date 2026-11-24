@@ -61,10 +61,10 @@
             android:name=".activities.MapPickerActivity"
             android:exported="false"
             android:label="Set Location"
-            android:parentActivityName=".activities.AddEditActivity"
+            android:parentActivityName=".views.addedit.AddEditView"
             android:theme="@style/Theme.LaundryTracker" />
         <activity
-            android:name=".activities.AddEditActivity"
+            android:name=".views.addedit.AddEditView"
             android:exported="false"
             android:label="Add Machine"
             android:parentActivityName=".activities.MachineListActivity"

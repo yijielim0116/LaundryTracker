@@ -22,6 +22,7 @@ import org.setu.laundrytracker.adapters.MachineAdapter
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
+import org.setu.laundrytracker.views.addedit.AddEditView
 import timber.log.Timber
 
 // Machine list screen - shows all the machines with search, the status filter and the menu
@@ -133,7 +134,7 @@ class MachineListActivity : DrawerActivity() {
     // opens the form to add a new machine (from the round + button)
     private fun openAddMachine() {
         startActivity(
-            Intent(this, AddEditActivity::class.java)
+            Intent(this, AddEditView::class.java)
         )
     }
 
@@ -145,7 +146,7 @@ class MachineListActivity : DrawerActivity() {
         statusFilter.setSelection(0)
     }
 
-    // onResume runs when I come back from AddEditActivity,
+    // onResume runs when I come back from AddEditView,
     // so I reload the list here otherwise the new machine won't show
     override fun onResume() {
         super.onResume()
@@ -206,7 +207,7 @@ class MachineListActivity : DrawerActivity() {
         Timber.d("Edit pressed, machine id=${machine.id}")
 
         val intent =
-            Intent(this, AddEditActivity::class.java)
+            Intent(this, AddEditView::class.java)
 
         intent.putExtra("id", machine.id)
 

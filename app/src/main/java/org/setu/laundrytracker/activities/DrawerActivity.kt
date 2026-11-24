@@ -16,6 +16,7 @@ import org.setu.laundrytracker.R
 import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.main.Session
 import org.setu.laundrytracker.main.ThemeSetting
+import org.setu.laundrytracker.views.addedit.AddEditView
 import timber.log.Timber
 
 /**
@@ -115,7 +116,7 @@ abstract class DrawerActivity : AppCompatActivity() {
                 startActivity(Intent(this, MachineMapActivity::class.java))
 
             R.id.nav_add_machine ->
-                startActivity(Intent(this, AddEditActivity::class.java))
+                startActivity(Intent(this, AddEditView::class.java))
 
             R.id.nav_dark_mode ->
                 showDarkModeChoice()
