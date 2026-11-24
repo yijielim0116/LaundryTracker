@@ -1,4 +1,4 @@
-package org.setu.laundrytracker.activities
+package org.setu.laundrytracker.views.splash
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,13 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.views.login.LoginView
+import org.setu.laundrytracker.views.home.HomeView
 import org.setu.laundrytracker.main.Session
 import timber.log.Timber
 
 // Splash screen - shows my logo for a bit, then goes to login (or home if already logged in)
-class SplashActivity : AppCompatActivity() {
+class SplashView : AppCompatActivity() {
 
     // I keep the handler so I can cancel it if the user leaves early
     private val handler = Handler(Looper.getMainLooper())
@@ -19,9 +21,9 @@ class SplashActivity : AppCompatActivity() {
     private val goToHome = Runnable {
         // logged in already -> home screen, otherwise they have to log in first
         val next = if (Session.isLoggedIn()) {
-            MainActivity::class.java
+            HomeView::class.java
         } else {
-            LoginActivity::class.java
+            LoginView::class.java
         }
         Timber.d("Splash done, opening ${next.simpleName}")
         startActivity(Intent(this, next))

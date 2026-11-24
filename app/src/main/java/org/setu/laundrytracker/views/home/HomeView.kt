@@ -1,4 +1,4 @@
-package org.setu.laundrytracker.activities
+package org.setu.laundrytracker.views.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,13 +9,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.activities.DrawerActivity
 import org.setu.laundrytracker.main.Session
 import org.setu.laundrytracker.views.machinelist.MachineListView
 import timber.log.Timber
 
 // Home screen - the first thing you see after logging in
 // extends DrawerActivity so it gets the navigation drawer
-class MainActivity : DrawerActivity() {
+class HomeView : DrawerActivity() {
 
     // Home is highlighted in the drawer on this screen
     override val currentNavItem = R.id.nav_home

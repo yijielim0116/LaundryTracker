@@ -1,4 +1,4 @@
-package org.setu.laundrytracker.activities
+package org.setu.laundrytracker.views.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.setu.laundrytracker.R
+import org.setu.laundrytracker.views.signup.SignupView
+import org.setu.laundrytracker.views.home.HomeView
 import org.setu.laundrytracker.main.Session
 import org.setu.laundrytracker.main.AppData
 import com.google.firebase.FirebaseNetworkException
@@ -20,7 +22,7 @@ import timber.log.Timber
 
 // Login screen - shows after the splash when nobody is logged in
 // the email + password are checked by Firebase Auth
-class LoginActivity : AppCompatActivity() {
+class LoginView : AppCompatActivity() {
 
     private lateinit var emailInput: EditText
     private lateinit var passwordInput: EditText
@@ -53,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.goToSignupButton).setOnClickListener {
             Timber.d("Sign up link pressed")
-            startActivity(Intent(this, SignupActivity::class.java))
+            startActivity(Intent(this, SignupView::class.java))
         }
     }
 
@@ -117,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
         // load this user's machines from Firestore before Home opens
         Session.userId()?.let { AppData.useCloudStoreFor(it) }
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, HomeView::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
