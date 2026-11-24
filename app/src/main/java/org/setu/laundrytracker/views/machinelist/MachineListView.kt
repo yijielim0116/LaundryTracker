@@ -1,6 +1,5 @@
 package org.setu.laundrytracker.views.machinelist
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -19,18 +18,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.setu.laundrytracker.R
 import org.setu.laundrytracker.activities.DrawerActivity
-import org.setu.laundrytracker.main.AppData
 import org.setu.laundrytracker.models.MachineModel
 import org.setu.laundrytracker.models.MachineStatus
-import org.setu.laundrytracker.views.addedit.AddEditView
-import timber.log.Timber
 
-// Machine list screen - shows all the machines with search, the status filter and the menu
+// Machine list screen - shows the machines, the search box, the status filter and the menu,
+// and passes everything I press on to the presenter (same as MarkListView in my PlacedMark lab)
 // extends DrawerActivity so it gets the navigation drawer too
 class MachineListView : DrawerActivity() {
 
     // Machines is highlighted in the drawer on this screen
     override val currentNavItem = R.id.nav_machines
+
+    private lateinit var presenter: MachineListPresenter
 
     // the RecyclerView shows the machines, the adapter turns each machine into a row
     private lateinit var recyclerView: RecyclerView
@@ -59,23 +58,25 @@ class MachineListView : DrawerActivity() {
         // the ☰ button replaces the up arrow, Back still goes to the home screen
         setUpDrawer(toolbar)
 
+        presenter = MachineListPresenter(this)
+
         emptyText =
             findViewById(R.id.emptyText)
 
         recyclerView =
             findViewById(R.id.machinesRecyclerView)
 
-        // start with an empty list, displayMachines() gives it the real machines
+        // starts empty, the presenter gives it the machines in onResume
         // the adapter calls back here when Edit or Delete is pressed on a row
         adapter = MachineAdapter(
             machines = emptyList(),
 
             onEdit = { machine ->
-                editMachine(machine)
+                presenter.doEditMachine(machine)
             },
 
             onDelete = { machine ->
-                deleteMachine(machine)
+                presenter.doDeleteMachine(machine)
             }
         )
 
@@ -85,32 +86,30 @@ class MachineListView : DrawerActivity() {
 
         recyclerView.adapter = adapter
 
-        // the round + button opens the add form (it used to be ADD on the toolbar)
+        // the round + button opens the add form
         findViewById<FloatingActionButton>(R.id.addMachineFab).setOnClickListener {
-            openAddMachine()
+            presenter.doAddMachine()
         }
 
         searchInput =
             findViewById(R.id.searchInput)
 
-        // redraw the list every time the search text changes
+        // tell the presenter every time the search text changes
         searchInput.doAfterTextChanged {
-            displayMachines()
+            presenter.doSearchChanged(it.toString())
         }
 
         statusFilter =
             findViewById(R.id.statusFilter)
 
-        // redraw the list when a different status is picked
+        // tell the presenter when a different status is picked
         statusFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                displayMachines()
+                presenter.doStatusFilterChanged(selectedStatus())
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
-
-        displayMachines()
     }
 
     // puts my menu (res/menu/menu_main.xml) on the toolbar
@@ -123,7 +122,7 @@ class MachineListView : DrawerActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_clear_filters -> {
-                clearFilters()
+                presenter.doClearFilters()
                 true
             }
 
@@ -131,96 +130,37 @@ class MachineListView : DrawerActivity() {
         }
     }
 
-    // opens the form to add a new machine (from the round + button)
-    private fun openAddMachine() {
-        startActivity(
-            Intent(this, AddEditView::class.java)
-        )
-    }
-
-    // empties the search box and sets the drop-down back to All,
-    // both of these redraw the list by themselves
-    private fun clearFilters() {
-        Timber.d("Clear filters pressed")
-        searchInput.setText("")
-        statusFilter.setSelection(0)
-    }
-
-    // onResume runs when I come back from AddEditView,
-    // so I reload the list here otherwise the new machine won't show
+    // onResume runs when I come back from the add/edit form, so the presenter shows the list again
     override fun onResume() {
         super.onResume()
-
-        if (::adapter.isInitialized) {
-            displayMachines()
-        }
-
-        // Firestore loads in the background, so redraw again whenever the machines change
-        AppData.machines.setOnChangeListener { displayMachines() }
+        presenter.doResume()
     }
 
-    // stop redrawing a screen I can't see
     override fun onPause() {
-        AppData.machines.setOnChangeListener(null)
+        presenter.doPause()
         super.onPause()
     }
 
-    // filters the machines and gives them to the adapter, the RecyclerView redraws the rows
-    private fun displayMachines() {
+    // ---- things the presenter tells me to show ----
 
-        val allMachines = AppData.machines.findAll()
-
-        // only keep the machines where the name or location has the search text in it
-        // ignoreCase so "washer" still finds "Washer 1"
-        val search = searchInput.text.toString().trim()
-
-        // null means "All" so I don't filter by status
-        val status = selectedStatus()
-
-        // a machine has to match the search AND the status to show up
-        val machines = allMachines.filter { machine ->
-            val matchesSearch =
-                machine.name.contains(search, ignoreCase = true) ||
-                    machine.location.contains(search, ignoreCase = true)
-
-            val matchesStatus =
-                status == null || machine.status == status
-
-            matchesSearch && matchesStatus
-        }
-
+    fun showMachines(machines: List<MachineModel>) {
         adapter.updateMachines(machines)
-        Timber.d("Showing ${machines.size} of ${allMachines.size} machines (search=\"$search\", status=$status)")
-
-        // nothing to show, the message depends on if there's no machines at all or just no matches
-        if (machines.isEmpty()) {
-            emptyText.text =
-                if (allMachines.isEmpty()) "No machines yet." else "No machines match your search or filter."
-            emptyText.visibility = View.VISIBLE
-        } else {
-            emptyText.visibility = View.GONE
-        }
     }
 
-    // Edit pressed on a row: open the form and send the machine's id so it knows which one to edit
-    private fun editMachine(machine: MachineModel) {
-        Timber.d("Edit pressed, machine id=${machine.id}")
-
-        val intent =
-            Intent(this, AddEditView::class.java)
-
-        intent.putExtra("id", machine.id)
-
-        startActivity(intent)
+    fun showEmptyMessage(message: String) {
+        emptyText.text = message
+        emptyText.visibility = View.VISIBLE
     }
 
-    // Delete pressed on a row: remove it from the store then redraw the list
-    private fun deleteMachine(machine: MachineModel) {
-        Timber.d("Delete pressed, machine id=${machine.id}")
+    fun hideEmptyMessage() {
+        emptyText.visibility = View.GONE
+    }
 
-        AppData.machines.delete(machine.id)
-
-        displayMachines()
+    // empties the search box and sets the drop-down back to All,
+    // both of these tell the presenter by themselves
+    fun clearFilterControls() {
+        searchInput.setText("")
+        statusFilter.setSelection(0)
     }
 
     // turns the drop-down position into a status, same order as status_filter_options in strings.xml
