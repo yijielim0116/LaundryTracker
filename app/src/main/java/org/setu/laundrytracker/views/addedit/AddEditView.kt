@@ -182,6 +182,12 @@ class AddEditView : AppCompatActivity() {
 
     fun showNameError(message: String) {
         nameInput.error = message
+        nameInput.requestFocus()
+    }
+
+    fun showLocationError(message: String) {
+        locationInput.error = message
+        locationInput.requestFocus()
     }
 
     fun showMessage(message: String) {

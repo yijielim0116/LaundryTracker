@@ -63,9 +63,23 @@ class AddEditPresenter(private val view: AddEditView) {
         val cleanName = name.trim()
         val cleanLocation = location.trim()
 
-        if (cleanName.isEmpty()) {
-            Timber.d("Save blocked: name is empty")
-            view.showNameError("Name is required")
+        // the other machines' names, so I can stop two machines having the same name
+        // (leave out the one I'm editing, otherwise saving it without changes would say it's taken)
+        val otherNames = AppData.machines.findAll()
+            .filter { it.id != editingId }
+            .map { it.name }
+
+        val nameProblem = nameError(cleanName, otherNames)
+        if (nameProblem != null) {
+            Timber.d("Save blocked: $nameProblem")
+            view.showNameError(nameProblem)
+            return
+        }
+
+        val locationProblem = locationError(cleanLocation)
+        if (locationProblem != null) {
+            Timber.d("Save blocked: $locationProblem")
+            view.showLocationError(locationProblem)
             return
         }
 
@@ -262,7 +276,33 @@ class AddEditPresenter(private val view: AddEditView) {
     }
 
     // keys for saving the photo and map spot when the screen gets recreated
+    // + the form checks as plain functions so my unit tests can check them (null means it's fine)
     companion object {
+        // same numbers as max_name_length / max_location_length in integers.xml
+        const val MAX_NAME_LENGTH = 30
+        const val MAX_LOCATION_LENGTH = 40
+
+        fun nameError(name: String, otherNames: List<String>): String? {
+            val clean = name.trim()
+            return when {
+                clean.isEmpty() -> "Name is required"
+                clean.length > MAX_NAME_LENGTH -> "Name can't be longer than $MAX_NAME_LENGTH characters"
+                // "washer 1" and "Washer 1" count as the same name
+                otherNames.any { it.trim().equals(clean, ignoreCase = true) } ->
+                    "A machine called $clean already exists"
+                else -> null
+            }
+        }
+
+        fun locationError(location: String): String? {
+            val clean = location.trim()
+            return when {
+                clean.isEmpty() -> "Location is required"
+                clean.length > MAX_LOCATION_LENGTH -> "Location can't be longer than $MAX_LOCATION_LENGTH characters"
+                else -> null
+            }
+        }
+
         private const val KEY_IMAGE_URI = "imageUri"
         private const val KEY_CAMERA_PATH = "cameraPath"
         private const val KEY_LATITUDE = "latitude"
