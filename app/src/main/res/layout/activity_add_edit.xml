@@ -34,13 +34,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Name (e.g. Washer 1)">
+                android:hint="Name (e.g. Washer 1)"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/max_name_length">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nameInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
+                    android:maxLength="@integer/max_name_length" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -48,13 +52,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Location (e.g. Block A, Floor 1)">
+                android:hint="Location (e.g. Block A, Floor 1)"
+                app:counterEnabled="true"
+                app:counterMaxLength="@integer/max_location_length">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/locationInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapWords"
+                    android:maxLength="@integer/max_location_length" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

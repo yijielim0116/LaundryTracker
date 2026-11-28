@@ -60,12 +60,20 @@ class MachineListPresenter(private val view: MachineListView) {
         view.startActivity(intent)
     }
 
-    // Delete pressed on a row: remove it from the store then show the list again
+    // Delete pressed on a row: ask first, there's no undo
+    // (it used to delete straight away, so one wrong tap lost the machine)
     fun doDeleteMachine(machine: MachineModel) {
         Timber.d("Delete pressed, machine id=${machine.id}")
+        view.showDeleteConfirm(machine)
+    }
+
+    // Delete pressed in the pop up: remove it from the store then show the list again
+    fun doConfirmDelete(machine: MachineModel) {
+        Timber.d("Delete confirmed, machine id=${machine.id}")
 
         AppData.machines.delete(machine.id)
         showMachines()
+        view.showMessage("${machine.name} deleted")
     }
 
     // filters the machines and tells the view what to show
