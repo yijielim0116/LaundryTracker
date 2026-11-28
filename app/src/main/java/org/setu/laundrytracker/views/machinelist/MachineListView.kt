@@ -8,6 +8,8 @@ import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
@@ -145,6 +147,20 @@ class MachineListView : DrawerActivity() {
 
     fun showMachines(machines: List<MachineModel>) {
         adapter.updateMachines(machines)
+    }
+
+    // the "are you sure" pop up before a machine gets deleted
+    fun showDeleteConfirm(machine: MachineModel) {
+        AlertDialog.Builder(this)
+            .setTitle("Delete ${machine.name}?")
+            .setMessage("This can't be undone.")
+            .setPositiveButton("Delete") { _, _ -> presenter.doConfirmDelete(machine) }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     fun showEmptyMessage(message: String) {
